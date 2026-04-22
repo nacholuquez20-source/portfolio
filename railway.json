@@ -4,7 +4,7 @@
     "builder": "DOCKERFILE"
   },
   "deploy": {
-    "startCommand": "serve -s . -l $PORT",
+    "startCommand": "serve -s . -p $PORT",
     "restartPolicyType": "ON_FAILURE"
   }
 }
