@@ -58,6 +58,18 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+/* ---- Yungas-reveal observer — organic emergence ---- */
+const yungasObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      yungasObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.yungas-reveal').forEach(el => yungasObserver.observe(el));
+
 /* ---- Card 3D tilt ---- */
 document.querySelectorAll('.tilt-card').forEach(card => {
   card.addEventListener('mousemove', e => {
@@ -95,6 +107,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* ---- Dynamic footer year ---- */
+const footerYear = document.getElementById('footer-year');
+if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 /* ---- Hero parallax bg text ---- */
 const bgText = document.querySelector('.hero-bg-text');

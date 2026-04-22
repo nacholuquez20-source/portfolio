@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Yungas organic noise filter reference -->
+  <svg style="position:absolute;width:0;height:0" aria-hidden="true">
+    <filter id="yungas-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
+      <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </svg>
 </head>
 <body>
 
@@ -92,18 +102,18 @@
   <!-- YUNGAS STRIP -->
   <div class="yungas-strip" aria-hidden="true">
     <div class="yungas-track">
-      <span>· Automatizaciones con IA</span><span class="ys-leaf">🌿</span>
-      <span>· n8n + WhatsApp</span><span class="ys-leaf">🌿</span>
-      <span>· Ingeniería de Procesos</span><span class="ys-leaf">🌿</span>
-      <span>· Lean Manufacturing</span><span class="ys-leaf">🌿</span>
-      <span>· FastAPI + React</span><span class="ys-leaf">🌿</span>
-      <span>· Tucumán → LATAM</span><span class="ys-leaf">🌿</span>
-      <span>· Automatizaciones con IA</span><span class="ys-leaf">🌿</span>
-      <span>· n8n + WhatsApp</span><span class="ys-leaf">🌿</span>
-      <span>· Ingeniería de Procesos</span><span class="ys-leaf">🌿</span>
-      <span>· Lean Manufacturing</span><span class="ys-leaf">🌿</span>
-      <span>· FastAPI + React</span><span class="ys-leaf">🌿</span>
-      <span>· Tucumán → LATAM</span><span class="ys-leaf">🌿</span>
+      <span>· Automatizaciones con IA</span><span class="ys-sep">·</span>
+      <span>· n8n + WhatsApp</span><span class="ys-sep">·</span>
+      <span>· Ingeniería de Procesos</span><span class="ys-sep">·</span>
+      <span>· Lean Manufacturing</span><span class="ys-sep">·</span>
+      <span>· FastAPI + React</span><span class="ys-sep">·</span>
+      <span>· Tucumán → LATAM</span><span class="ys-sep">·</span>
+      <span>· Automatizaciones con IA</span><span class="ys-sep">·</span>
+      <span>· n8n + WhatsApp</span><span class="ys-sep">·</span>
+      <span>· Ingeniería de Procesos</span><span class="ys-sep">·</span>
+      <span>· Lean Manufacturing</span><span class="ys-sep">·</span>
+      <span>· FastAPI + React</span><span class="ys-sep">·</span>
+      <span>· Tucumán → LATAM</span><span class="ys-sep">·</span>
     </div>
   </div>
 
@@ -120,7 +130,7 @@
 
       <div class="service-rows">
 
-        <div class="service-row reveal">
+        <div class="service-row reveal yungas-reveal">
           <div class="service-row-num mono">01</div>
           <div class="service-row-main">
             <h3>Procesos e Ingeniería</h3>
@@ -132,7 +142,7 @@
           <div class="service-row-arrow">→</div>
         </div>
 
-        <div class="service-row reveal">
+        <div class="service-row reveal yungas-reveal">
           <div class="service-row-num mono">02</div>
           <div class="service-row-main">
             <h3>Automatizaciones con IA</h3>
@@ -144,7 +154,7 @@
           <div class="service-row-arrow">→</div>
         </div>
 
-        <div class="service-row reveal">
+        <div class="service-row reveal yungas-reveal">
           <div class="service-row-num mono">03</div>
           <div class="service-row-main">
             <h3>SaaS Industriales</h3>
@@ -172,7 +182,7 @@
 
       <div class="projects-list">
 
-        <div class="project-item reveal tilt-card">
+        <div class="project-item reveal yungas-reveal tilt-card">
           <div class="project-ghost-num" aria-hidden="true">01</div>
           <div class="project-item-inner">
             <div class="project-item-head">
@@ -190,7 +200,7 @@
           <div class="project-item-line"></div>
         </div>
 
-        <div class="project-item reveal tilt-card">
+        <div class="project-item reveal yungas-reveal tilt-card">
           <div class="project-ghost-num" aria-hidden="true">02</div>
           <div class="project-item-inner">
             <div class="project-item-head">
@@ -279,7 +289,7 @@
       </div>
       <div class="about-grid">
         <div class="about-quote-col reveal">
-          <blockquote class="about-pull-quote">
+          <blockquote class="about-pull-quote yungas-reveal">
             No construyo<br /><em>herramientas</em><br />en el vacío.
           </blockquote>
         </div>
@@ -329,12 +339,13 @@
 
   <!-- FOOTER -->
   <footer class="footer">
+    <div class="footer-yungas" aria-hidden="true">YUNGAS</div>
     <div class="footer-monogram" aria-hidden="true">JIL</div>
     <div class="container">
       <div class="footer-inner">
         <span class="footer-logo mono">JIL</span>
-        <p class="footer-copy mono">© 2025 Juan Ignacio Luquez · Tucumán, Argentina</p>
-        <p class="footer-tagline">Hecho con código y mate</p>
+        <p class="footer-copy mono">© <span id="footer-year"></span> Juan Ignacio Luquez · Tucumán, Argentina</p>
+        <p class="footer-tagline">Hecho con código, mate 🧉 y selva.</p>
       </div>
     </div>
   </footer>
