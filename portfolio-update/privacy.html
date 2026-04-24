@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Política de Privacidad — Juan Ignacio Luquez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..700;1,300..700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:        #EFEBE1;
+    --bg-alt:    #E6E1D4;
+    --card:      #F6F2E8;
+    --ink:       #1E2A1C;
+    --ink-soft:  #3E4A3A;
+    --ink-mute:  #6B7565;
+    --rule:      rgba(30, 42, 28, 0.14);
+    --rule-soft: rgba(30, 42, 28, 0.08);
+    --accent:    #163A66;
+    --accent-2:  #8B6F47;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans:  'Inter', system-ui, sans-serif;
+    --mono:  'JetBrains Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV — idéntico al portfolio */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-logo-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .nav-back {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-mute);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--ink); }
+
+  /* CONTENIDO */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .page-header {
+    padding: 7rem 0 3rem;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 3rem;
+  }
+
+  .page-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .page-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 22px; height: 1px;
+    background: var(--ink-mute);
+  }
+
+  h1.page-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  h1.page-title em {
+    font-style: italic;
+    color: var(--accent-2);
+  }
+
+  .page-meta {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--ink-mute);
+    letter-spacing: 0.03em;
+  }
+
+  /* SECCIONES */
+  .policy-body {
+    padding-bottom: 6rem;
+  }
+
+  .policy-section {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .policy-section:last-child {
+    border-bottom: none;
+  }
+
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 0.6rem;
+  }
+
+  h2.policy-heading {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .policy-body p {
+    color: var(--ink-soft);
+    margin-bottom: 1rem;
+    font-size: 0.97rem;
+  }
+  .policy-body p:last-child { margin-bottom: 0; }
+
+  ul.policy-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
+  ul.policy-list li {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    padding: 0.4rem 0 0.4rem 1.4rem;
+    position: relative;
+    border-top: 1px solid var(--rule-soft);
+  }
+  ul.policy-list li:last-child { border-bottom: 1px solid var(--rule-soft); }
+  ul.policy-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-2);
+    font-size: 0.85rem;
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 1.5rem 2rem;
+    margin-top: 1.5rem;
+  }
+  .contact-card p {
+    margin-bottom: 0.4rem !important;
+  }
+  .contact-card a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .contact-card a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  .footer {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 1.8rem 0;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    opacity: 0.7;
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 600px) {
+    .page-header { padding: 6rem 0 2.5rem; }
+    .footer-inner { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="nav-logo-dot"></span> JIL · Luquez
+    </a>
+    <a href="/" class="nav-back">← Volver al portfolio</a>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<div class="container">
+  <header class="page-header">
+    <div class="page-eyebrow">Legal &amp; Privacidad</div>
+    <h1 class="page-title">Política de<br/><em>Privacidad</em></h1>
+    <p class="page-meta">Última actualización: <span id="update-date"></span></p>
+  </header>
+</div>
+
+<!-- CUERPO -->
+<main class="container policy-body">
+
+  <div class="policy-section">
+    <div class="section-num">00 — Introducción</div>
+    <h2 class="policy-heading">¿A quién aplica esta política?</h2>
+    <p>Esta Política de Privacidad describe cómo Juan Ignacio Luquez ("yo", "el responsable") recopila, utiliza y protege la información de las personas que interactúan con mis servicios de automatización e inteligencia artificial, incluyendo las aplicaciones conectadas a la API de WhatsApp Business.</p>
+    <p>Al utilizar cualquiera de mis servicios o herramientas, aceptás los términos descritos en este documento.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">01 — Datos que recopilo</div>
+    <h2 class="policy-heading">Información recopilada</h2>
+    <p>En el contexto de mis automatizaciones y aplicaciones de WhatsApp Business, puedo recopilar los siguientes datos:</p>
+    <ul class="policy-list">
+      <li>Número de teléfono asociado a la cuenta de WhatsApp</li>
+      <li>Nombre de perfil de WhatsApp (cuando está disponible)</li>
+      <li>Contenido de los mensajes enviados a través de los flujos automatizados</li>
+      <li>Datos operativos y de proceso proporcionados voluntariamente durante la interacción</li>
+      <li>Metadatos de conversación: fecha, hora y estado de entrega de mensajes</li>
+    </ul>
+    <p>No recopilo datos de pago, documentos de identidad ni información sensible de salud.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">02 — Uso de la información</div>
+    <h2 class="policy-heading">¿Para qué uso tus datos?</h2>
+    <p>La información recopilada se utiliza exclusivamente con las siguientes finalidades:</p>
+    <ul class="policy-list">
+      <li>Operar y mejorar los flujos de automatización contratados</li>
+      <li>Responder consultas y gestionar las interacciones con los sistemas</li>
+      <li>Generar reportes operativos para los clientes del servicio</li>
+      <li>Detectar y corregir errores técnicos en los sistemas</li>
+      <li>Cumplir con las políticas de uso de Meta y la API de WhatsApp Business</li>
+    </ul>
+    <p>No vendo, alquilo ni cedo información a terceros con fines comerciales.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">03 — Base legal del tratamiento</div>
+    <h2 class="policy-heading">Fundamento legal</h2>
+    <p>El tratamiento de datos se realiza bajo las siguientes bases legales:</p>
+    <ul class="policy-list">
+      <li><strong>Consentimiento:</strong> el usuario inicia la interacción voluntariamente a través de WhatsApp</li>
+      <li><strong>Ejecución de contrato:</strong> el tratamiento es necesario para prestar el servicio de automatización acordado</li>
+      <li><strong>Interés legítimo:</strong> mejora y mantenimiento de los sistemas operativos</li>
+    </ul>
+    <p>Los servicios se prestan desde Argentina y se sujetan a la Ley N.º 25.326 de Protección de Datos Personales.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">04 — Almacenamiento y seguridad</div>
+    <h2 class="policy-heading">Dónde y cómo se guardan los datos</h2>
+    <p>Los datos se procesan en servidores propios y en infraestructura de terceros de confianza (Railway, Hetzner, Supabase u otras plataformas según el proyecto). Todos los proveedores cumplen estándares de seguridad internacionales.</p>
+    <p>Se aplican las siguientes medidas de protección:</p>
+    <ul class="policy-list">
+      <li>Conexiones cifradas (HTTPS/TLS) en todas las comunicaciones</li>
+      <li>Acceso restringido a los datos por rol y necesidad operativa</li>
+      <li>Retención de datos limitada al período necesario para el servicio</li>
+      <li>Eliminación segura de datos al finalizar la relación contractual</li>
+    </ul>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">05 — Compartición con terceros</div>
+    <h2 class="policy-heading">Terceros y plataformas externas</h2>
+    <p>Mis servicios pueden integrarse con las siguientes plataformas, cada una con sus propias políticas de privacidad:</p>
+    <ul class="policy-list">
+      <li><strong>Meta / WhatsApp Business API</strong> — plataforma de mensajería</li>
+      <li><strong>Anthropic (Claude API)</strong> — procesamiento de lenguaje natural</li>
+      <li><strong>n8n</strong> — orquestación de flujos de trabajo</li>
+      <li><strong>Google Workspace</strong> — almacenamiento y hojas de cálculo (según proyecto)</li>
+    </ul>
+    <p>El intercambio de datos con estos terceros se limita estrictamente a lo necesario para la operación del servicio.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">06 — Tus derechos</div>
+    <h2 class="policy-heading">Derechos del usuario</h2>
+    <p>De acuerdo con la Ley 25.326 y normativas aplicables, tenés derecho a:</p>
+    <ul class="policy-list">
+      <li>Acceder a los datos personales que tengo sobre vos</li>
+      <li>Rectificar datos incorrectos o desactualizados</li>
+      <li>Solicitar la eliminación de tus datos (derecho al olvido)</li>
+      <li>Oponerte al tratamiento de tus datos en cualquier momento</li>
+      <li>Solicitar la portabilidad de tus datos</li>
+    </ul>
+    <p>Para ejercer cualquiera de estos derechos, podés contactarme directamente a través del correo indicado más abajo. Respondo en un plazo máximo de 30 días hábiles.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">07 — Cookies y rastreo</div>
+    <h2 class="policy-heading">Uso de cookies</h2>
+    <p>Este sitio web (juanluquez.com o dominio equivalente) no utiliza cookies de rastreo de terceros ni publicidad comportamental. Se pueden emplear cookies técnicas estrictamente necesarias para el funcionamiento del sitio.</p>
+    <p>Las aplicaciones de WhatsApp no utilizan cookies por su naturaleza de mensajería directa.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">08 — Menores de edad</div>
+    <h2 class="policy-heading">Protección de menores</h2>
+    <p>Mis servicios están dirigidos exclusivamente a empresas y personas mayores de 18 años. No recopilo conscientemente datos de menores. Si detectás que un menor ha interactuado con mis sistemas, contactame para eliminar esa información de inmediato.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">09 — Modificaciones</div>
+    <h2 class="policy-heading">Actualizaciones a esta política</h2>
+    <p>Esta política puede actualizarse para reflejar cambios en mis servicios, en la legislación aplicable o en los requisitos de plataformas como Meta. La fecha de "última actualización" al inicio de esta página indica la versión vigente.</p>
+    <p>Los cambios significativos serán comunicados a los clientes activos por correo electrónico o a través de WhatsApp.</p>
+  </div>
+
+  <div class="policy-section">
+    <div class="section-num">10 — Contacto</div>
+    <h2 class="policy-heading">¿Preguntas sobre privacidad?</h2>
+    <p>Si tenés preguntas, solicitudes o reclamos relacionados con el tratamiento de tus datos personales, podés contactarme por cualquiera de estos medios:</p>
+    <div class="contact-card">
+      <p><strong>Juan Ignacio Luquez</strong></p>
+      <p>Ingeniero Industrial · Consultor en Automatización e IA</p>
+      <p>Tucumán, Argentina</p>
+      <p>✉ <a href="mailto:luquez.jignacio@gmail.com">luquez.jignacio@gmail.com</a></p>
+      <p>📱 <a href="https://wa.me/5493814758763">+54 9 381 475-8763</a></p>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span>© <span id="footer-year"></span> · Juan Ignacio Luquez</span>
+    <span>Política de Privacidad</span>
+    <span>Tucumán · Argentina</span>
+  </div>
+</footer>
+
+<script>
+  // Fecha actual
+  const now = new Date();
+  const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+  const dateEl = document.getElementById('update-date');
+  if (dateEl) dateEl.textContent = now.toLocaleDateString('es-AR', opts);
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = now.getFullYear();
+</script>
+
+</body>
+</html>
