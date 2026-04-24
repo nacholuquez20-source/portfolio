@@ -7,4 +7,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD serve -s . -l ${PORT:-3000}
+CMD serve . -l ${PORT:-3000}
