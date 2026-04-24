@@ -1,355 +1,290 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juan Ignacio Luquez — Ingeniero Industrial & IA</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Yungas organic noise filter reference -->
-  <svg style="position:absolute;width:0;height:0" aria-hidden="true">
-    <filter id="yungas-noise">
-      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-      <feColorMatrix type="saturate" values="0"/>
-      <feBlend in="SourceGraphic" mode="overlay" result="blend"/>
-      <feComposite in="blend" in2="SourceGraphic" operator="in"/>
-    </filter>
-  </svg>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Juan Ignacio Luquez — Ingeniero Industrial & IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300..700;1,300..700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=10" />
+<style>
+  body.no-dropcap .editorial-body p:first-child::first-letter {
+    font-family: inherit; float: none; font-size: inherit;
+    padding: 0; color: inherit; font-style: inherit;
+  }
+</style>
 </head>
 <body>
 
-  <div id="cursor-dot"></div>
-  <div id="cursor-ring"></div>
+<!-- NAV -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo"><span class="nav-logo-dot"></span> JIL · Luquez</a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo">JIL</a>
-      <ul class="nav-links">
-        <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#sobre-mi">Sobre mí</a></li>
-        <li><a href="#contacto" class="nav-cta">Contacto</a></li>
-      </ul>
-      <button class="nav-menu-btn" id="menuBtn" aria-label="Menú">
-        <span></span><span></span>
-      </button>
-    </div>
-  </nav>
+<!-- HERO -->
+<section class="hero" id="hero" data-screen-label="Hero">
+  <div class="container">
+    <div class="hero-grid">
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-inner">
-
-      <div class="hero-text">
-        <div class="hero-badge animate-in delay-1">
-          <span class="badge-dot"></span>
-          <span>Tucumán · Argentina · LATAM</span>
+      <!-- LEFT: name + intro -->
+      <div class="hero-left reveal">
+        <div>
+          <div class="hero-eyebrow">Tucumán · Argentina · LATAM</div>
         </div>
-
-        <h1 class="hero-name animate-in delay-2">
-          <span class="name-line name-first">Juan Ignacio</span>
-          <span class="name-line name-last"><em>Luquez</em></span>
-        </h1>
-
-        <p class="hero-role animate-in delay-3">
-          Ingeniero Industrial
-          <span class="role-sep">—</span>
-          Automatizaciones con IA
-        </p>
-
-        <p class="hero-tagline animate-in delay-4">
-          Diseño sistemas donde los procesos industriales<br />
-          y la inteligencia artificial producen resultados reales.
-        </p>
-
-        <div class="hero-actions animate-in delay-5">
-          <a href="https://wa.me/5493814758763" target="_blank" class="btn btn-primary magnetic">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.123 1.528 5.855L.057 23.998l6.305-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.371l-.358-.213-3.742.981.998-3.648-.234-.374A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-            Hablemos
-          </a>
-          <a href="#proyectos" class="btn btn-ghost magnetic">Ver proyectos ↓</a>
+        <div>
+          <div class="hero-greet">Hola —</div>
+          <h1 class="hero-name">
+            Ingeniero<br/>
+            <em>Industrial</em>
+          </h1>
+          <div class="hero-role">consultor &amp; automatizaciones con IA</div>
+          <p class="hero-tagline">
+            Diseño sistemas donde los procesos industriales y la
+            inteligencia artificial producen resultados reales —
+            medibles, sostenidos, humanos.
+          </p>
+        </div>
+        <div class="hero-actions">
+          <a href="#proyectos" class="btn btn-primary btn-lg">Ver proyectos →</a>
+          <a href="https://wa.me/5493814758763" target="_blank" class="btn btn-ghost">Hablemos</a>
         </div>
       </div>
 
-      <div class="hero-visual animate-in delay-3">
-        <div class="photo-frame">
-          <img src="assets/Foto.jpg" alt="Juan Ignacio Luquez" id="heroPhoto" />
-          <div class="photo-initials-fallback" id="photoFallback">JIL</div>
-          <div class="photo-overlay"></div>
+      <!-- CENTER: photo (polaroid) -->
+      <div class="hero-photo reveal">
+        <div class="hero-photo-frame">
+          <span class="photo-tape" aria-hidden="true"></span>
+          <div class="hero-photo-inner">
+            <img src="assets/Foto.jpg" alt="Juan Ignacio Luquez"  style="object-fit: cover"/>
+          </div>
+          <div class="hero-photo-caption">
+            Juan Ignacio Luquez
+            <small>Ing. Industrial · Consultor & Dev</small>
+          </div>
         </div>
-        <div class="photo-deco-ring"></div>
-        <div class="photo-deco-line"></div>
-        <div class="photo-badge-float">
-          <span class="mono">Ing. Industrial</span>
-          <span class="mono year-tag">2025</span>
-        </div>
+        <div class="photo-corner"><span class="photo-corner-dot"></span> Disponible</div>
       </div>
 
-    </div>
-
-    <div class="hero-scroll-hint animate-in delay-5">
-      <div class="scroll-track"><div class="scroll-thumb"></div></div>
-      <span class="mono">scroll</span>
-    </div>
-
-    <div class="hero-bg-text" aria-hidden="true">LUQUEZ</div>
-  </section>
-
-  <!-- YUNGAS STRIP -->
-  <div class="yungas-strip" aria-hidden="true">
-    <div class="yungas-track">
-      <span>· Automatizaciones con IA</span><span class="ys-sep">·</span>
-      <span>· n8n + WhatsApp</span><span class="ys-sep">·</span>
-      <span>· Ingeniería de Procesos</span><span class="ys-sep">·</span>
-      <span>· Lean Manufacturing</span><span class="ys-sep">·</span>
-      <span>· FastAPI + React</span><span class="ys-sep">·</span>
-      <span>· Tucumán → LATAM</span><span class="ys-sep">·</span>
-      <span>· Automatizaciones con IA</span><span class="ys-sep">·</span>
-      <span>· n8n + WhatsApp</span><span class="ys-sep">·</span>
-      <span>· Ingeniería de Procesos</span><span class="ys-sep">·</span>
-      <span>· Lean Manufacturing</span><span class="ys-sep">·</span>
-      <span>· FastAPI + React</span><span class="ys-sep">·</span>
-      <span>· Tucumán → LATAM</span><span class="ys-sep">·</span>
     </div>
   </div>
+</section>
 
-  <!-- DIVISOR -->
-  <div class="section-divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- SERVICIOS -->
-  <section class="services" id="servicios">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">01 — Servicios</span>
-        <h2 class="section-title">Qué hago</h2>
+<!-- SERVICES -->
+<section class="section" id="servicios" data-screen-label="Servicios">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-label">01 — Servicios</div>
+        <h2 class="section-title">Donde la ingeniería<br/>se vuelve <em>producto</em>.</h2>
       </div>
+      <p class="section-subtitle">
+        
 
-      <div class="service-rows">
+      </p>
+    </div>
 
-        <div class="service-row reveal yungas-reveal">
-          <div class="service-row-num mono">01</div>
-          <div class="service-row-main">
-            <h3>Procesos e Ingeniería</h3>
-            <p>Diseño de flujos operativos, KPIs y mejora continua con metodologías Lean, ISO y 5S en industrias reales. Foco en resultados medibles, no en teoría.</p>
-          </div>
-          <div class="service-row-tags">
-            <span>Lean</span><span>ISO</span><span>5S</span><span>KPIs</span>
-          </div>
-          <div class="service-row-arrow">→</div>
-        </div>
-
-        <div class="service-row reveal yungas-reveal">
-          <div class="service-row-num mono">02</div>
-          <div class="service-row-main">
-            <h3>Automatizaciones con IA</h3>
-            <p>n8n, WhatsApp Business API y agentes de IA para operaciones industriales. Automatizaciones que trabajan solas, 24/7, sin fricción humana.</p>
-          </div>
-          <div class="service-row-tags">
-            <span>n8n</span><span>Claude API</span><span>WhatsApp</span><span>Agentes</span>
-          </div>
-          <div class="service-row-arrow">→</div>
-        </div>
-
-        <div class="service-row reveal yungas-reveal">
-          <div class="service-row-num mono">03</div>
-          <div class="service-row-main">
-            <h3>SaaS Industriales</h3>
-            <p>Productos digitales para talleres mecánicos, flotas y logística interna. Del prototipo al deploy en producción.</p>
-          </div>
-          <div class="service-row-tags">
-            <span>FastAPI</span><span>React</span><span>PostgreSQL</span><span>Railway</span>
-          </div>
-          <div class="service-row-arrow">→</div>
-        </div>
-
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-arrow">↗</span>
+        <div class="service-num">01 / Ingeniería</div>
+        <div class="service-name">Procesos<br/>e Ingeniería</div>
+        <p class="service-desc">Diseño de flujos operativos, KPIs y mejora continua con Lean, ISO y 5S en plantas reales.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-arrow">↗</span>
+        <div class="service-num">02 / IA</div>
+        <div class="service-name">Automatizaciones<br/>con IA</div>
+        <p class="service-desc">n8n, WhatsApp Business y agentes que trabajan solos, 24/7, sin fricción humana.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-arrow">↗</span>
+        <div class="service-num">03 / Producto</div>
+        <div class="service-name">SaaS<br/>Industriales</div>
+        <p class="service-desc">Talleres, flotas e intralogística. Del prototipo al deploy en producción.</p>
+      </div>
+      <div class="service-card reveal">
+        <span class="service-arrow">↗</span>
+        <div class="service-num">04 / Consultoría</div>
+        <div class="service-name">Diagnóstico<br/>& Estrategia</div>
+        <p class="service-desc">Auditoría operativa + hoja de ruta con quick wins en 30 días y visión a 12 meses.</p>
       </div>
     </div>
-  </section>
 
-  <div class="section-divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- PROYECTOS -->
-  <section class="projects" id="proyectos">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">02 — Proyectos</span>
-        <h2 class="section-title">Productos construidos</h2>
-      </div>
-
-      <div class="projects-list">
-
-        <div class="project-item reveal yungas-reveal tilt-card">
-          <div class="project-ghost-num" aria-hidden="true">01</div>
-          <div class="project-item-inner">
-            <div class="project-item-head">
-              <h3 class="project-item-name">TallerHub</h3>
-              <div class="project-item-status">
-                <span class="status-dot"></span>
-                <span class="mono">En desarrollo</span>
-              </div>
-            </div>
-            <p class="project-item-desc">Plataforma de gestión integral para talleres automotrices. Transcripción de voz en tiempo real, NPS automático, dashboards operativos y agente IA para diagnóstico de vehículos.</p>
-            <div class="project-item-tags">
-              <span>React</span><span>FastAPI</span><span>Claude API</span><span>WhatsApp</span><span>PostgreSQL</span>
-            </div>
-          </div>
-          <div class="project-item-line"></div>
-        </div>
-
-        <div class="project-item reveal yungas-reveal tilt-card">
-          <div class="project-ghost-num" aria-hidden="true">02</div>
-          <div class="project-item-inner">
-            <div class="project-item-head">
-              <h3 class="project-item-name">Kernium</h3>
-              <div class="project-item-status">
-                <span class="status-dot"></span>
-                <span class="mono">En desarrollo</span>
-              </div>
-            </div>
-            <p class="project-item-desc">Sistema de gestión de flota industrial con IA para operaciones de intralogística. Optimización de rutas, mantenimiento predictivo y reportes automáticos sin fricción.</p>
-            <div class="project-item-tags">
-              <span>Python</span><span>n8n</span><span>Claude API</span><span>Docker</span>
-            </div>
-          </div>
-          <div class="project-item-line"></div>
-        </div>
-
+    <!-- STACK / TRUSTED -->
+    <div class="trusted reveal">
+      <div class="trusted-label">Stack & metodologías</div>
+      <div class="trusted-grid">
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Python · FastAPI</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/></svg> React · Next</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4v16"/></svg> n8n · Workflows</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 22,12 12,22 2,12"/></svg> Claude · LLM APIs</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg> PostgreSQL</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg> Lean · ISO 9001</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Docker · Railway</div>
+        <div class="stack-chip"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> WhatsApp API</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div class="section-divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- STACK -->
-  <section class="stack-section" id="stack">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">03 — Tecnología</span>
-        <h2 class="section-title">Stack</h2>
-      </div>
+<!-- EDITORIAL / SOBRE MÍ -->
+<section class="editorial" id="sobre-mi" data-screen-label="Sobre mi">
+  <div class="container">
+    <div class="section-head reveal" style="margin-bottom: 3rem;">
+      <div class="section-label">02 — Sobre mí</div>
     </div>
-    <div class="marquee-wrap">
-      <div class="marquee-track" id="marqueeA">
-        <div class="marquee-item"><span>Python</span></div>
-        <div class="marquee-item"><span>FastAPI</span></div>
-        <div class="marquee-item"><span>React</span></div>
-        <div class="marquee-item"><span>PostgreSQL</span></div>
-        <div class="marquee-item"><span>n8n</span></div>
-        <div class="marquee-item"><span>Claude API</span></div>
-        <div class="marquee-item"><span>WhatsApp API</span></div>
-        <div class="marquee-item"><span>Docker</span></div>
-        <div class="marquee-item"><span>Railway</span></div>
-        <!-- duplicate for seamless loop -->
-        <div class="marquee-item" aria-hidden="true"><span>Python</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>FastAPI</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>React</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>PostgreSQL</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>n8n</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Claude API</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>WhatsApp API</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Docker</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Railway</span></div>
-      </div>
-    </div>
-    <div class="marquee-wrap marquee-wrap-rev">
-      <div class="marquee-track marquee-track-rev" id="marqueeB">
-        <div class="marquee-item"><span>Lean Manufacturing</span></div>
-        <div class="marquee-item"><span>ISO 9001</span></div>
-        <div class="marquee-item"><span>Ingeniería Industrial</span></div>
-        <div class="marquee-item"><span>Automatización</span></div>
-        <div class="marquee-item"><span>LATAM</span></div>
-        <div class="marquee-item"><span>SaaS</span></div>
-        <div class="marquee-item"><span>Intralogística</span></div>
-        <div class="marquee-item"><span>Mejora Continua</span></div>
-        <div class="marquee-item"><span>Agentes IA</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Lean Manufacturing</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>ISO 9001</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Ingeniería Industrial</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Automatización</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>LATAM</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>SaaS</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Intralogística</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Mejora Continua</span></div>
-        <div class="marquee-item" aria-hidden="true"><span>Agentes IA</span></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
-
-  <!-- SOBRE MÍ -->
-  <section class="about" id="sobre-mi">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">04 — Sobre mí</span>
-      </div>
-      <div class="about-grid">
-        <div class="about-quote-col reveal">
-          <blockquote class="about-pull-quote yungas-reveal">
-            No construyo<br /><em>herramientas</em><br />en el vacío.
-          </blockquote>
-        </div>
-        <div class="about-text-col reveal">
-          <p>Soy Ingeniero Industrial. Trabajo en el cruce entre procesos industriales y tecnología: diseño sistemas que combinan metodologías Lean con automatizaciones de IA para que las operaciones funcionen de verdad.</p>
-          <p>Entiendo el piso de fábrica, el taller mecánico, la logística real. Eso cambia profundamente lo que construyo y cómo lo construyo.</p>
-          <p>Basado en Tucumán, trabajo con empresas de Argentina y LATAM.</p>
-          <div class="about-chips">
-            <span class="mono">🏭 Ing. Industrial</span>
-            <span class="mono">🌿 Tucumán, ARG</span>
-            <span class="mono">🌎 LATAM</span>
-          </div>
+    <div class="editorial-grid">
+      <h2 class="editorial-title reveal">
+        Construir<br/>operaciones<br/><em>que respiren</em>
+      </h2>
+      <div class="editorial-body reveal">
+        <p>Soy Ingeniero Industrial. Trabajo en el cruce entre procesos industriales y tecnología: diseño sistemas que combinan metodologías Lean con automatizaciones de IA para que las operaciones funcionen de verdad.</p>
+        <p>Entiendo el piso de fábrica, el taller mecánico, la logística real. Eso cambia profundamente lo que construyo y cómo lo construyo — cada flujo nace de observar gente resolviendo problemas, no de una pizarra.</p>
+        <p>Basado en Tucumán, al pie de las Yungas. Trabajo con empresas de Argentina y LATAM que quieren operar más liviano, más claro, más medible.</p>
+        <div class="editorial-chips">
+          <span class="chip-globe">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3 12h18"/>
+              <path d="M12 3a14 14 0 0 1 0 18"/>
+              <path d="M12 3a14 14 0 0 0 0 18"/>
+            </svg>
+            Argentina &amp; Latinoamérica
+          </span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div class="section-divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+<!-- PULL QUOTE -->
+<section class="pullquote reveal" data-screen-label="Quote">
+  <div class="container">
+    <blockquote>
+      No construyo herramientas <em>en el vacío</em> — las construyo junto a la gente que las va a usar.
+    </blockquote>
+    <cite>— Filosofía de trabajo</cite>
+  </div>
+</section>
 
-  <!-- CONTACTO -->
-  <section class="contact" id="contacto">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-label">05 — Contacto</span>
-        <h2 class="section-title">Hablemos</h2>
+<!-- PORTFOLIO -->
+<section class="portfolio" id="proyectos" data-screen-label="Proyectos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="section-label">03 — Portfolio</div>
+        <h2 class="section-title">Productos<br/><em>construidos</em>.</h2>
       </div>
-      <p class="contact-tagline reveal">Si tenés un proceso roto o una operación<br />que podría automatizarse, escribime.</p>
-
-      <div class="contact-email-big reveal">
-        <a href="mailto:luquez.jignacio@gmail.com" class="email-link">
-          luquez.jignacio<span class="email-at">@gmail.com</span>
-        </a>
-      </div>
-
-      <div class="contact-socials reveal">
-        <a href="https://www.linkedin.com/in/juan-ignacio-luquez-9138192bb/" target="_blank" class="social-link magnetic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="https://wa.me/5493814758763" target="_blank" class="social-link social-link-wa magnetic">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.123 1.528 5.855L.057 23.998l6.305-1.654A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.371l-.358-.213-3.742.981.998-3.648-.234-.374A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          WhatsApp
-        </a>
-      </div>
+      <p class="section-subtitle">Software real, operando en campo, con clientes reales.</p>
     </div>
-  </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-yungas" aria-hidden="true">YUNGAS</div>
-    <div class="footer-monogram" aria-hidden="true">JIL</div>
-    <div class="container">
-      <div class="footer-inner">
-        <span class="footer-logo mono">JIL</span>
-        <p class="footer-copy mono">© <span id="footer-year"></span> Juan Ignacio Luquez · Tucumán, Argentina</p>
-        <p class="footer-tagline">Hecho con código, mate 🧉 y selva.</p>
-      </div>
+    <div class="proj-grid">
+
+      <a href="#" class="proj-card proj-card-feature reveal">
+        <div class="proj-visual proj-visual-1">
+          <div class="proj-visual-glyph">TH</div>
+          <div class="proj-visual-dots" aria-hidden="true"></div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-meta">
+            <span class="proj-num">P / 01 · 2025</span>
+            <span class="proj-status">En desarrollo</span>
+          </div>
+          <h3 class="proj-name">Taller<em>Hub</em></h3>
+          <p class="proj-desc">Plataforma de gestión integral para talleres automotrices. Transcripción de voz en tiempo real, NPS automático, dashboards operativos y agente IA para diagnóstico de vehículos.</p>
+          <div class="proj-tags">
+            <span>React</span><span>FastAPI</span><span>Claude API</span><span>WhatsApp</span><span>PostgreSQL</span>
+          </div>
+          <span class="proj-cta">Ver caso <span class="proj-cta-arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="#" class="proj-card reveal">
+        <div class="proj-visual proj-visual-2">
+          <div class="proj-visual-glyph">K</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-meta">
+            <span class="proj-num">P / 02 · 2025</span>
+            <span class="proj-status">En desarrollo</span>
+          </div>
+          <h3 class="proj-name">Kern<em>ium</em></h3>
+          <p class="proj-desc">Sistema de gestión de flota industrial con IA para operaciones de intralogística. Optimización de rutas, mantenimiento predictivo y reportes automáticos.</p>
+          <div class="proj-tags">
+            <span>Python</span><span>n8n</span><span>Claude API</span><span>Docker</span>
+          </div>
+          <span class="proj-cta">Ver caso <span class="proj-cta-arrow">→</span></span>
+        </div>
+      </a>
+
+      <a href="#" class="proj-card reveal">
+        <div class="proj-visual proj-visual-3">
+          <div class="proj-visual-glyph">FN</div>
+        </div>
+        <div class="proj-body">
+          <div class="proj-meta">
+            <span class="proj-num">P / 03 · 2024</span>
+            <span class="proj-status proj-status-live">En producción</span>
+          </div>
+          <h3 class="proj-name">Flujo<em>Norte</em></h3>
+          <p class="proj-desc">Automatizaciones internas para una citrícola tucumana: reportes de producción, alertas de calidad y consolidación de datos a dashboard operativo.</p>
+          <div class="proj-tags">
+            <span>n8n</span><span>Google Sheets</span><span>Metabase</span>
+          </div>
+          <span class="proj-cta">Ver caso <span class="proj-cta-arrow">→</span></span>
+        </div>
+      </a>
+
     </div>
-  </footer>
+  </div>
+</section>
 
-  <script src="main.js"></script>
+<!-- CONTACTO -->
+<section class="contact" id="contacto" data-screen-label="Contacto">
+  <div class="container">
+    <div class="contact-kicker">04 — Contacto</div>
+    <h2 class="contact-heading">
+      ¿Tenés un proceso<br/>que <em>debería</em> funcionar mejor?
+    </h2>
+    <a href="mailto:luquez.jignacio@gmail.com" class="contact-email">
+      luquez.jignacio@gmail.com
+    </a>
+    <div class="contact-socials">
+      <a href="https://www.linkedin.com/in/juan-ignacio-luquez-9138192bb/" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://wa.me/5493814758763" target="_blank" class="btn btn-primary">WhatsApp ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span>© <span id="footer-year"></span> · Juan Ignacio Luquez</span>
+      <span class="monogram">Quebrada del Portugués</span>
+      <a href="privacy.html" style="opacity:.75">Política de privacidad</a>
+      <span>Tucumán · Argentina</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Tweaks root -->
+<div id="tweaks-root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
 </body>
 </html>
