@@ -1,6 +1,6 @@
 import { Project, FAQItem, ConsultingPackage } from './types';
 
-import heroBanner from './assets/images/hero-banner.jpg';
+import heroBanner from './assets/images/hero-banner-juan.jpg';
 import projectAuditbot from './assets/images/project_auditbot_1781199868816.jpg';
 import projectTallerhub from './assets/images/project_tallerhub_1781199880336.jpg';
 import projectKernium from './assets/images/project_kernium_1781199891528.jpg';

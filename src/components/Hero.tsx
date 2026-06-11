@@ -67,7 +67,7 @@ export default function Hero({ onExploreProjects }: HeroProps) {
           <div className="overflow-hidden rounded-2xl bg-neutral-200 aspect-[16/10] md:aspect-[21/9] shadow-inner relative group border border-neutral-200/40">
             <img
               src={PORTRAIT}
-              alt="Espacio de trabajo — ingeniería y desarrollo de software"
+              alt="Juan Ignacio Luquez — Ingeniero Industrial y consultor"
               className="w-full h-full object-cover contrast-[1.02] brightness-100 group-hover:scale-[1.02] transition-transform duration-700 ease-out"
             />
             {/* Elegant overlay card containing live indicators */}
