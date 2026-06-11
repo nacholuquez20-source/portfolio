@@ -1,34 +1,29 @@
 # Portfolio — Juan Ignacio Luquez
 
-Sitio web portfolio personal. Stack: HTML + CSS + JS vanilla. Deploy en Railway con `serve`.
+Sitio web portfolio personal. Stack: Vite + React 19 + TypeScript + Tailwind CSS v4 + Motion.
 
-## Personalizar antes de deployar
+## Estructura
 
-### 1. Foto de perfil
-Colocá tu foto en `/assets/foto.jpg`.
-- Tamaño recomendado: 400×400px mínimo, formato cuadrado
-- Se recorta automáticamente en círculo
-
-### 2. Datos de contacto
-En `index.html` buscá y reemplazá:
-
-| Placeholder | Reemplazar con |
-|---|---|
-| `tu@email.com` | Tu email real |
-| `https://linkedin.com/in/tu-perfil` | Tu URL de LinkedIn |
-| `https://wa.me/5493816000000` | Tu número WhatsApp (formato internacional, sin +) |
-
-### 3. Deploy en Railway
-
-1. Pusheá este proyecto a un repositorio GitHub
-2. En Railway: **New Project → Deploy from GitHub repo**
-3. Railway detecta el `Dockerfile` automáticamente
-4. El sitio queda en `https://tu-proyecto.up.railway.app`
+- `src/data.ts` — todo el contenido del sitio: proyectos, FAQs, paquetes de consultoría y datos de contacto. Para actualizar textos, editá este archivo.
+- `src/components/` — componentes de cada sección (Hero, Proyectos, Demos, Calculadora, FAQ, Contacto).
+- `public/privacy.html` — política de privacidad de AuditBot (se sirve tal cual en `/privacy.html`).
+- `src/assets/images/` — foto de perfil e imágenes de proyectos.
 
 ## Desarrollo local
 
 ```bash
-npx serve .
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # genera dist/
+npm run lint     # chequeo de tipos (tsc)
 ```
 
-Abrí `http://localhost:3000`.
+## Deploy en Railway
+
+Railway detecta el `Dockerfile` automáticamente: build de Vite en una etapa y `serve dist` en la final.
+La URL `/privacy.html` debe seguir funcionando (está referenciada por AuditBot) — por eso `serve` corre **sin** modo SPA.
+
+## Notas
+
+- Los precios base del cotizador están en `src/data.ts` (`CONSULTING_PACKAGES`) y en `src/components/ConsultingCalculator.tsx` (`basePrices`) — son indicativos, ajustar a tarifa real.
+- El formulario de contacto no usa backend: arma el mensaje y lo abre en WhatsApp (`wa.me`).
