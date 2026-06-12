@@ -87,31 +87,22 @@ export default function App() {
           </div>
 
           {/* Grid Cards Container */}
-          {/* Jerarquía editorial: AuditBot (en producción) destacado a 4/6, el resto en proporciones menores */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12">
-            {PROJECTS.map((project, idx) => {
-              const spanClass: Record<string, string> = {
-                auditbot: 'lg:col-span-4',
-                tallerhub: 'lg:col-span-2',
-                kernium: 'lg:col-span-3',
-                flujonorte: 'lg:col-span-3',
-              };
-              return (
-                <motion.div
-                  key={project.id}
-                  className={spanClass[project.id] ?? 'lg:col-span-2'}
-                  initial={{ opacity: 0, y: 28 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-60px' }}
-                  transition={{ duration: 0.55, delay: idx * 0.1, ease: 'easeOut' }}
-                >
-                  <ProjectCard
-                    project={project}
-                    onSelect={(p) => setSelectedProject(p)}
-                  />
-                </motion.div>
-              );
-            })}
+          {/* Grilla 2x2 pareja: cuatro tarjetas grandes de igual peso, AuditBot primero */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12">
+            {PROJECTS.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, delay: idx * 0.1, ease: 'easeOut' }}
+              >
+                <ProjectCard
+                  project={project}
+                  onSelect={(p) => setSelectedProject(p)}
+                />
+              </motion.div>
+            ))}
           </div>
 
         </div>

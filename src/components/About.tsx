@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { Globe } from 'lucide-react';
-import fotoJuan from '../assets/images/foto-juan.jpg';
+import fotoJuan from '../assets/images/foto-sobre-mi.jpg';
 
 export default function About() {
   return (
@@ -17,11 +17,11 @@ export default function About() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <div className="relative max-w-sm mx-auto lg:mx-0">
-              <div className="overflow-hidden rounded-2xl aspect-[4/5] border border-neutral-200/60 shadow-sm bg-neutral-200">
+              <div className="overflow-hidden rounded-2xl aspect-[4/5] border border-neutral-200/60 shadow-sm bg-neutral-200 group">
                 <img
                   src={fotoJuan}
-                  alt="Juan Ignacio Luquez"
-                  className="w-full h-full object-cover object-top"
+                  alt="Juan Ignacio Luquez trabajando"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
                 />
               </div>
               <p className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase mt-4 text-center lg:text-left">
