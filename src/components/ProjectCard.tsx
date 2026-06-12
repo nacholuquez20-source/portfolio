@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { Project } from '../types';
 import { Sparkles, Cpu, Code2 } from 'lucide-react';
+import ProjectCardPreview from './ProjectCardPreview';
 
 interface ProjectCardProps {
   project: Project;
@@ -33,10 +34,12 @@ export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
           src={project.image}
           alt={project.title}
           referrerPolicy="no-referrer"
-          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 ease-out grayscale hover:grayscale-0"
+          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 ease-out grayscale"
         />
-        {/* Subtle overlay hover effect */}
-        <div className="absolute inset-0 bg-[#1c1c1a]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        {/* Animated mini-demo revealed on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <ProjectCardPreview projectId={project.id} />
+        </div>
       </div>
 
       {/* Project info & Meta */}

@@ -69,14 +69,14 @@ export default function DashboardMockup({
       <div className="flex flex-1 overflow-hidden min-h-0">
         
         {/* Web Navigation Sidebar */}
-        <div className="w-48 bg-slate-950 border-r border-slate-810 p-3 flex flex-col justify-between flex-shrink-0">
+        <div className="w-14 lg:w-40 bg-slate-950 border-r border-slate-810 p-2 lg:p-3 flex flex-col justify-between flex-shrink-0">
           <div className="space-y-5">
             {/* Logo */}
-            <div className="flex items-center gap-2 px-1.5 py-1">
-              <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-sm shadow-[0_0_12px_rgba(37,99,235,0.4)]">
+            <div className="flex items-center gap-2 px-1.5 py-1 justify-center lg:justify-start">
+              <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white text-sm shadow-[0_0_12px_rgba(37,99,235,0.4)] shrink-0">
                 K
               </div>
-              <div>
+              <div className="hidden lg:block">
                 <span className="font-bold tracking-tight text-slate-100 text-sm">Kernium</span>
                 <span className="text-[9px] text-blue-400 block font-mono">FLOW INTEGRATOR</span>
               </div>
@@ -97,18 +97,19 @@ export default function DashboardMockup({
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
                     id={`sidebar-link-${item.id}`}
-                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left transition-all duration-200 text-xs ${
-                      isSelected 
-                        ? 'bg-blue-600 text-white font-semibold shadow-[0_4px_12px_rgba(37,99,235,0.25)]' 
+                    title={item.label}
+                    className={`w-full flex items-center justify-center lg:justify-between px-2 lg:px-3 py-2 rounded-xl text-left transition-all duration-200 text-xs ${
+                      isSelected
+                        ? 'bg-blue-600 text-white font-semibold shadow-[0_4px_12px_rgba(37,99,235,0.25)]'
                         : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className={`w-4 h-4 ${isSelected ? 'text-white' : 'text-slate-505'}`} />
-                      <span>{item.label}</span>
+                      <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-white' : 'text-slate-505'}`} />
+                      <span className="hidden lg:inline">{item.label}</span>
                     </div>
                     {item.badge && item.badge > 0 ? (
-                      <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold font-mono ${
+                      <span className={`hidden lg:inline text-[10px] px-1.5 py-0.2 rounded-full font-bold font-mono ${
                         isSelected ? 'bg-white text-blue-600' : 'bg-rose-500/10 text-rose-500 border border-rose-500/20 animate-pulse'
                       }`}>
                         {item.badge}
@@ -121,7 +122,7 @@ export default function DashboardMockup({
           </div>
 
           {/* User profile section at base */}
-          <div className="pt-4 border-t border-slate-900 flex items-center gap-2.5 px-1.5">
+          <div className="pt-4 border-t border-slate-900 hidden lg:flex items-center gap-2.5 px-1.5">
             <div className="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 font-mono">
               OP
             </div>
@@ -190,10 +191,10 @@ export default function DashboardMockup({
 
           {/* TAB 1: FLEET OVERVIEW (SIDE-BY-SIDE GRID OF MAP & TABLE) */}
           {activeTab === 'overview' && (
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 min-h-0 flex-1">
-              
-              {/* Fleet List Table Panel (Col span 3) */}
-              <div className="lg:col-span-3 bg-slate-900 border border-slate-810 rounded-2xl p-4 flex flex-col h-full justify-between">
+            <div className="grid grid-cols-1 gap-4 min-h-0 flex-1">
+
+              {/* Fleet List Table Panel */}
+              <div className="bg-slate-900 border border-slate-810 rounded-2xl p-4 flex flex-col h-full justify-between">
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
                     <CircleDot className="w-3.5 h-3.5 text-blue-500" /> Estado de Vehículos Industriales
@@ -277,8 +278,8 @@ export default function DashboardMockup({
                 </div>
               </div>
 
-              {/* Simplified Satelital GPS Tracking Map (Col span 2) */}
-              <div className="lg:col-span-2 bg-slate-900 border border-slate-810 rounded-2xl p-4 flex flex-col justify-between h-full min-h-[220px]">
+              {/* Simplified Satelital GPS Tracking Map */}
+              <div className="bg-slate-900 border border-slate-810 rounded-2xl p-4 flex flex-col justify-between h-full min-h-[220px]">
                 <div>
                   <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5 justify-between">
                     <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5 text-blue-500" /> Monitoreo Geográfico y Rutas</span>

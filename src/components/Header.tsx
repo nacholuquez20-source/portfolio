@@ -22,7 +22,6 @@ export default function Header({ onNavigate, activeSection }: HeaderProps) {
   const navItems = [
     { label: 'Proyectos', id: 'projects' },
     { label: 'Cómo funciona', id: 'demos' },
-    { label: 'Consultoría', id: 'consulting' },
     { label: 'Preguntas Frecuentes', id: 'faq' },
     { label: 'Contacto', id: 'contact' },
   ];

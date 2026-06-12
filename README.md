@@ -4,8 +4,8 @@ Sitio web portfolio personal. Stack: Vite + React 19 + TypeScript + Tailwind CSS
 
 ## Estructura
 
-- `src/data.ts` — todo el contenido del sitio: proyectos, FAQs, paquetes de consultoría y datos de contacto. Para actualizar textos, editá este archivo.
-- `src/components/` — componentes de cada sección (Hero, Proyectos, Demos, Calculadora, FAQ, Contacto).
+- `src/data.ts` — todo el contenido del sitio: proyectos, FAQs y datos de contacto. Para actualizar textos, editá este archivo.
+- `src/components/` — componentes de cada sección (Hero, Proyectos, Demos, FAQ, Contacto).
 - `public/privacy.html` — política de privacidad de AuditBot (se sirve tal cual en `/privacy.html`).
 - `src/assets/images/` — foto de perfil e imágenes de proyectos.
 
@@ -25,5 +25,4 @@ La URL `/privacy.html` debe seguir funcionando (está referenciada por AuditBot)
 
 ## Notas
 
-- Los precios base del cotizador están en `src/data.ts` (`CONSULTING_PACKAGES`) y en `src/components/ConsultingCalculator.tsx` (`basePrices`) — son indicativos, ajustar a tarifa real.
 - El formulario de contacto no usa backend: arma el mensaje y lo abre en WhatsApp (`wa.me`).

@@ -20,11 +20,12 @@ export default function PhoneMockup({
 }: PhoneMockupProps) {
   const [inputText, setInputText] = useState('');
   const activeOperator = operators.find(op => op.id === selectedOperatorId) || operators[0];
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatScrollRef = useRef<HTMLDivElement>(null);
 
-  // Auto scroll to bottom of chat
+  // Auto scroll del contenedor del chat (no usar scrollIntoView: arrastra la página entera al montar)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = chatScrollRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   }, [activeOperator.initialChat]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -124,9 +125,7 @@ export default function PhoneMockup({
         </div>
 
         {/* Chat History Area */}
-        <div className="flex-1 overflow-y-auto p-4 bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-opacity-5 relative flex flex-col space-y-3 scrollbar-thin">
-          {/* Ambient overlay background to mute the WhatsApp pattern */}
-          <div className="absolute inset-0 bg-neutral-950 bg-opacity-[0.88] z-0 pointer-events-none" />
+        <div ref={chatScrollRef} className="flex-1 overflow-y-auto p-4 bg-zinc-950 relative flex flex-col space-y-3 scrollbar-thin">
 
           {/* System Date Badge */}
           <div className="z-10 mx-auto bg-zinc-900 border border-zinc-800/80 px-3 py-1 rounded-full text-[10px] text-zinc-400 tracking-wide flex items-center gap-1 shadow-sm font-sans font-medium">
@@ -167,7 +166,6 @@ export default function PhoneMockup({
               </div>
             );
           })}
-          <div ref={messagesEndRef} />
         </div>
 
         {/* WhatsApp typing input loader */}

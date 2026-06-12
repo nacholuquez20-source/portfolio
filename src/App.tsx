@@ -9,7 +9,6 @@ import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import ProjectDetails from './components/ProjectDetails';
 import InteractiveDemos from './components/InteractiveDemos';
-import ConsultingCalculator from './components/ConsultingCalculator';
 import FAQ from './components/FAQ';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
@@ -20,14 +19,13 @@ import { Layers, HelpCircle, Briefcase, ChevronRight, PhoneCall, Code } from 'lu
 export default function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [proposalText, setProposalText] = useState<string>('');
 
   // Watch scroll progression to update navigation highlight highlights
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-      const sections = ['hero', 'projects', 'demos', 'consulting', 'faq', 'contact'];
+      const sections = ['hero', 'projects', 'demos', 'faq', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -50,24 +48,6 @@ export default function App() {
       targetElement.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
     }
-  };
-
-  // Helper autofills proposed cost calculator text into contact form text area
-  const handleApplyProposalText = (sowDescription: string) => {
-    setProposalText(sowDescription);
-    
-    // Smooth scroll down to contact form
-    setTimeout(() => {
-      handleNavigate('contact');
-      // Autofill actual DOM elements inside the form if desired
-      const msgArea = document.getElementById('form-message-area') as HTMLTextAreaElement;
-      if (msgArea) {
-        msgArea.value = `Hola Juan,\n\nMe gustaría solicitar una propuesta formal basada en la siguiente cotización preliminar calculada:\n\n👉 "${sowDescription}"\n\nQuedo a la espera de coordinar la primera llamada diagnóstica.`;
-        // Trigger generic change event to tell react hooks to update
-        const event = new Event('input', { bubbles: true });
-        msgArea.dispatchEvent(event);
-      }
-    }, 400);
   };
 
   return (
@@ -107,13 +87,19 @@ export default function App() {
 
           {/* Grid Cards Container */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
-            {PROJECTS.map((project) => (
-              <div key={project.id}>
+            {PROJECTS.map((project, idx) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, delay: idx * 0.1, ease: 'easeOut' }}
+              >
                 <ProjectCard
                   project={project}
                   onSelect={(p) => setSelectedProject(p)}
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -123,24 +109,22 @@ export default function App() {
       {/* Interactive Walkthrough Demonstrations of Core Products */}
       <InteractiveDemos />
 
-      {/* Interactive SOW Scope Calculator & Configurator */}
-      <ConsultingCalculator onApplyProposal={handleApplyProposalText} />
-
       {/* FAQ Enquiries List */}
       <FAQ />
 
       {/* Client Feedback Contact Message Form */}
       <ContactForm />
 
-      {/* Sidebar index navigator matching the low-right block in user image */}
-      <div className="hidden lg:block fixed bottom-12 right-12 z-30 max-w-[200px]">
+      {/* Sidebar index navigator: oculto en Contacto para no tapar el botón de envío */}
+      <div className={`hidden lg:block fixed bottom-12 right-12 z-30 max-w-[200px] transition-opacity duration-300 ${
+        activeSection === 'contact' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}>
         <div className="bg-white/80 backdrop-blur px-5 py-4 rounded-xl border border-neutral-300/60 shadow-lg text-left space-y-3">
           <p className="font-mono text-[8px] text-neutral-400 uppercase tracking-widest">// MAPA DE SECCIONES</p>
           <div className="flex flex-col gap-1 text-[11px] font-mono">
             {[
               { id: 'projects', label: 'Productos Construidos' },
               { id: 'demos', label: 'Cómo Funciona' },
-              { id: 'consulting', label: 'Consultoría & Cotización' },
               { id: 'faq', label: 'Preguntas Frecuentes' },
               { id: 'contact', label: 'Iniciar Propuesta' }
             ].map((sec) => (

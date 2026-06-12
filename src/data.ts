@@ -1,4 +1,4 @@
-import { Project, FAQItem, ConsultingPackage } from './types';
+import { Project, FAQItem } from './types';
 
 import heroBanner from './assets/images/hero-banner-juan.jpg';
 import projectAuditbot from './assets/images/project_auditbot_1781199868816.jpg';
@@ -129,48 +129,3 @@ export const FAQS: FAQItem[] = [
   }
 ];
 
-// Precios base indicativos en USD — ajustar a la tarifa real antes de publicar.
-export const CONSULTING_PACKAGES: ConsultingPackage[] = [
-  {
-    id: 'pkg-diagnostico',
-    title: 'Diagnóstico & Auditoría Operativa',
-    subtitle: 'Evaluación del proceso real, en el lugar donde ocurre',
-    description:
-      'Auditoría profunda de tus flujos operativos actuales. Identificamos cuellos de botella, desperdicios y oportunidades de automatización, y entregamos una hoja de ruta con quick wins a 30 días y visión a 12 meses.',
-    basePrice: '$900',
-    features: [
-      'Relevamiento de procesos y flujos de datos actuales',
-      'Análisis Lean: desperdicios, cuellos de botella y KPIs',
-      'Hoja de ruta con quick wins implementables en 30 días',
-      'Estimación de retorno de cada mejora propuesta'
-    ]
-  },
-  {
-    id: 'pkg-automatizacion',
-    title: 'Automatización con IA',
-    subtitle: 'Agentes y flujos que trabajan solos, 24/7',
-    description:
-      'Diseño e implementación de automatizaciones sobre n8n, WhatsApp Business y APIs de IA: reportes automáticos, alertas operativas, checklists conversacionales y agentes que eliminan tareas repetitivas.',
-    basePrice: '$2,400',
-    features: [
-      'Flujos n8n conectados a tus sistemas existentes',
-      'Canal operativo por WhatsApp Business API',
-      'Agentes de IA con Claude para tareas de criterio',
-      'Dashboard de monitoreo y soporte post-lanzamiento'
-    ]
-  },
-  {
-    id: 'pkg-saas',
-    title: 'SaaS / Software a Medida',
-    subtitle: 'Del prototipo al deploy en producción',
-    description:
-      'Desarrollo integral de producto para operaciones industriales: talleres, flotas, intralogística. Backend robusto, interfaz clara para gente de campo y deploy productivo con monitoreo.',
-    basePrice: '$4,800',
-    features: [
-      'Prototipo funcional en las primeras semanas',
-      'Backend FastAPI + PostgreSQL, frontend React',
-      'Deploy productivo en Docker / Railway',
-      'Iteración con los usuarios reales del sistema'
-    ]
-  }
-];

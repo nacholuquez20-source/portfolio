@@ -16,12 +16,3 @@ export interface FAQItem {
   question: string;
   answer: string;
 }
-
-export interface ConsultingPackage {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  basePrice: string;
-  features: string[];
-}
