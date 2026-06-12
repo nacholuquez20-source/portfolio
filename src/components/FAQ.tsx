@@ -18,7 +18,7 @@ export default function FAQ() {
         <div className="lg:col-span-5 lg:sticky lg:top-32 h-fit space-y-4 text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-neutral-100 rounded-full border border-neutral-200/50">
             <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
-            <span className="font-mono text-[9px] tracking-widest text-neutral-500 uppercase">
+            <span className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase">
               RESPUESTAS // CONSULTAS COMUNES
             </span>
           </div>

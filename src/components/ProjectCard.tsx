@@ -57,7 +57,7 @@ export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
               return (
                 <span
                   key={badge}
-                  className={`font-mono text-[9px] tracking-wide px-2.5 py-0.5 rounded-full border ${
+                  className={`font-mono text-[10px] tracking-wide px-2.5 py-0.5 rounded-full border ${
                     isProduction
                       ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
                       : isDevelopment

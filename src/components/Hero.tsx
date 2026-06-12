@@ -20,7 +20,7 @@ export default function Hero({ onExploreProjects }: HeroProps) {
           {/* Subtle tag at the top */}
           <div className="flex items-center gap-2 mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-mono text-[9px] md:text-[11px] tracking-widest text-neutral-400 uppercase">
+            <span className="font-mono text-[10px] md:text-[11px] tracking-widest text-neutral-500 uppercase">
               TUCUMÁN · ARGENTINA // INGENIERÍA INDUSTRIAL & IA APLICADA
             </span>
           </div>
@@ -83,37 +83,37 @@ export default function Hero({ onExploreProjects }: HeroProps) {
           </div>
         </div>
 
-        {/* Stats / Qualities Section under image */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mt-16 pt-16 border-t border-neutral-200/60">
-          <div className="flex flex-col space-y-3">
-            <span className="font-mono text-xs text-neutral-400">01 / PROCESOS</span>
-            <h3 className="font-serif text-2xl font-semibold text-neutral-800">Ingeniería</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed font-light">
-              Diseño de flujos operativos, KPIs y mejora continua con Lean, ISO 9001 y 5S
-              en plantas, talleres y operaciones logísticas reales.
-            </p>
-          </div>
-
-          <div className="flex flex-col space-y-3">
-            <span className="font-mono text-xs text-neutral-400">02 / PRODUCTOS</span>
-            <div className="flex items-baseline gap-2">
-              <span className="font-serif text-5xl font-semibold text-neutral-900">04</span>
-              <span className="font-mono text-xs text-neutral-400 uppercase">Sistemas en Campo</span>
+        {/* Ficha técnica: lo esencial, escaneable en segundos */}
+        <div className="mt-16 pt-10 border-t border-neutral-200/60">
+          <p className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase mb-6">
+            // FICHA TÉCNICA
+          </p>
+          <dl className="divide-y divide-neutral-200/70 border-y border-neutral-200/70">
+            {[
+              { label: 'UBICACIÓN', value: 'San Miguel de Tucumán, Argentina — remoto en Argentina & LATAM' },
+              { label: 'ESPECIALIZACIÓN', value: 'Procesos industriales · Automatización con IA · SaaS a medida' },
+              { label: 'STACK', value: 'Python · FastAPI · React · n8n · Claude API · PostgreSQL · Docker' },
+              { label: 'PRODUCTOS EN CAMPO', value: '04 — AuditBot · TallerHub · Kernium · FlujoNorte' },
+            ].map((row) => (
+              <div key={row.label} className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-6 py-3.5">
+                <dt className="sm:col-span-3 font-mono text-[10px] sm:text-xs tracking-wider text-neutral-500 uppercase pt-0.5">
+                  {row.label}
+                </dt>
+                <dd className="sm:col-span-9 font-sans text-sm text-neutral-700">
+                  {row.value}
+                </dd>
+              </div>
+            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-6 py-3.5">
+              <dt className="sm:col-span-3 font-mono text-[10px] sm:text-xs tracking-wider text-neutral-500 uppercase pt-0.5">
+                ESTADO
+              </dt>
+              <dd className="sm:col-span-9 font-sans text-sm text-neutral-700 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                Disponible para consultoría
+              </dd>
             </div>
-            <p className="text-sm text-neutral-500 leading-relaxed font-light">
-              AuditBot, TallerHub, Kernium y FlujoNorte: software real operando con
-              clientes reales, del prototipo al deploy en producción.
-            </p>
-          </div>
-
-          <div className="flex flex-col space-y-3">
-            <span className="font-mono text-xs text-neutral-400">03 / AUTOMATIZACIÓN</span>
-            <h3 className="font-serif text-2xl font-semibold text-neutral-800">IA Aplicada</h3>
-            <p className="text-sm text-neutral-500 leading-relaxed font-light">
-              Agentes con n8n, WhatsApp Business y APIs de LLM que trabajan solos,
-              24/7, sin fricción humana.
-            </p>
-          </div>
+          </dl>
         </div>
       </div>
     </section>

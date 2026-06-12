@@ -9,6 +9,7 @@ import Hero from './components/Hero';
 import ProjectCard from './components/ProjectCard';
 import ProjectDetails from './components/ProjectDetails';
 import InteractiveDemos from './components/InteractiveDemos';
+import About from './components/About';
 import FAQ from './components/FAQ';
 import ContactForm from './components/ContactForm';
 import Footer from './components/Footer';
@@ -25,7 +26,7 @@ export default function App() {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
-      const sections = ['hero', 'projects', 'demos', 'faq', 'contact'];
+      const sections = ['hero', 'projects', 'demos', 'about', 'faq', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -68,7 +69,7 @@ export default function App() {
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-neutral-200/50">
                 <Layers className="w-3.5 h-3.5 text-neutral-500" />
-                <span className="font-mono text-[9px] tracking-widest text-[#1c1c1a] uppercase">
+                <span className="font-mono text-[10px] tracking-widest text-[#1c1c1a] uppercase">
                   PORTFOLIO // SOFTWARE REAL OPERANDO EN CAMPO
                 </span>
               </div>
@@ -79,28 +80,38 @@ export default function App() {
             </div>
 
             <div className="text-left md:text-right shrink-0">
-              <span className="font-mono text-xs text-neutral-450 tracking-wider">
+              <span className="font-mono text-xs text-neutral-500 tracking-wider">
                 VISTA TOTAL / 04 PRODUCTOS
               </span>
             </div>
           </div>
 
           {/* Grid Cards Container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
-            {PROJECTS.map((project, idx) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: idx * 0.1, ease: 'easeOut' }}
-              >
-                <ProjectCard
-                  project={project}
-                  onSelect={(p) => setSelectedProject(p)}
-                />
-              </motion.div>
-            ))}
+          {/* Jerarquía editorial: AuditBot (en producción) destacado a 4/6, el resto en proporciones menores */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 md:gap-12">
+            {PROJECTS.map((project, idx) => {
+              const spanClass: Record<string, string> = {
+                auditbot: 'lg:col-span-4',
+                tallerhub: 'lg:col-span-2',
+                kernium: 'lg:col-span-3',
+                flujonorte: 'lg:col-span-3',
+              };
+              return (
+                <motion.div
+                  key={project.id}
+                  className={spanClass[project.id] ?? 'lg:col-span-2'}
+                  initial={{ opacity: 0, y: 28 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.55, delay: idx * 0.1, ease: 'easeOut' }}
+                >
+                  <ProjectCard
+                    project={project}
+                    onSelect={(p) => setSelectedProject(p)}
+                  />
+                </motion.div>
+              );
+            })}
           </div>
 
         </div>
@@ -108,6 +119,9 @@ export default function App() {
 
       {/* Interactive Walkthrough Demonstrations of Core Products */}
       <InteractiveDemos />
+
+      {/* Editorial About / Philosophy */}
+      <About />
 
       {/* FAQ Enquiries List */}
       <FAQ />
@@ -125,6 +139,7 @@ export default function App() {
             {[
               { id: 'projects', label: 'Productos Construidos' },
               { id: 'demos', label: 'Cómo Funciona' },
+              { id: 'about', label: 'Sobre Mí' },
               { id: 'faq', label: 'Preguntas Frecuentes' },
               { id: 'contact', label: 'Iniciar Propuesta' }
             ].map((sec) => (

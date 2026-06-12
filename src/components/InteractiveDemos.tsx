@@ -163,7 +163,7 @@ export default function InteractiveDemos() {
         <div className="text-left max-w-3xl mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1c1c1a] text-[#F8F8F5] rounded-full text-xs font-mono">
             <Zap className="w-3 h-3 text-amber-400 fill-amber-400" />
-            <span className="tracking-widest uppercase text-[9px]">// DEMOS INTERACTIVAS</span>
+            <span className="tracking-widest uppercase text-[10px]">// DEMOS INTERACTIVAS</span>
           </div>
 
           <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl text-neutral-900 tracking-tight leading-none">

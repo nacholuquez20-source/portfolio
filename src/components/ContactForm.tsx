@@ -59,8 +59,8 @@ export default function ContactForm() {
         <div className="lg:col-span-5 space-y-6 text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-neutral-200/55">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-            <span className="font-mono text-[9px] tracking-widest text-[#1c1c1a] uppercase font-semibold">
-              CONTÁCTANOS EN VIVO // INCIAR UN PROYECTO
+            <span className="font-mono text-[10px] tracking-widest text-[#1c1c1a] uppercase font-semibold">
+              CONTACTO DIRECTO // INICIAR UN PROYECTO
             </span>
           </div>
 
