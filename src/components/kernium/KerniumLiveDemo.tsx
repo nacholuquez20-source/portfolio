@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, MessageSquare, Cpu, CheckCircle, Layout, CornerRightDown, RotateCcw } from 'lucide-react';
+import { Sparkles, MessageSquare, Cpu, CheckCircle, Layout, RotateCcw } from 'lucide-react';
 import { Vehicle, ChatMessage, Operator, MaintenanceTicket, PipelineStep, VehicleId } from './types';
 import { INITIAL_VEHICLES, INITIAL_OPERATORS, INITIAL_TICKETS } from './mockData';
 import PhoneMockup from './PhoneMockup';
@@ -343,164 +343,191 @@ export default function KerniumLiveDemo() {
   };
 
   return (
-    <div className="bg-slate-950 text-slate-100 rounded-2xl border border-neutral-800 shadow-2xl overflow-hidden relative font-sans antialiased">
+    <div className="space-y-8 relative">
 
-      {/* Dynamic Toast feedback */}
+      {/* Toast feedback */}
       {toastMessage && (
-        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-full bg-slate-900/95 border-2 border-emerald-500/50 shadow-[0_0_20px_rgba(16,185,129,0.25)] text-slate-100 p-3.5 rounded-2xl flex items-center gap-3 text-xs font-semibold">
-          <div className="p-1 bg-emerald-500/10 rounded-lg text-emerald-400">
+        <div className="fixed top-24 left-1/2 transform -translate-x-1/2 z-50 max-w-sm w-full bg-[#1c1c1a] text-[#F8F8F5] border border-neutral-700 shadow-xl p-3.5 rounded-2xl flex items-center gap-3 text-xs font-medium">
+          <div className="p-1 bg-emerald-500/15 rounded-lg text-emerald-400">
             <CheckCircle className="w-5 h-5" />
           </div>
           <span>{toastMessage}</span>
         </div>
       )}
 
-      <div className="p-4 md:p-6 space-y-6">
-
-        {/* Intro Explanatory Banner */}
-        <section className="bg-gradient-to-r from-slate-900 to-slate-950 border border-slate-800 p-6 rounded-3xl relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-80 h-36 bg-blue-500/5 blur-[80px] rounded-full pointer-events-none" />
-
-          <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-            <div className="max-w-2xl">
-              <span className="text-[10px] uppercase font-mono font-bold tracking-widest text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full">
-                Demo Interactiva en Vivo
-              </span>
-              <h2 className="text-xl md:text-2xl font-black text-slate-100 tracking-tight mt-2.5">
-                ¿Cómo impacta el WhatsApp de los operarios en la plataforma web?
-              </h2>
-              <p className="text-slate-400 text-xs mt-2 leading-relaxed">
-                Cuando los choferes u operarios envían un mensaje por WhatsApp — en lugar de llamadas manuales —
-                el webhook de Kernium procesa el lenguaje natural con IA y actualiza la central inmediatamente.
-                Probalo: enviá un mensaje o disparí un escenario precargado.
-              </p>
-            </div>
-
-            <button
-              onClick={handleResetShowcase}
-              className="flex items-center gap-1.5 bg-slate-900 border border-slate-800 text-slate-300 hover:text-white px-3.5 py-2 rounded-xl transition-all hover:bg-slate-800 font-medium cursor-pointer text-xs shrink-0"
-              title="Reiniciar todos los estados de la demo"
-            >
-              <RotateCcw className="w-3.5 h-3.5 text-blue-400" />
-              <span>Reiniciar Demo</span>
-            </button>
-          </div>
-
-          {/* Flow explanation cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-5 border-t border-slate-800">
-            {[
-              {
-                num: '01',
-                title: 'WhatsApp del Chofer',
-                desc: 'Los operarios envían textos libres detallando alarmas o finalizaciones de turno sin salir de la ruta.',
-                color: 'text-emerald-400 border-emerald-950 bg-emerald-500/5'
-              },
-              {
-                num: '02',
-                title: 'Análisis IA Kernium',
-                desc: 'Extrae el ID del vehículo, clasifica la gravedad y genera órdenes de taller de inmediato.',
-                color: 'text-blue-400 border-blue-950 bg-blue-500/5'
-              },
-              {
-                num: '03',
-                title: 'Impacto Web Instantáneo',
-                desc: 'El panel web mapea al equipo en alerta y sugiere despachos de mecánicos.',
-                color: 'text-amber-400 border-amber-950 bg-amber-500/5'
-              }
-            ].map((card, i) => (
-              <div key={i} className={`p-4 rounded-2xl border ${card.color} flex flex-col justify-between`}>
-                <div>
-                  <span className="font-mono font-black text-xs block mb-1 opacity-50">{card.num}</span>
-                  <h4 className="text-xs font-bold text-slate-200">{card.title}</h4>
-                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">{card.desc}</p>
-                </div>
-                <CornerRightDown className="w-3.5 h-3.5 mt-3 opacity-30 self-end hidden md:block" />
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* TRIPLE INTERACTIVE BOARD GRID */}
-        <section className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
-
-          {/* COLUMN 1: WHATSAPP PHONE */}
-          <div className="xl:col-span-4 flex flex-col">
-            <div className="mb-2 px-1 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-                <MessageSquare className="w-3.5 h-3.5 text-emerald-400" /> 1) Canal Operadores
-              </span>
-              <span className="text-[10px] text-zinc-400 bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded-md font-mono">
-                MOCKUP TELÉFONO
-              </span>
-            </div>
-            <div className="flex-1">
-              <PhoneMockup
-                operators={operators}
-                selectedOperatorId={selectedOperatorId}
-                onSelectOperator={handleSelectOperator}
-                onSendMessage={handleSendMessage}
-                isProcessing={isProcessing}
-              />
-            </div>
-          </div>
-
-          {/* COLUMN 2: KERNIUM WEB DASHBOARD */}
-          <div className="xl:col-span-5 flex flex-col">
-            <div className="mb-2 px-1 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-                <Layout className="w-3.5 h-3.5 text-blue-400" /> 2) Consola Web Kernium
-              </span>
-              <span className="text-[10px] text-blue-400 bg-blue-900/10 border border-blue-500/20 px-2 py-0.5 rounded-md font-mono">
-                VISTA ESCRITORIO
-              </span>
-            </div>
-            <div className="flex-1">
-              <DashboardMockup
-                vehicles={vehicles}
-                tickets={tickets}
-                onConfirmTicket={handleResolveTicket}
-                activeTab={activeTab}
-                setActiveTab={setActiveTab}
-                onDispatchMechanic={handleDispatchMechanic}
-              />
-            </div>
-          </div>
-
-          {/* COLUMN 3: AI PIPELINE */}
-          <div className="xl:col-span-3 flex flex-col">
-            <div className="mb-2 px-1 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-400 flex items-center gap-1.5 uppercase tracking-wider">
-                <Cpu className="w-3.5 h-3.5 text-purple-400" /> 3) Middleware de Análisis
-              </span>
-              <span className="text-[10px] text-purple-400 bg-purple-900/10 border border-purple-500/20 px-2 py-0.5 rounded-md font-mono">
-                UNDER THE HOOD
-              </span>
-            </div>
-            <div className="flex-1">
-              <AIPipeline
-                steps={pipelineSteps}
-                currentMessageText={currentMessageText}
-                isProcessing={isProcessing}
-              />
-            </div>
-          </div>
-
-        </section>
-
-        {/* WORKFLOW INSTRUCTION GUIDE */}
-        <section className="bg-slate-900/45 border border-slate-800 p-5 rounded-2xl">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2 flex items-center gap-1">
-            <Sparkles className="w-4 h-4 text-emerald-400" /> Guía de Prueba
+      {/* Intro editorial: cómo funciona el flujo */}
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 text-left">
+        <div className="max-w-2xl space-y-3">
+          <h3 className="font-serif text-2xl md:text-3xl text-neutral-900 tracking-tight leading-snug">
+            ¿Cómo impacta el WhatsApp de los operarios <em className="font-light text-neutral-500">en la plataforma web?</em>
           </h3>
-          <p className="text-[11px] text-slate-400 leading-normal">
-            1. En <strong>Escenarios Listos</strong> (debajo del teléfono), hacé clic en <span className="text-emerald-400">🚨 Alerta: Grúa con pérdida crítica</span>. Verás cómo el teléfono envía la alerta mecánica al canal.<br />
-            2. Observá el <strong>Middleware de Análisis</strong> (columna derecha): la IA procesa el webhook, extrae las entidades clave y actualiza la geolocalización para encender el radar rojo.<br />
-            3. En la <strong>Consola de Flota</strong> la grúa CR-04 pasa a alerta roja, se crea una orden de mantenimiento urgente y el sistema sugiere <span className="text-slate-100 font-semibold bg-rose-500/15 py-0.5 px-1.5 rounded text-[10px]">Despachar Mecánico</span>.<br />
-            4. Presioná el despachador: el taller asigna al técnico y el chofer recibe la confirmación automática por WhatsApp en tiempo real.
+          <p className="text-sm text-neutral-500 font-light leading-relaxed">
+            Cuando los choferes u operarios envían un mensaje por WhatsApp — en lugar de llamadas
+            manuales — el webhook de Kernium procesa el lenguaje natural con IA y actualiza la
+            central inmediatamente. Probalo: enviá un mensaje o disparí un escenario precargado.
           </p>
-        </section>
+        </div>
 
+        <button
+          onClick={handleResetShowcase}
+          className="flex items-center gap-2 bg-white border border-neutral-300 text-neutral-600 hover:text-[#1c1c1a] hover:border-[#1c1c1a] px-4 py-2.5 rounded-full transition-all cursor-pointer font-mono text-[10px] uppercase tracking-wider shrink-0 w-fit"
+          title="Reiniciar todos los estados de la demo"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          <span>Reiniciar Demo</span>
+        </button>
       </div>
+
+      {/* Flujo en 3 pasos, estilo editorial claro */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {[
+          {
+            num: '01',
+            title: 'WhatsApp del Chofer',
+            desc: 'Los operarios envían textos libres detallando alarmas o finalizaciones de turno sin salir de la ruta.',
+            dot: 'bg-emerald-500'
+          },
+          {
+            num: '02',
+            title: 'Análisis IA Kernium',
+            desc: 'Extrae el ID del vehículo, clasifica la gravedad y genera órdenes de taller de inmediato.',
+            dot: 'bg-amber-500'
+          },
+          {
+            num: '03',
+            title: 'Impacto Web Instantáneo',
+            desc: 'El panel web mapea al equipo en alerta y sugiere despachos de mecánicos.',
+            dot: 'bg-neutral-900'
+          }
+        ].map((card) => (
+          <div key={card.num} className="bg-white p-5 rounded-xl border border-neutral-200 text-left space-y-2">
+            <div className="flex items-center gap-2">
+              <span className={`w-1.5 h-1.5 rounded-full ${card.dot}`} />
+              <span className="font-mono text-[10px] text-neutral-400 tracking-widest">{card.num}</span>
+            </div>
+            <h4 className="font-serif text-lg font-semibold text-neutral-900">{card.title}</h4>
+            <p className="text-xs text-neutral-500 font-light leading-relaxed">{card.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Marco "ventana" oscuro con los tres paneles, mismo lenguaje que la demo AuditBot */}
+      <div className="bg-neutral-900 text-[#F8F8F5] rounded-2xl border border-neutral-800 shadow-2xl overflow-hidden">
+
+        {/* Window bar */}
+        <div className="bg-[#1c1c1a] px-4 py-3 flex items-center justify-between border-b border-neutral-800 select-none">
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-3 rounded-full bg-rose-500 inline-block opacity-80" />
+            <span className="w-3 h-3 rounded-full bg-amber-500 inline-block opacity-80" />
+            <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block opacity-80" />
+          </div>
+          <div className="bg-neutral-800/80 px-4 py-1 rounded-lg text-[10px] font-mono text-neutral-400 tracking-wide max-w-sm w-3/5 truncate text-center select-none border border-neutral-700/30">
+            kernium.app/console — demo interactiva en vivo
+          </div>
+          <div className="flex items-center gap-2 font-mono text-[10px] text-neutral-400">
+            <span className="h-2 w-2 rounded-full bg-emerald-400"></span>
+            <span>SECURE // WS</span>
+          </div>
+        </div>
+
+        {/* Triple board grid */}
+        <div className="p-4 md:p-6">
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-5 items-stretch">
+
+            {/* COLUMN 1: WHATSAPP PHONE */}
+            <div className="xl:col-span-4 flex flex-col">
+              <div className="mb-2 px-1 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-neutral-400 flex items-center gap-1.5 uppercase tracking-wider">
+                  <MessageSquare className="w-3.5 h-3.5 text-emerald-400" /> 1) Canal Operadores
+                </span>
+                <span className="text-[9px] font-mono text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded">
+                  TELÉFONO
+                </span>
+              </div>
+              <div className="flex-1">
+                <PhoneMockup
+                  operators={operators}
+                  selectedOperatorId={selectedOperatorId}
+                  onSelectOperator={handleSelectOperator}
+                  onSendMessage={handleSendMessage}
+                  isProcessing={isProcessing}
+                />
+              </div>
+            </div>
+
+            {/* COLUMN 2: KERNIUM WEB DASHBOARD */}
+            <div className="xl:col-span-5 flex flex-col">
+              <div className="mb-2 px-1 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-neutral-400 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Layout className="w-3.5 h-3.5 text-emerald-400" /> 2) Consola Web Kernium
+                </span>
+                <span className="text-[9px] font-mono text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded">
+                  ESCRITORIO
+                </span>
+              </div>
+              <div className="flex-1">
+                <DashboardMockup
+                  vehicles={vehicles}
+                  tickets={tickets}
+                  onConfirmTicket={handleResolveTicket}
+                  activeTab={activeTab}
+                  setActiveTab={setActiveTab}
+                  onDispatchMechanic={handleDispatchMechanic}
+                />
+              </div>
+            </div>
+
+            {/* COLUMN 3: AI PIPELINE */}
+            <div className="xl:col-span-3 flex flex-col">
+              <div className="mb-2 px-1 flex items-center justify-between">
+                <span className="text-[10px] font-mono font-bold text-neutral-400 flex items-center gap-1.5 uppercase tracking-wider">
+                  <Cpu className="w-3.5 h-3.5 text-amber-400" /> 3) Middleware IA
+                </span>
+                <span className="text-[9px] font-mono text-neutral-500 border border-neutral-800 px-2 py-0.5 rounded">
+                  INTERNO
+                </span>
+              </div>
+              <div className="flex-1">
+                <AIPipeline
+                  steps={pipelineSteps}
+                  currentMessageText={currentMessageText}
+                  isProcessing={isProcessing}
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom toolbar, igual a la ventana de AuditBot */}
+        <div className="bg-[#1c1c1a] border-t border-neutral-800 px-5 py-3 flex justify-between items-center text-[10px] font-mono text-neutral-500">
+          <p>// STACK: WHATSAPP BUSINESS API / NLP / WEBSOCKETS / PANEL WEB</p>
+          <span className="uppercase tracking-widest">Simulación Interactiva</span>
+        </div>
+      </div>
+
+      {/* Guía de prueba, tarjeta clara como las del sidebar de AuditBot */}
+      <div className="bg-neutral-100/50 border border-neutral-200 p-6 rounded-2xl text-left">
+        <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-500 mb-3 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-amber-500" /> GUÍA DE PRUEBA
+        </h4>
+        <ol className="text-xs text-neutral-600 font-light leading-relaxed space-y-1.5 list-decimal list-inside">
+          <li>
+            En <strong className="font-medium">Escenarios Listos</strong> (debajo del teléfono), hacé clic en{' '}
+            <span className="text-rose-700 font-medium">🚨 Alerta: Grúa con pérdida crítica</span> — el teléfono envía la alerta al canal.
+          </li>
+          <li>
+            Observá el <strong className="font-medium">Middleware IA</strong> (columna derecha): procesa el webhook, extrae las entidades clave y actualiza la geolocalización.
+          </li>
+          <li>
+            En la <strong className="font-medium">Consola Web</strong> la grúa CR-04 pasa a alerta roja, se crea la orden de mantenimiento y el sistema sugiere despachar al mecánico.
+          </li>
+          <li>
+            Presioná el despachador: el taller asigna al técnico y el chofer recibe la confirmación automática por WhatsApp en tiempo real.
+          </li>
+        </ol>
+      </div>
+
     </div>
   );
 }

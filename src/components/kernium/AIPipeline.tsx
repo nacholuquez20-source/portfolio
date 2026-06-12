@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Brain, Database, Cpu, MessageSquare, Check, Loader2, ArrowRight } from 'lucide-react';
 import { PipelineStep } from './types';
 
@@ -35,12 +35,12 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
     // Simple word splitting and wrapping
     const words = text.split(/(\s+)/);
     return (
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 font-sans text-sm text-slate-200 leading-relaxed shadow-inner">
-        <div className="flex items-center gap-2 mb-2 text-slate-400 text-xs uppercase tracking-wider font-semibold">
-          <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
+      <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-4 font-sans text-sm text-neutral-200 leading-relaxed shadow-inner">
+        <div className="flex items-center gap-2 mb-2 text-neutral-400 text-xs uppercase tracking-wider font-semibold">
+          <MessageSquare className="w-3.5 h-3.5 text-amber-400" />
           <span>Payload de WhatsApp Recibido</span>
         </div>
-        <p className="font-medium text-slate-100">
+        <p className="font-medium text-neutral-100">
           {words.map((chunk, idx) => {
             const clean = chunk.toLowerCase().replace(/[.,!?;()]/g, '');
             const match = keywords.find(k => 
@@ -49,9 +49,9 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
 
             if (match && clean.length > 2) {
               let colorClasses = '';
-              if (match.type === 'vehicle') colorClasses = 'bg-blue-950/80 text-blue-300 border-blue-850';
-              else if (match.type === 'issue') colorClasses = 'bg-rose-950/80 text-rose-300 border-rose-850';
-              else if (match.type === 'action') colorClasses = 'bg-emerald-950/80 text-emerald-300 border-emerald-850';
+              if (match.type === 'vehicle') colorClasses = 'bg-amber-950/80 text-amber-300 border-amber-800';
+              else if (match.type === 'issue') colorClasses = 'bg-rose-950/80 text-rose-300 border-rose-800';
+              else if (match.type === 'action') colorClasses = 'bg-emerald-950/80 text-emerald-300 border-emerald-800';
 
               return (
                 <span 
@@ -71,19 +71,19 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
   };
 
   return (
-    <div className="bg-slate-950 border border-slate-850 rounded-2xl p-6 text-white shadow-xl flex flex-col h-full justify-between" id="ai-pipeline-container">
+    <div className="bg-neutral-950 border border-neutral-800 rounded-2xl p-6 text-white shadow-xl flex flex-col h-full justify-between" id="ai-pipeline-container">
       <div>
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-900">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-neutral-900">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-blue-500/10 rounded-lg text-blue-400 border border-blue-500/20">
+            <div className="p-1.5 bg-amber-500/10 rounded-lg text-amber-400 border border-amber-500/20">
               <Brain className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-slate-100 text-sm">Kernium AI Engine™</h3>
-              <p className="text-[11px] text-slate-400">Motor parsing de lenguaje natural y webhook link</p>
+              <h3 className="font-semibold text-neutral-100 text-sm">Kernium AI Engine™</h3>
+              <p className="text-[11px] text-neutral-400">Motor parsing de lenguaje natural y webhook link</p>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full text-[10px] font-mono tracking-widest uppercase">
+          <div className="flex items-center gap-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[10px] font-mono tracking-widest uppercase">
             {isProcessing ? (
               <>
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -97,13 +97,13 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
 
         {/* Input message inspection */}
         <div className="mb-6">
-          <h4 className="text-xs text-slate-400 font-medium uppercase tracking-wider mb-2">Paso 1: Lectura de Canal</h4>
+          <h4 className="text-xs text-neutral-400 font-medium uppercase tracking-wider mb-2">Paso 1: Lectura de Canal</h4>
           {renderHighlightedText(currentMessageText)}
         </div>
 
         {/* Pipeline Steps stack */}
         <div className="space-y-4">
-          <h4 className="text-xs text-slate-400 font-medium uppercase tracking-wider mb-1">Paso 2: Pipeline de Extracción AI</h4>
+          <h4 className="text-xs text-neutral-400 font-medium uppercase tracking-wider mb-1">Paso 2: Pipeline de Extracción AI</h4>
           {steps.map((step, index) => {
             const isIdle = step.status === 'idle';
             const isPending = step.status === 'processing';
@@ -121,33 +121,33 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
                 key={step.id} 
                 className={`relative flex gap-3 p-3.5 rounded-xl border transition-all duration-300 ${
                   isPending 
-                    ? 'bg-blue-955/20 border-blue-800/80 shadow-[0_0_12px_rgba(59,130,246,0.1)]' 
+                    ? 'bg-amber-950/20 border-amber-700/60' 
                     : isSuccess 
-                      ? 'bg-slate-900/40 border-slate-800' 
-                      : 'bg-transparent border-slate-900 opacity-50'
+                      ? 'bg-neutral-900/40 border-neutral-800' 
+                      : 'bg-transparent border-neutral-900 opacity-50'
                 }`}
               >
                 {/* Visual Connector Line */}
                 {index < steps.length - 1 && (
                   <div className={`absolute top-11 bottom-[-16px] left-[26px] w-[2px] transition-colors duration-500 ${
-                    isSuccess ? 'bg-blue-500' : 'bg-slate-800'
+                    isSuccess ? 'bg-emerald-600' : 'bg-neutral-800'
                   }`} />
                 )}
 
                 {/* Step ring status */}
                 <div className={`flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center border transition-all duration-300 ${
                   isSuccess 
-                    ? 'bg-blue-500 text-white border-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.4)]' 
+                    ? 'bg-emerald-600 text-white border-emerald-500' 
                     : isPending 
-                      ? 'bg-blue-950 text-blue-400 border-blue-500 animate-pulse' 
-                      : 'bg-slate-900 text-slate-500 border-slate-850'
+                      ? 'bg-amber-950 text-amber-400 border-amber-500 animate-pulse' 
+                      : 'bg-neutral-900 text-neutral-500 border-neutral-800'
                 }`}>
                   {isSuccess ? <Check className="w-4 h-4 stroke-[3px]" /> : stepIcon}
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className={`text-xs font-semibold tracking-wide ${isSuccess ? 'text-slate-100' : isPending ? 'text-blue-400 font-bold' : 'text-slate-400'}`}>
+                    <span className={`text-xs font-semibold tracking-wide ${isSuccess ? 'text-neutral-100' : isPending ? 'text-amber-400 font-bold' : 'text-neutral-400'}`}>
                       {step.label}
                     </span>
                     {isSuccess && (
@@ -156,20 +156,20 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
                       </span>
                     )}
                   </div>
-                  <p className="text-slate-350 text-[11px] mt-0.5 leading-normal">
+                  <p className="text-neutral-300 text-[11px] mt-0.5 leading-normal">
                     {step.description}
                   </p>
 
                   {/* Extracted Parameters Badge Drawer */}
                   {isSuccess && step.extractedData && Object.keys(step.extractedData).length > 0 && (
-                    <div className="mt-2.5 flex flex-wrap gap-1.5 p-2 bg-slate-950/80 border border-slate-900 rounded-lg">
+                    <div className="mt-2.5 flex flex-wrap gap-1.5 p-2 bg-neutral-950/80 border border-neutral-900 rounded-lg">
                       {Object.entries(step.extractedData).map(([key, val]) => (
-                        <div key={key} className="flex items-center gap-1 bg-slate-900 border border-slate-800/80 px-2 py-0.5 rounded text-[10px] font-mono">
-                          <span className="text-slate-500">{key}:</span>
+                        <div key={key} className="flex items-center gap-1 bg-neutral-900 border border-neutral-800/80 px-2 py-0.5 rounded text-[10px] font-mono">
+                          <span className="text-neutral-500">{key}:</span>
                           <span className={`font-semibold ${
                             key === 'Prioridad' || key === 'Gravedad'
                               ? val === 'Alta' || val === 'Critico' ? 'text-rose-400' : val === 'Media' ? 'text-amber-400' : 'text-emerald-400'
-                              : 'text-blue-400'
+                              : 'text-emerald-300'
                           }`}>{val}</span>
                         </div>
                       ))}
@@ -183,16 +183,16 @@ export default function AIPipeline({ steps, currentMessageText, isProcessing }: 
       </div>
 
       {/* Metrics of efficiency card */}
-      <div className="mt-6 pt-4 border-t border-slate-900">
-        <div className="bg-gradient-to-r from-slate-900 to-blue-960 border border-slate-800 p-3.5 rounded-xl">
+      <div className="mt-6 pt-4 border-t border-neutral-900">
+        <div className="bg-neutral-900 border border-neutral-800 p-3.5 rounded-xl">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-xs text-slate-400 font-medium">Latencia de Procesado</span>
-            <span className="text-xs text-blue-400 font-semibold font-mono">1.2 segundos</span>
+            <span className="text-xs text-neutral-400 font-medium">Latencia de Procesado</span>
+            <span className="text-xs text-emerald-400 font-semibold font-mono">1.2 segundos</span>
           </div>
-          <div className="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden">
-            <div className="bg-blue-500 h-full w-[94%]" />
+          <div className="w-full bg-neutral-950 rounded-full h-1.5 overflow-hidden">
+            <div className="bg-emerald-500 h-full w-[94%]" />
           </div>
-          <p className="text-[10px] text-slate-400 mt-2 leading-relaxed">
+          <p className="text-[10px] text-neutral-400 mt-2 leading-relaxed">
             El despachador de IA de Kernium automatiza el triage de flota: reemplaza las llamadas de emergencia por reportes estructurados que impactan en la consola al instante.
           </p>
         </div>
