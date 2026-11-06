@@ -9,7 +9,7 @@ export default function About() {
   const y = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
 
   return (
-    <section id="perfil" className="relative border-t border-linea bg-hoja">
+    <section id="perfil" className="relative border-t border-linea">
       <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
           <div className="lg:sticky lg:top-28 lg:self-start">
@@ -42,7 +42,7 @@ export default function About() {
                 <h2 className="display text-[clamp(2.4rem,5.4vw,4.6rem)]">
                   <LineReveal lines={['De la calidad', 'al código.']} />
                 </h2>
-                <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-tinta-2">
+                <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-tinta/75">
                   <Reveal as="p" delay={0.05}>
                     Soy ingeniero industrial (UNT) y técnico electromecánico. Empecé en calidad, en el sector automotriz: participé en tres
                     certificaciones ISO 9001 e ISO 14001, auditorías internas y análisis de causa raíz. Ahí aprendí que un proceso
@@ -79,7 +79,7 @@ export default function About() {
                       <p className="titular text-xl">{e.role}</p>
                       <p className="rotulo mt-1 text-grafito">{e.org}</p>
                     </div>
-                    <div className="text-[15px] leading-relaxed text-tinta-2">
+                    <div className="text-[15px] leading-relaxed text-tinta/75">
                       {e.detail}
                     </div>
                   </Reveal>
@@ -88,13 +88,13 @@ export default function About() {
             </div>
 
             {/* Herramientas */}
-            <div className="mt-16 grid grid-cols-1 gap-px border border-linea bg-linea sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
               {SKILLS.map((s, i) => (
                 <Reveal key={s.area} delay={i * 0.06} className="bg-hoja p-5">
                   <p className="rotulo text-grafito">{s.area}</p>
                   <ul className="mt-3 flex flex-wrap gap-1.5">
                     {s.items.map((it) => (
-                      <li key={it} className="border border-linea px-2 py-1 text-[13px] text-tinta">
+                      <li key={it} className="rounded-full border border-linea bg-white/50 px-2.5 py-1 text-[13px] text-tinta">
                         {it}
                       </li>
                     ))}

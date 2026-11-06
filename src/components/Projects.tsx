@@ -9,7 +9,7 @@ export default function Projects({ onSelect }: { onSelect: (p: Project) => void 
   const enUso = PROJECTS.filter((p) => p.status.kind === 'live').length;
 
   return (
-    <section id="proyectos" className="relative bg-papel">
+    <section id="proyectos" className="relative">
       <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
           <div className="lg:sticky lg:top-28 lg:self-start">
@@ -20,7 +20,7 @@ export default function Projects({ onSelect }: { onSelect: (p: Project) => void 
               <LineReveal lines={['Sistemas que', 'ya están en campo.']} />
             </h2>
             <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-              <Reveal className="max-w-[60ch] text-lg leading-relaxed text-tinta-2" delay={0.1}>
+              <Reveal className="max-w-[60ch] text-lg leading-relaxed text-tinta/75" delay={0.1}>
                 Cada proyecto nació de un proceso concreto: un taller que no veía su estado real, una cadena que detectaba pero no
                 corregía, un parte de campo que alguien pasaba a mano. Ninguno empezó por la tecnología.
               </Reveal>

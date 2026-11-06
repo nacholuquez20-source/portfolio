@@ -11,13 +11,13 @@ interface ProjectCardProps {
 const toneClasses = (tone: Project['tone']) =>
   tone === 'tinta'
     ? { box: 'bg-tinta text-papel grano', muted: 'text-grafito-claro', border: 'border-linea-oscura', grid: 'grilla-plano-oscura' }
-    : { box: 'bg-hoja text-tinta', muted: 'text-grafito', border: 'border-linea', grid: 'grilla-plano' };
+    : { box: 'bg-hoja text-tinta', muted: 'text-grafito', border: 'border-white/80', grid: 'grilla-plano' };
 
 export function FeaturedProjectCard({ project, onSelect }: ProjectCardProps) {
   const t = toneClasses(project.tone);
   return (
     <motion.article
-      className={`group encuadre relative border ${t.border} ${t.box}`}
+      className={`group encuadre relative overflow-hidden border ${t.border} ${t.box}`}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
@@ -46,7 +46,7 @@ export function FeaturedProjectCard({ project, onSelect }: ProjectCardProps) {
           </div>
 
           <p className="titular max-w-[26ch] text-2xl">{project.tagline}</p>
-          <p className={`max-w-[52ch] text-[15px] leading-relaxed ${project.tone === 'tinta' ? 'text-papel/75' : 'text-tinta-2'}`}>
+          <p className={`max-w-[52ch] text-[15px] leading-relaxed ${project.tone === 'tinta' ? 'text-papel/75' : 'text-tinta/75'}`}>
             {project.problem}
           </p>
 
@@ -82,7 +82,7 @@ export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const t = toneClasses(project.tone);
   return (
     <motion.article
-      className={`group encuadre relative h-full border ${t.border} ${t.box}`}
+      className={`group encuadre relative h-full overflow-hidden border ${t.border} ${t.box}`}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}

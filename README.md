@@ -4,15 +4,16 @@ Sitio portfolio personal: ingeniero industrial que desarrolla soluciones digital
 
 Stack: Vite + React 19 + TypeScript + Tailwind CSS v4 + Motion.
 
-## Identidad visual
+## Identidad visual: niebla de las yungas
 
-Sigue el manual de marca de @juanluquezia: papel `#F4F4F1` y tinta `#111213`, una señal amarilla `#F6C400` para el dato clave y rojo cinabrio `#C8361F` solo para el resultado logrado. Archivo (condensada) para todo e IBM Plex Mono para rótulos, cifras y cotas. La marca principal es **Yunga Devs**; el nombre **Juan Ignacio Luquez** va como firma manuscrita en Yellowtail (componente `Firma`), solo para el nombre y nunca para texto corrido. Los tokens están en `src/index.css`.
+Las yungas son una selva de niebla: el cristal es la niebla, los colores son los de la lluvia y los pasteles vienen de las flores del monte. Los tokens están en `src/index.css`.
 
-Reglas que conviene mantener al editar:
-
-- Amarillo como resaltador detrás del texto sobre papel, o como color de texto sobre tinta. Nunca texto amarillo sobre fondo claro.
-- Rojo cinabrio solo para una mejora lograda (por ejemplo, el −60 % de la tesis). No para alertas.
-- Nada de imágenes generadas ni colores de "IA genérica" (azul eléctrico, neón, violeta).
+- **Bandas claras de niebla** (`papel` #EEF2F3) sobre una atmósfera fija de manchas pastel (`components/motion/Atmosfera.tsx`): tarco, helecho, lluvia, lapacho y durazno.
+- **Bandas de noche en las yungas** (`tinta` #1B2128) con brillos pastel; se despliegan con esquinas redondeadas al entrar (`useInkReveal`).
+- **Cristal**: `bg-hoja` (claro) y `bg-tinta-2` (oscuro) llevan desenfoque de fondo y bordes luminosos.
+- **Acentos**: `senal` es el lila del tarco y `cinabrio` el rosa del lapacho. Degradés `.degrade` (sobre noche) y `.degrade-hondo` (sobre niebla); botón principal `.boton-degrade`.
+- **Tipografía**: Instrument Serif para títulos, Inter Tight liviana para texto, DM Mono para rótulos y Yellowtail solo para la firma "Juan Ignacio Luquez" (componente `Firma`).
+- **Detalles**: lluvia fina (`components/motion/Lluvia.tsx`), píldoras, cotas finas.
 
 ## Estructura
 

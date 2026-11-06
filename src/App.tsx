@@ -16,6 +16,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
 import Intro from './components/motion/Intro';
+import Atmosfera from './components/motion/Atmosfera';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('inicio');
@@ -45,6 +46,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
+      <Atmosfera />
       <Intro onDone={onIntroDone} />
       <a
         href="#proyectos"

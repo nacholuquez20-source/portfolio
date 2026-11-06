@@ -56,7 +56,7 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
 
       <motion.div
         ref={scrollRef}
-        className="relative h-full w-full max-w-[1080px] overflow-y-auto bg-papel text-tinta shadow-2xl"
+        className="relative h-full w-full max-w-[1080px] overflow-y-auto bg-papel text-tinta shadow-2xl sm:rounded-l-[32px]"
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
@@ -102,11 +102,11 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
 
         <div className="px-4 sm:px-8">
           <Block num="A" title="El problema">
-            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta-2">{project.problem}</p>
+            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta/75">{project.problem}</p>
           </Block>
 
           <Block num="B" title="La solución">
-            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta-2">{project.solution}</p>
+            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta/75">{project.solution}</p>
           </Block>
 
           <Block num="C" title="El flujo">
@@ -125,7 +125,7 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
                       <span className="-ml-1 text-xs">▸</span>
                     </span>
                   )}
-                  <span className="flex items-center gap-2 border border-tinta bg-hoja px-3 py-2 text-sm">
+                  <span className="flex items-center gap-2 rounded-full border border-white/80 bg-hoja px-4 py-2 text-sm">
                     <span className="rotulo text-[10px] text-grafito">{String(i + 1).padStart(2, '0')}</span>
                     {step}
                   </span>
@@ -135,9 +135,9 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
           </Block>
 
           <Block num="D" title="Qué hace">
-            <ul className="grid grid-cols-1 gap-px border border-linea bg-linea md:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {project.highlights.map((h, i) => (
-                <li key={h} className="flex gap-4 bg-papel p-4 text-[15px] leading-relaxed text-tinta-2">
+                <li key={h} className="flex gap-4 bg-hoja p-4 text-[15px] leading-relaxed text-tinta/75">
                   <span className="rotulo pt-1 text-grafito">{String(i + 1).padStart(2, '0')}</span>
                   {h}
                 </li>
@@ -147,7 +147,7 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
 
           {project.results.length > 0 && (
             <Block num="E" title="En números">
-              <dl className="grid grid-cols-1 gap-px border border-linea bg-linea sm:grid-cols-3">
+              <dl className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 {project.results.map((r) => (
                   <div key={r.label} className="flex flex-col bg-hoja p-5">
                     <dd className="display order-1 text-5xl">
@@ -162,9 +162,9 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
 
           {project.lesson && (
             <Block num="F" title="Criterio de ingeniería">
-              <div className="border-l-[3px] border-senal pl-5">
+              <div className="border-l-2 border-musgo pl-5">
                 <p className="titular text-2xl sm:text-3xl">{project.lesson.title}</p>
-                <p className="mt-3 max-w-[64ch] text-[17px] leading-relaxed text-tinta-2">{project.lesson.body}</p>
+                <p className="mt-3 max-w-[64ch] text-[17px] leading-relaxed text-tinta/75">{project.lesson.body}</p>
               </div>
             </Block>
           )}
@@ -198,7 +198,7 @@ export default function ProjectDetails({ project, onClose, onNavigate }: Project
             <a
               href="#contacto"
               onClick={onClose}
-              className="rotulo mt-6 inline-flex items-center gap-3 bg-senal px-5 py-3.5 text-tinta"
+              className="rotulo boton-degrade mt-6 inline-flex items-center gap-3 px-6 py-3.5"
             >
               Contame cómo funciona hoy →
             </a>

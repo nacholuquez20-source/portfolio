@@ -54,9 +54,9 @@ function palette(tone: Tone) {
 function Phone({ tone, title, subtitle, children }: { tone: Tone; title: string; subtitle: string; children: ReactNode }) {
   const p = palette(tone);
   return (
-    <div className={`mx-auto w-full max-w-[290px] border ${p.border} ${p.surface} shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)]`}>
+    <div className={`mx-auto w-full max-w-[290px] overflow-hidden rounded-[22px] border ${p.border} ${p.surface} shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)]`}>
       <div className={`flex items-center gap-2.5 border-b ${p.border} px-3.5 py-2.5`}>
-        <span className={`flex h-7 w-7 items-center justify-center ${tone === 'tinta' ? 'bg-papel text-tinta' : 'bg-tinta text-papel'} text-[11px] font-bold`}>
+        <span className={`flex h-7 w-7 items-center justify-center rounded-full ${tone === 'tinta' ? 'bg-papel text-tinta' : 'bg-tinta text-papel'} text-[11px] font-bold`}>
           {title.slice(0, 1)}
         </span>
         <div className="min-w-0">
@@ -79,7 +79,7 @@ function Bubble({ tone, side, children, delay = 0 }: { tone: Tone; side: 'in' | 
       viewport={{ once: true }}
       transition={{ duration: 0.35, delay, ease: [0.2, 0, 0, 1] }}
     >
-      <div className={`max-w-[86%] px-3 py-2 text-[12px] leading-snug ${side === 'out' ? p.bubbleOut : p.bubbleIn}`}>{children}</div>
+      <div className={`max-w-[86%] rounded-2xl px-3 py-2 text-[12px] leading-snug ${side === 'out' ? p.bubbleOut : p.bubbleIn}`}>{children}</div>
     </motion.div>
   );
 }
@@ -100,7 +100,7 @@ function AudioWave({ tone, seconds }: { tone: Tone; seconds: string }) {
   const bars = [4, 9, 6, 12, 7, 14, 9, 5, 11, 7, 13, 6, 9, 4, 8, 12, 6, 10, 5];
   return (
     <div className="flex items-center gap-2">
-      <span className={`flex h-5 w-5 items-center justify-center ${tone === 'tinta' ? 'bg-tinta text-papel' : 'bg-papel text-tinta'} text-[8px]`}>▶</span>
+      <span className={`flex h-5 w-5 items-center justify-center rounded-full ${tone === 'tinta' ? 'bg-tinta text-papel' : 'bg-papel text-tinta'} text-[8px]`}>▶</span>
       <div className="flex h-4 items-center gap-[2px]">
         {bars.map((h, i) => (
           <span
@@ -118,13 +118,13 @@ function AudioWave({ tone, seconds }: { tone: Tone; seconds: string }) {
 function Frame({ tone, label, children }: { tone: Tone; label: string; children: ReactNode }) {
   const p = palette(tone);
   return (
-    <div className={`border ${p.border} ${p.surface} shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)]`}>
+    <div className={`overflow-hidden rounded-[22px] border ${p.border} ${p.surface} shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)]`}>
       <div className={`flex items-center justify-between border-b ${p.border} px-3.5 py-2`}>
         <span className={`rotulo text-[9px] ${p.muted}`}>{label}</span>
         <span className="flex gap-1">
-          <span className={`h-1.5 w-1.5 ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
-          <span className={`h-1.5 w-1.5 ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
-          <span className={`h-1.5 w-1.5 ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
+          <span className={`h-1.5 w-1.5 rounded-full ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
+          <span className={`h-1.5 w-1.5 rounded-full ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
+          <span className={`h-1.5 w-1.5 rounded-full ${tone === 'tinta' ? 'bg-linea-oscura' : 'bg-linea'}`} />
         </span>
       </div>
       {children}
@@ -193,7 +193,7 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
                   <td className="px-2 py-2">
                     <span className="inline-flex items-center gap-1.5">
                       <span
-                        className={`h-1.5 w-1.5 ${o.alert ? 'bg-senal' : o.done ? (tone === 'tinta' ? 'bg-papel' : 'bg-tinta') : 'border border-current'}`}
+                        className={`h-1.5 w-1.5 rounded-full ${o.alert ? 'bg-senal' : o.done ? (tone === 'tinta' ? 'bg-papel' : 'bg-tinta') : 'border border-current'}`}
                       />
                       {o.est}
                     </span>
@@ -221,7 +221,7 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
 
       {/* Aviso por WhatsApp que sale del tablero */}
       <motion.div
-        className="absolute -bottom-12 right-3 w-[230px] border border-tinta bg-senal p-3 text-tinta shadow-lg sm:-right-4"
+        className="absolute -bottom-12 right-3 w-[230px] rounded-2xl border border-white/70 bg-senal p-3 text-tinta shadow-lg sm:-right-4"
         initial={{ opacity: 0, y: 12 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -256,7 +256,7 @@ function CircuitoVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
           </span>
         </Bubble>
         <Bubble tone={tone} side="out" delay={0.35}>
-          <span className={`mb-1.5 block aspect-[4/3] w-36 ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-tinta-3'} grilla-plano-oscura`} />
+          <span className={`mb-1.5 block aspect-[4/3] w-36 rounded-xl ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-tinta-3'} grilla-plano-oscura`} />
           Listo, quedó en la punta.
         </Bubble>
         <Bubble tone={tone} side="in" delay={0.55}>
@@ -266,7 +266,7 @@ function CircuitoVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
 
       {!compact && (
         <motion.div
-          className={`border ${p.border} ${p.surface} p-4 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)] sm:mt-16`}
+          className={`rounded-[22px] border ${p.border} ${p.surface} p-4 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)] sm:mt-16`}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -304,7 +304,7 @@ function AulaVisual({ tone }: { tone: Tone }) {
   return (
     <Phone tone={tone} title="Asistente" subtitle="Mostrador · uso interno">
       <Bubble tone={tone} side="out">
-        <span className="mb-1.5 block aspect-[3/4] w-24 bg-tinta-3 grilla-plano-oscura" />
+        <span className="mb-1.5 block aspect-[3/4] w-24 rounded-xl bg-tinta-3 grilla-plano-oscura" />
         Revisame esta receta.
       </Bubble>
       <Bubble tone={tone} side="in" delay={0.2}>
@@ -352,7 +352,7 @@ function AudiCampoVisual({ tone }: { tone: Tone }) {
         </Bubble>
       </Phone>
       <motion.div
-        className={`mx-auto flex max-w-[290px] items-center justify-between border ${p.border} ${p.surface} px-3 py-2`}
+        className={`mx-auto flex max-w-[290px] items-center justify-between rounded-xl border ${p.border} ${p.surface} px-3 py-2`}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
@@ -382,12 +382,12 @@ function BioglosseVisual({ tone }: { tone: Tone }) {
   ];
   return (
     <Phone tone={tone} title="Visita · Paso 2 de 5" subtitle="Check de surtido · 19 productos">
-      <div className={`flex items-center justify-between border ${p.border} px-2.5 py-2`}>
+      <div className={`flex items-center justify-between rounded-xl border ${p.border} px-2.5 py-2`}>
         <span className={`rotulo text-[9px] ${p.muted}`}>Cumplimiento</span>
         <span className="flex items-center gap-2">
-          <span className={`h-1.5 w-20 ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-papel'}`}>
+          <span className={`h-1.5 w-20 overflow-hidden rounded-full ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-papel'}`}>
             <motion.span
-              className="block h-full bg-senal"
+              className="block h-full rounded-full bg-senal"
               initial={{ width: 0 }}
               whileInView={{ width: '84%' }}
               viewport={{ once: true }}
@@ -413,7 +413,7 @@ function BioglosseVisual({ tone }: { tone: Tone }) {
             </span>
             <span className="flex items-center gap-2">
               <span
-                className={`rotulo px-1.5 py-0.5 text-[8px] ${
+                className={`rotulo rounded-full px-1.5 py-0.5 text-[8px] ${
                   it.s === 'falta' ? 'bg-senal text-tinta' : it.s === 'bajo' ? `border ${p.border}` : p.muted
                 }`}
               >
@@ -452,15 +452,15 @@ function ObrasVisual({ tone }: { tone: Tone }) {
             <div className={`mb-1 flex items-center justify-between text-[11px] ${p.text}`}>
               <span className="flex items-center gap-2">
                 {t.n}
-                {t.desvio && <span className="rotulo bg-senal px-1.5 py-0.5 text-[8px] text-tinta">Desvío crítico</span>}
+                {t.desvio && <span className="rotulo rounded-full bg-senal px-1.5 py-0.5 text-[8px] text-tinta">Desvío crítico</span>}
               </span>
               <span className="font-mono">
                 {t.real} % <span className={p.muted}>/ {t.plan} %</span>
               </span>
             </div>
-            <div className={`relative h-2 ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-papel'}`}>
+            <div className={`relative h-2 rounded-full ${tone === 'tinta' ? 'bg-tinta-3' : 'bg-papel'}`}>
               <motion.span
-                className={`absolute inset-y-0 left-0 ${t.desvio ? 'bg-senal' : tone === 'tinta' ? 'bg-papel' : 'bg-tinta'}`}
+                className={`absolute inset-y-0 left-0 rounded-full ${t.desvio ? 'bg-senal' : tone === 'tinta' ? 'bg-papel' : 'bg-tinta'}`}
                 initial={{ width: 0 }}
                 whileInView={{ width: `${t.real}%` }}
                 viewport={{ once: true }}

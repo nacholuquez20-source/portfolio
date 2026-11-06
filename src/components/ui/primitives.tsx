@@ -68,19 +68,21 @@ export function LineReveal({
   );
 }
 
-/** Resaltador amarillo que se pinta detrás de la palabra al entrar en pantalla. */
+/** Énfasis: itálica fina con degradé pastel profundo, que se enciende al aparecer. */
 export function Senal({ children, delay = 0, play }: { children: ReactNode; delay?: number; play?: boolean }) {
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
   const on = play ?? inView;
   return (
-    <span
+    <motion.em
       ref={ref}
-      className={`marca-senal ${on ? 'is-on' : ''}`}
-      style={{ transitionDelay: `${0.25 + delay}s` }}
+      className="degrade-hondo pr-[0.08em] italic [-webkit-box-decoration-break:clone] [box-decoration-break:clone]"
+      initial={{ opacity: 0.2 }}
+      animate={{ opacity: on ? 1 : 0.2 }}
+      transition={{ duration: 1, delay: 0.25 + delay }}
     >
       {children}
-    </span>
+    </motion.em>
   );
 }
 
@@ -210,10 +212,10 @@ export function StatusTag({
   tone?: 'papel' | 'tinta';
 }) {
   const border = tone === 'tinta' ? 'border-linea-oscura text-papel' : 'border-linea text-tinta';
-  const fill = tone === 'tinta' ? 'bg-senal' : 'bg-tinta';
+  const fill = tone === 'tinta' ? 'bg-senal' : 'bg-musgo';
   return (
     <span className={`rotulo inline-flex items-center gap-2 border px-2.5 py-1 ${border}`}>
-      <span className={`relative block h-2 w-2 border ${tone === 'tinta' ? 'border-senal' : 'border-tinta'}`}>
+      <span className={`relative block h-2 w-2 overflow-hidden rounded-full border ${tone === 'tinta' ? 'border-senal' : 'border-musgo'}`}>
         {kind === 'live' && <span className={`absolute inset-0 ${fill}`} />}
         {kind === 'build' && <span className={`absolute inset-y-0 left-0 w-1/2 ${fill}`} />}
       </span>
@@ -285,7 +287,7 @@ export function Firma({
     <motion.span
       ref={ref}
       className={`firma inline-block pr-[0.2em] ${className}`}
-      style={glow ? { textShadow: '0 0 22px rgb(246 196 0 / 0.35)' } : undefined}
+      style={glow ? { textShadow: '0 0 26px rgb(207 193 240 / 0.55)' } : undefined}
       initial={{ clipPath: hidden }}
       animate={{ clipPath: on ? shown : hidden }}
       transition={{ duration: 1.2, delay, ease: [0.45, 0, 0.2, 1] }}

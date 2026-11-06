@@ -118,7 +118,7 @@ export default function Obra() {
               </AnimatePresence>
               <span className="hidden sm:inline">Esc. 1:1 · ilustrativo</span>
             </div>
-            <div className="relative border border-linea-oscura bg-tinta-2/60">
+            <div className="relative overflow-hidden rounded-[28px] border border-linea-oscura bg-tinta-2">
               <Plano p={p} reduce={!!reduce} />
             </div>
           </div>
@@ -140,7 +140,7 @@ function Rail({ p, index, label, active }: { p: MotionValue<number>; index: numb
   const colors = ['bg-papel', 'bg-papel', 'bg-senal', 'bg-cinabrio'];
   return (
     <div>
-      <div className="h-[2px] bg-linea-oscura">
+      <div className="h-[2px] overflow-hidden rounded-full bg-linea-oscura">
         <motion.div className={`h-full origin-left ${colors[index]}`} style={{ scaleX: fill }} />
       </div>
       <p className={`rotulo mt-2 text-[10px] transition-colors duration-300 ${active ? 'text-papel' : 'text-grafito-claro/60'}`}>{label}</p>
@@ -247,11 +247,11 @@ function Plano({ p, reduce }: { p: MotionValue<number>; reduce: boolean }) {
 
       {/* ── Fase 3: cuello de botella ── */}
       <motion.g style={{ opacity: neckCotaFade }}>
-        <motion.line x1="352" y1={BAR_BASE - 150} x2="352" y2={BAR_BASE} stroke="#F6C400" strokeWidth="1" style={{ pathLength: neckCota }} />
-        <line x1="346" y1={BAR_BASE - 150} x2="358" y2={BAR_BASE - 150} stroke="#F6C400" strokeWidth="1" />
-        <line x1="346" y1={BAR_BASE} x2="358" y2={BAR_BASE} stroke="#F6C400" strokeWidth="1" />
+        <motion.line x1="352" y1={BAR_BASE - 150} x2="352" y2={BAR_BASE} stroke="#CFC1F0" strokeWidth="1" style={{ pathLength: neckCota }} />
+        <line x1="346" y1={BAR_BASE - 150} x2="358" y2={BAR_BASE - 150} stroke="#CFC1F0" strokeWidth="1" />
+        <line x1="346" y1={BAR_BASE} x2="358" y2={BAR_BASE} stroke="#CFC1F0" strokeWidth="1" />
       </motion.g>
-      <motion.text x="364" y={BAR_BASE - 138} className="font-mono" fontSize="11" fill="#F6C400" style={{ opacity: neckText }}>
+      <motion.text x="364" y={BAR_BASE - 138} className="font-mono" fontSize="11" fill="#CFC1F0" style={{ opacity: neckText }}>
         CUELLO DE BOTELLA
       </motion.text>
 
@@ -271,8 +271,8 @@ function Plano({ p, reduce }: { p: MotionValue<number>; reduce: boolean }) {
           [408, 'REGLAS'],
         ].map(([x, label]) => (
           <g key={label as string}>
-            <rect x={(x as number) - 9} y={LINE_Y + 73} width="18" height="18" fill="#1E1F21" stroke="currentColor" strokeWidth="1" />
-            <motion.rect x={(x as number) - 5} y={LINE_Y + 77} width="10" height="10" fill="#F6C400" style={{ opacity: toolDone }} />
+            <rect x={(x as number) - 9} y={LINE_Y + 73} width="18" height="18" fill="#1B2128" stroke="currentColor" strokeWidth="1" />
+            <motion.rect x={(x as number) - 5} y={LINE_Y + 77} width="10" height="10" fill="#CFC1F0" style={{ opacity: toolDone }} />
             <text x={x as number} y={LINE_Y + 112} textAnchor="middle" className="font-mono" fontSize="10" fill="currentColor" fillOpacity="0.7">
               {label}
             </text>
@@ -296,8 +296,8 @@ function Plano({ p, reduce }: { p: MotionValue<number>; reduce: boolean }) {
         style={{ pathLength: kpiDraw, opacity: kpiFrame }}
       />
       <motion.g style={{ opacity: result }}>
-        <rect x="600" y="104" width="8" height="8" fill="#C8361F" />
-        <text x="604" y="142" textAnchor="end" className="font-mono" fontSize="10" fill="#C8361F">
+        <rect x="600" y="104" width="8" height="8" fill="#F2A7BB" />
+        <text x="604" y="142" textAnchor="end" className="font-mono" fontSize="10" fill="#F2A7BB">
           EL CAMBIO QUEDA
         </text>
       </motion.g>
@@ -321,7 +321,7 @@ function Bar({ p, x, h, index, neck }: { p: MotionValue<number>; x: number; h: n
         fillOpacity={isNeck ? 0.9 : 0.55}
         style={{ scaleY, originY: 1 }}
       />
-      {isNeck && <motion.rect x={x - 7} y={BAR_BASE - h} width="14" height={h} fill="#F6C400" style={{ scaleY, originY: 1, opacity: neck }} />}
+      {isNeck && <motion.rect x={x - 7} y={BAR_BASE - h} width="14" height={h} fill="#CFC1F0" style={{ scaleY, originY: 1, opacity: neck }} />}
     </motion.g>
   );
 }
@@ -332,8 +332,8 @@ function Station({ p, x, index, neck }: { p: MotionValue<number>; x: number; ind
   const scale = useTransform(p, [start, start + 0.03], [0.4, 1]);
   return (
     <motion.g style={{ opacity, scale }}>
-      <rect x={x - 13} y={LINE_Y - 13} width="26" height="26" fill="#1E1F21" stroke="currentColor" strokeWidth="1.2" />
-      {neck && <motion.rect x={x - 13} y={LINE_Y - 13} width="26" height="26" fill="#F6C400" style={{ opacity: neck }} />}
+      <rect x={x - 13} y={LINE_Y - 13} width="26" height="26" fill="#1B2128" stroke="currentColor" strokeWidth="1.2" />
+      {neck && <motion.rect x={x - 13} y={LINE_Y - 13} width="26" height="26" fill="#CFC1F0" style={{ opacity: neck }} />}
     </motion.g>
   );
 }

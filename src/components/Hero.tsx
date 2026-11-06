@@ -2,6 +2,7 @@ import { PointerEvent, useRef, useState } from 'react';
 import { motion, useMotionValue, useScroll, useTransform } from 'motion/react';
 import { PORTRAIT, WHATSAPP_URL } from '../data';
 import HeroLine from './motion/HeroLine';
+import Lluvia from './motion/Lluvia';
 import { Corners, Firma, LineReveal, Senal } from './ui/primitives';
 
 const FICHA =
@@ -41,6 +42,7 @@ export default function Hero({ ready }: { ready: boolean }) {
   return (
     <section id="inicio" className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36">
       <div className="grilla-plano pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
+      <Lluvia />
 
       <div className="relative mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
         {/* Rótulo de lámina */}
@@ -95,7 +97,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           transition={{ duration: 0.6, delay: 0.55, ease: [0.2, 0, 0, 1] }}
         >
           <div className="lg:col-span-7">
-            <p className="max-w-[58ch] text-[17px] leading-relaxed text-tinta-2 sm:text-lg">
+            <p className="max-w-[58ch] text-[17px] leading-relaxed text-tinta/75 sm:text-lg">
               Soy ingeniero industrial y desarrollo soluciones digitales para la{' '}
               <strong className="font-semibold text-tinta">transformación digital de empresas</strong>: automatización de
               procesos, agentes de IA por WhatsApp, integraciones con los sistemas que ya usan y tableros para decidir con datos.
@@ -103,7 +105,7 @@ export default function Hero({ ready }: { ready: boolean }) {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#proyectos"
-                className="group rotulo inline-flex items-center gap-3 bg-tinta px-6 py-4 text-papel transition-colors hover:bg-tinta-3"
+                className="group rotulo boton-degrade inline-flex items-center gap-3 px-7 py-4"
               >
                 Ver proyectos
                 <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
@@ -112,7 +114,7 @@ export default function Hero({ ready }: { ready: boolean }) {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group rotulo inline-flex items-center gap-3 border border-tinta px-6 py-4 text-tinta transition-colors hover:bg-tinta hover:text-papel"
+                className="group rotulo inline-flex items-center gap-3 border border-white/80 bg-white/45 px-7 py-4 text-tinta backdrop-blur-md transition-colors hover:bg-white/75"
               >
                 Contame tu proceso
                 <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
@@ -177,9 +179,9 @@ export default function Hero({ ready }: { ready: boolean }) {
             </div>
             <Corners />
           </div>
-          <div className="border-x border-b border-linea bg-hoja p-4 sm:hidden">
+          <div className="mt-3 bg-hoja p-4 sm:hidden">
             <p className="rotulo text-grafito">Ficha</p>
-            <p className="mt-1 text-[15px] leading-snug text-tinta-2">{FICHA}</p>
+            <p className="mt-1 text-[15px] leading-snug text-tinta/75">{FICHA}</p>
           </div>
         </motion.div>
 

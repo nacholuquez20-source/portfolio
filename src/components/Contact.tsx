@@ -17,7 +17,7 @@ export default function Contact() {
   const [form, setForm] = useState({ name: '', company: '', area: AREAS[0], message: '' });
   const [status, setStatus] = useState<'idle' | 'error' | 'sent'>('idle');
   const sectionRef = useRef<HTMLElement>(null);
-  const clipPath = useInkReveal(sectionRef);
+  const clipPath = useInkReveal(sectionRef, 'arriba');
 
   // Sin backend: arma el mensaje y lo abre en WhatsApp, listo para enviar.
   const onSubmit = (e: FormEvent) => {
@@ -38,7 +38,7 @@ export default function Contact() {
   };
 
   const field =
-    'w-full border border-linea-oscura bg-tinta-2 px-4 py-3.5 text-[15px] text-papel placeholder:text-grafito-claro transition-colors focus:border-papel focus:outline-none';
+    'w-full rounded-2xl border border-linea-oscura bg-tinta-2 px-4 py-3.5 text-[15px] text-papel placeholder:text-grafito-claro transition-colors focus:border-papel focus:outline-none';
 
   return (
     <motion.section ref={sectionRef} id="contacto" className="grano relative overflow-hidden bg-tinta text-papel" style={{ clipPath }}>
@@ -51,7 +51,7 @@ export default function Contact() {
           <div className="min-w-0">
             <h2 className="display text-[clamp(2.6rem,6.8vw,6rem)]">
               <LineReveal
-                lines={['¿Qué proceso de', 'tu empresa debería', <span className="text-senal">funcionar solo?</span>]}
+                lines={['¿Qué proceso de', 'tu empresa debería', <span className="degrade pr-[0.08em] italic">funcionar solo?</span>]}
               />
             </h2>
             <Reveal className="mt-8 max-w-[56ch] text-lg leading-relaxed text-papel/80" delay={0.1}>
@@ -88,7 +88,7 @@ export default function Contact() {
 
               {/* Formulario */}
               <Reveal delay={0.1}>
-                <form onSubmit={onSubmit} className="relative border border-linea-oscura p-5 sm:p-7" noValidate>
+                <form onSubmit={onSubmit} className="relative overflow-hidden rounded-[30px] border border-linea-oscura bg-tinta-2 p-5 sm:p-7" noValidate>
                   <p className="rotulo mb-5 flex justify-between text-grafito-claro">
                     <span>Mensaje · se abre en WhatsApp</span>
                     <span>FORM. 01</span>
@@ -126,7 +126,7 @@ export default function Contact() {
                           type="button"
                           onClick={() => setForm({ ...form, area: a })}
                           aria-pressed={form.area === a}
-                          className={`border px-3 py-2 text-[13px] transition-colors ${
+                          className={`rounded-full border px-3.5 py-2 text-[13px] transition-colors ${
                             form.area === a ? 'border-senal bg-senal text-tinta' : 'border-linea-oscura text-papel/80 hover:border-papel'
                           }`}
                         >
@@ -153,7 +153,7 @@ export default function Contact() {
                     </p>
                     <button
                       type="submit"
-                      className="group rotulo inline-flex items-center justify-center gap-3 bg-senal px-6 py-4 text-tinta transition-colors hover:bg-papel"
+                      className="group rotulo boton-degrade inline-flex items-center justify-center gap-3 px-7 py-4"
                     >
                       Enviar por WhatsApp
                       <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>

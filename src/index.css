@@ -1,69 +1,85 @@
 @import "tailwindcss";
 
 /*
-  Sistema visual alineado al manual de marca de @juanluquezia:
-  papel y tinta, una señal amarilla para el dato clave y un rojo cinabrio
-  reservado para el resultado logrado. Archivo para todo, IBM Plex Mono para datos.
+  Niebla de las yungas.
+  La selva de montaña es una selva de niebla: el cristal es la niebla, los colores
+  son los de la lluvia y los pasteles vienen de las flores del monte (tarco y lapacho).
+  Bandas claras de niebla y bandas de "noche en las yungas" con brillos pastel.
+  Instrument Serif para títulos, Inter Tight liviana para texto, DM Mono para rótulos
+  y Yellowtail solo para la firma.
 */
 @theme {
-  --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  /* Solo para la firma: el nombre escrito a mano */
+  --font-sans: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Instrument Serif", "Times New Roman", serif;
+  --font-mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-firma: "Yellowtail", "Brush Script MT", cursive;
 
-  --color-papel: #f4f4f1;
-  --color-hoja: #ffffff;
-  --color-tinta: #111213;
-  --color-tinta-2: #1e1f21;
-  --color-tinta-3: #2a2b2e;
-  --color-grafito: #6b6e72;
-  --color-grafito-claro: #a3a6a9;
-  --color-linea: #d6d7d3;
-  --color-linea-oscura: #303236;
-  --color-senal: #f6c400;
-  --color-cinabrio: #c8361f;
+  /* Base: los nombres se mantienen para no tocar cada componente */
+  --color-papel: #eef2f3; /* niebla: fondo claro y texto sobre la noche */
+  --color-hoja: rgb(255 255 255 / 0.55); /* cristal claro */
+  --color-tinta: #1b2128; /* noche en las yungas: texto y bandas oscuras */
+  --color-tinta-2: rgb(255 255 255 / 0.06); /* cristal oscuro */
+  --color-tinta-3: rgb(255 255 255 / 0.1);
+  --color-grafito: #5b6a70;
+  --color-grafito-claro: #9eabb1;
+  --color-linea: rgb(27 33 40 / 0.1);
+  --color-linea-oscura: rgb(255 255 255 / 0.13);
+  --color-senal: #cfc1f0; /* tarco: el acento pastel */
+  --color-cinabrio: #f2a7bb; /* lapacho: el resultado logrado */
+
+  /* Paleta de las yungas */
+  --color-lluvia: #cfe0ea;
+  --color-helecho: #cfe3d4;
+  --color-musgo: #557263;
+  --color-tarco: #d9ccf1;
+  --color-lapacho: #f3d6de;
+  --color-durazno: #f6dcc6;
 
   --ease-plano: cubic-bezier(0.2, 0, 0, 1);
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 96px;
 }
 
 body {
   background-color: var(--color-papel);
   color: var(--color-tinta);
   font-family: var(--font-sans);
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
+strong, b { font-weight: 500; }
+
 ::selection {
-  background-color: var(--color-senal);
+  background-color: var(--color-tarco);
   color: var(--color-tinta);
 }
 
 :focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
+  border-radius: 6px;
 }
 
-/* Titulares: condensados, apretados, siempre a la izquierda */
+/* Títulos: serif fina */
 .display {
-  font-weight: 800;
-  font-stretch: 80%;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 0.96;
   text-wrap: balance;
 }
 
 .titular {
-  font-weight: 700;
-  font-stretch: 85%;
-  letter-spacing: -0.02em;
-  line-height: 1.04;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.1;
   text-wrap: balance;
 }
 
@@ -76,44 +92,66 @@ body {
   text-transform: none;
 }
 
-/* Voz técnica: rótulos, cotas y firma */
+/* Rótulos finos */
 .rotulo {
   font-family: var(--font-mono);
+  font-weight: 400;
   font-size: 11px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-/* Resaltador amarillo detrás del texto (solo sobre papel) */
-.marca-senal {
-  background-image: linear-gradient(transparent 14%, var(--color-senal) 14%, var(--color-senal) 88%, transparent 88%);
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  padding: 0 0.1em;
-  margin: 0 -0.04em;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  transition: background-size 0.7s var(--ease-plano) 0.25s;
+/* Degradé pastel para las palabras clave */
+.degrade {
+  background-image: linear-gradient(95deg, #d9ccf1 0%, #f2b8c6 48%, #f6d4b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.marca-senal.is-on {
-  background-size: 100% 100%;
+.degrade-hondo {
+  background-image: linear-gradient(95deg, #557263 0%, #8a74c2 52%, #c06e8a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-/* Grilla de plano de fondo */
+/* Botón principal: píldora con degradé pastel y halo suave */
+.boton-degrade {
+  background-image: linear-gradient(95deg, #d9ccf1 0%, #f2b8c6 50%, #f6d4b8 100%);
+  color: var(--color-tinta) !important;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px -10px rgb(192 110 138 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.7);
+  transition: box-shadow 0.3s var(--ease-plano), transform 0.3s var(--ease-plano), filter 0.3s;
+}
+.boton-degrade:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.15);
+  box-shadow: 0 16px 38px -12px rgb(138 116 194 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.8);
+}
+
+/* Bandas de noche: brillos pastel de fondo */
+.grano.bg-tinta {
+  background-image:
+    radial-gradient(42% 38% at 8% 4%, rgb(207 193 240 / 0.2), transparent 70%),
+    radial-gradient(38% 34% at 96% 30%, rgb(242 167 187 / 0.15), transparent 70%),
+    radial-gradient(46% 40% at 40% 104%, rgb(207 227 212 / 0.12), transparent 70%);
+}
+
+/* Retículas, ahora casi imperceptibles */
 .grilla-plano {
   background-image:
-    linear-gradient(to right, rgb(17 18 19 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(17 18 19 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(27 33 40 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(27 33 40 / 0.035) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 .grilla-plano-oscura {
   background-image:
-    linear-gradient(to right, rgb(244 244 241 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(244 244 241 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
-/* Grano de película para las bandas de tinta y las fotos */
+/* Grano apenas perceptible en la noche */
 .grano {
   position: relative;
   isolation: isolate;
@@ -124,38 +162,37 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.07;
+  opacity: 0.035;
   background-size: 160px 160px;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  animation: grano 1.2s steps(6) infinite;
-}
-@keyframes grano {
-  0% { background-position: 0 0; }
-  20% { background-position: -37px 21px; }
-  40% { background-position: 29px -44px; }
-  60% { background-position: -18px -9px; }
-  80% { background-position: 52px 33px; }
-  100% { background-position: 0 0; }
 }
 
-/* Esquinas de encuadre tipo plano */
+/* Encuadres: ahora redondeados; las esquinas de plano se retiran */
 .encuadre {
   position: relative;
+  border-radius: 28px;
 }
-.encuadre > .esq {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: currentColor;
-  transition: all 0.35s var(--ease-plano);
-  pointer-events: none;
+.encuadre > .esq { display: none; }
+
+@layer components {
+  /* Cristal claro y oscuro */
+  .bg-hoja {
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px -36px rgb(27 33 40 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.85);
+  }
+  .bg-tinta-2 {
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    backdrop-filter: blur(16px) saturate(130%);
+  }
+  /* Etiquetas, botones y chips en forma de píldora */
+  .rotulo[class*="border"]:not([role="tab"]),
+  a.rotulo[class*="px-"],
+  button.rotulo[class*="px-"]:not([role="tab"]) {
+    border-radius: 999px;
+  }
 }
-.encuadre > .esq-tl { top: -1px; left: -1px; border-top-width: 1.5px; border-left-width: 1.5px; }
-.encuadre > .esq-tr { top: -1px; right: -1px; border-top-width: 1.5px; border-right-width: 1.5px; }
-.encuadre > .esq-bl { bottom: -1px; left: -1px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
-.encuadre > .esq-br { bottom: -1px; right: -1px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
-.encuadre:hover > .esq,
-.group:hover .encuadre > .esq { width: 22px; height: 22px; }
 
 /* Cinta de texto en movimiento continuo */
 @keyframes cinta {
@@ -164,6 +201,22 @@ body {
 }
 .cinta {
   animation: cinta 48s linear infinite;
+}
+
+/* Manchas de color que se mueven despacio en el fondo */
+@keyframes deriva-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6vw, 4vh, 0) scale(1.08); }
+}
+@keyframes deriva-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-5vw, -3vh, 0) scale(0.95); }
+}
+
+/* Gotas que caen lento */
+@keyframes gota {
+  from { transform: translateY(-12vh); }
+  to { transform: translateY(112vh); }
 }
 
 /* Piezas que circulan por las líneas de proceso (motion graphics) */
@@ -189,8 +242,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .grano::after, .cinta { animation: none; }
-  .marca-senal { transition: none; }
+  .cinta { animation: none; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

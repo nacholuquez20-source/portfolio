@@ -8,7 +8,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden border-t border-linea-oscura bg-tinta text-papel">
+    <footer className="grano relative overflow-hidden border-t border-linea-oscura bg-tinta text-papel">
       <div className="mx-auto max-w-[1240px] px-4 pt-16 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 gap-10 border-b border-linea-oscura pb-12 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
           <div>

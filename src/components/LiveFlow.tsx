@@ -240,7 +240,7 @@ export default function LiveFlow() {
           </div>
         </div>
 
-        <div ref={ref} className="mt-14 border border-linea-oscura lg:mt-16">
+        <div ref={ref} className="mt-14 overflow-hidden rounded-[30px] border border-linea-oscura bg-tinta-2 lg:mt-16">
           {/* Selector de caso */}
           <div className="flex flex-col border-b border-linea-oscura sm:flex-row" role="tablist" aria-label="Casos de ejemplo">
             {SCENARIOS.map((s, i) => (
@@ -266,9 +266,9 @@ export default function LiveFlow() {
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)_minmax(0,1fr)]">
             {/* 1 · Canal */}
             <Column num="1" title="Canal" note="WhatsApp">
-              <div className="mx-auto w-full max-w-[300px] border border-linea-oscura bg-tinta-2">
+              <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-[22px] border border-linea-oscura bg-tinta-2">
                 <div className="flex items-center gap-2.5 border-b border-linea-oscura px-3.5 py-2.5">
-                  <span className="flex h-7 w-7 items-center justify-center bg-papel text-[11px] font-bold text-tinta">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-papel text-[11px] font-bold text-tinta">
                     {scenario.channel.title.slice(0, 1)}
                   </span>
                   <div>
@@ -309,12 +309,12 @@ export default function LiveFlow() {
                           setStep(i);
                           setPlaying(false);
                         }}
-                        className={`flex w-full items-start gap-3 px-2 py-2 text-left transition-colors ${
+                        className={`flex w-full items-start gap-3 rounded-xl px-2 py-2 text-left transition-colors ${
                           state === 'active' ? 'bg-tinta-2' : 'hover:bg-tinta-2/60'
                         }`}
                       >
                         <span
-                          className={`mt-1 flex h-3.5 w-3.5 shrink-0 items-center justify-center border text-[8px] ${
+                          className={`mt-1 flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full border text-[8px] ${
                             state === 'done'
                               ? 'border-papel bg-papel text-tinta'
                               : state === 'active'
@@ -363,13 +363,13 @@ export default function LiveFlow() {
 
             {/* 3 · Registro */}
             <Column num="3" title="Registro" note="Tablero" last>
-              <div className="border border-linea-oscura bg-papel text-tinta">
+              <div className="overflow-hidden rounded-[22px] border border-linea-oscura bg-papel text-tinta">
                 <div className="flex items-center justify-between border-b border-linea px-3.5 py-2.5">
                   <span className="rotulo text-[10px] text-grafito">{scenario.output}</span>
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={status ?? 'pendiente'}
-                      className={`rotulo px-2 py-0.5 text-[9px] ${status ? 'bg-senal text-tinta' : 'text-grafito'}`}
+                      className={`rotulo rounded-full px-2 py-0.5 text-[9px] ${status ? 'bg-senal text-tinta' : 'text-grafito'}`}
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 4 }}
@@ -397,7 +397,7 @@ export default function LiveFlow() {
                               {conOcultos(fields[k])}
                             </motion.span>
                           ) : (
-                            <span className="block h-[6px] w-16 bg-linea" />
+                            <span className="block h-[6px] w-16 rounded-full bg-linea" />
                           )}
                         </AnimatePresence>
                       </dd>
@@ -473,10 +473,10 @@ function Column({
 function Message({ m }: { m: Msg }) {
   const out = m.side === 'out';
   return (
-    <div className={`max-w-[88%] px-3 py-2 text-[12.5px] leading-snug ${out ? 'bg-papel text-tinta' : 'bg-tinta-3 text-papel'}`}>
+    <div className={`max-w-[88%] rounded-2xl px-3 py-2 text-[12.5px] leading-snug ${out ? 'bg-papel text-tinta' : 'bg-tinta-3 text-papel'}`}>
       {m.kind === 'audio' && (
         <span className="flex items-center gap-2">
-          <span className="flex h-5 w-5 items-center justify-center bg-tinta text-[8px] text-papel">▶</span>
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-tinta text-[8px] text-papel">▶</span>
           <span className="flex h-4 items-center gap-[2px]">
             {[4, 9, 6, 12, 7, 14, 9, 5, 11, 7, 13, 6, 9, 4, 8, 12].map((h, i) => (
               <span key={i} className="block w-[2px] bg-current" style={{ height: h, animation: `onda 1.4s ${i * 0.07}s ease-in-out infinite` }} />
@@ -485,7 +485,7 @@ function Message({ m }: { m: Msg }) {
           <span className="rotulo text-[9px] opacity-70">{m.seconds}</span>
         </span>
       )}
-      {m.kind === 'photo' && <span className="grilla-plano-oscura mb-1.5 block aspect-[4/3] w-36 bg-tinta-3" aria-label="Foto" />}
+      {m.kind === 'photo' && <span className="grilla-plano-oscura mb-1.5 block aspect-[4/3] w-36 rounded-xl bg-tinta-3" aria-label="Foto" />}
       {m.card && (
         <span className="block">
           <span className="rotulo block text-[9px] opacity-70">{m.card.label}</span>

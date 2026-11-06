@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'motion/react';
 import { LineReveal, Reveal, SectionLabel } from './ui/primitives';
 import { useInkReveal } from './motion/useInkReveal';
+import Lluvia from './motion/Lluvia';
 
 /*
   Origen del nombre: Yunga Devs nace de la biodiversidad de las yungas tucumanas.
@@ -75,6 +76,7 @@ export default function Origin() {
       style={{ clipPath }}
     >
       <div className="grilla-plano-oscura pointer-events-none absolute inset-0 opacity-50" />
+      <Lluvia tone="noche" count={22} />
       <div className="relative z-[2] mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
           <div className="lg:sticky lg:top-28 lg:self-start">
@@ -109,7 +111,7 @@ export default function Origin() {
                 <span>FIG. 09 — Yungas tucumanas · curvas de nivel</span>
                 <span className="hidden sm:inline">Esquema · sin escala</span>
               </div>
-              <div className="relative border border-linea-oscura bg-tinta-2/60">
+              <div className="relative overflow-hidden rounded-[28px] border border-linea-oscura bg-tinta-2">
                 <svg viewBox="0 0 660 430" className="block w-full text-papel" aria-hidden>
                   {/* curvas de nivel */}
                   {CONTOURS.map((d, i) => (
@@ -175,7 +177,7 @@ export default function Origin() {
                         y={-2.5}
                         width="5"
                         height="5"
-                        fill="#F6C400"
+                        fill="#CFC1F0"
                         initial={{ opacity: 0, x: A.x, y: A.y }}
                         animate={
                           inView
@@ -239,7 +241,7 @@ export default function Origin() {
 
 function Marker({ kind, x, y }: { kind: Kind; x: number; y: number }) {
   if (kind === 'ave') return <rect x={x - 4} y={y - 4} width="8" height="8" fill="currentColor" />;
-  if (kind === 'flora') return <rect x={x - 4} y={y - 4} width="8" height="8" fill="#1E1F21" stroke="currentColor" strokeWidth="1.2" />;
+  if (kind === 'flora') return <rect x={x - 4} y={y - 4} width="8" height="8" fill="#1B2128" stroke="currentColor" strokeWidth="1.2" />;
   return (
     <g stroke="currentColor" strokeWidth="1.3">
       <line x1={x - 4} y1={y} x2={x + 4} y2={y} />

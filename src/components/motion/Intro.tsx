@@ -75,6 +75,9 @@ export default function Intro({ onDone }: { onDone: () => void }) {
           aria-hidden
         >
           <div className="grilla-plano pointer-events-none absolute inset-0 opacity-70" />
+          <span className="pointer-events-none absolute -left-[10vw] -top-[10vh] h-[55vw] w-[55vw] rounded-full bg-tarco opacity-70 blur-[90px]" />
+          <span className="pointer-events-none absolute -right-[8vw] top-[20vh] h-[45vw] w-[45vw] rounded-full bg-helecho opacity-70 blur-[90px]" />
+          <span className="pointer-events-none absolute bottom-[-20vh] left-[30vw] h-[45vw] w-[45vw] rounded-full bg-lapacho opacity-60 blur-[90px]" />
 
           <div className="rotulo relative flex justify-between text-grafito">
             <span>FIG. 00 — Apertura</span>
