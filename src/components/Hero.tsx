@@ -4,6 +4,9 @@ import { HERO_FACTS, PORTRAIT, WHATSAPP_URL } from '../data';
 import HeroLine from './motion/HeroLine';
 import { Corners, Counter, LineReveal, Senal } from './ui/primitives';
 
+const FICHA =
+  'Ingeniero industrial dedicado al desarrollo, la digitalización y la mejora de procesos. Acompaño a empresas en su transición hacia la digitalización y la inteligencia artificial.';
+
 const SECTORES = [
   'Posventa automotriz',
   'Retail farmacéutico',
@@ -142,10 +145,11 @@ export default function Hero({ ready }: { ready: boolean }) {
             <motion.img
               src={PORTRAIT}
               alt="Juan Ignacio Luquez sentado junto a un ventanal"
-              className="absolute inset-x-0 top-[-6%] h-[112%] w-full object-cover object-[64%_center] contrast-[1.05] grayscale"
+              className="absolute inset-x-0 top-[-6%] h-[112%] w-full object-cover object-[64%_center]"
               style={{ y: imgY }}
-              initial={{ opacity: 0, filter: 'brightness(1.9) blur(12px)' }}
-              animate={ready ? { opacity: 1, filter: 'brightness(1) blur(0px)' } : undefined}
+              // El filtro animado incluye el blanco y negro: un filtro en línea reemplaza al de las clases
+              initial={{ opacity: 0, filter: 'grayscale(1) contrast(1.05) brightness(1.9) blur(12px)' }}
+              animate={ready ? { opacity: 1, filter: 'grayscale(1) contrast(1.05) brightness(1) blur(0px)' } : undefined}
               transition={{ duration: 2.2, delay: 0.5, ease: [0.2, 0, 0, 1] }}
               fetchPriority="high"
             />
@@ -164,13 +168,15 @@ export default function Hero({ ready }: { ready: boolean }) {
                 <motion.span className="pointer-events-none absolute inset-x-0 z-[2] h-px bg-papel/50" style={{ y: cy }} />
               </>
             )}
-            <div className="absolute bottom-4 left-4 z-[2] max-w-xs text-papel sm:bottom-6 sm:left-6">
+            <div className="absolute bottom-6 left-6 z-[2] hidden max-w-xs text-papel sm:block">
               <p className="rotulo text-grafito-claro">Ficha</p>
-              <p className="mt-1 text-sm leading-snug">
-                Ingeniero Industrial (UNT) · Técnico electromecánico. Analista de procesos y mejora continua en Grupo Romar.
-              </p>
+              <p className="mt-1 text-sm leading-snug">{FICHA}</p>
             </div>
             <Corners />
+          </div>
+          <div className="border-x border-b border-linea bg-hoja p-4 sm:hidden">
+            <p className="rotulo text-grafito">Ficha</p>
+            <p className="mt-1 text-[15px] leading-snug text-tinta-2">{FICHA}</p>
           </div>
         </motion.div>
 

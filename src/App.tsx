@@ -10,6 +10,7 @@ import Projects from './components/Projects';
 import LiveFlow from './components/LiveFlow';
 import Services from './components/Services';
 import About from './components/About';
+import Origin from './components/Origin';
 import FAQ from './components/FAQ';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -59,6 +60,7 @@ export default function App() {
         <LiveFlow />
         <Services />
         <About />
+        <Origin />
         <FAQ />
         <Contact />
       </main>

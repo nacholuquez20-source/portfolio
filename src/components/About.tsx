@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import { EXPERIENCE, PROFILE_PHOTO, SKILLS } from '../data';
-import { Corners, LineReveal, Reveal, SectionLabel, Senal } from './ui/primitives';
+import { Corners, LineReveal, Reveal, SectionLabel } from './ui/primitives';
 
 export default function About() {
   const photoRef = useRef<HTMLDivElement>(null);
@@ -44,12 +44,12 @@ export default function About() {
                 </h2>
                 <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-tinta-2">
                   <Reveal as="p" delay={0.05}>
-                    Soy ingeniero industrial (UNT) y técnico electromecánico. Empecé en calidad, en Grupo Romar: participé en tres
+                    Soy ingeniero industrial (UNT) y técnico electromecánico. Empecé en calidad, en el sector automotriz: participé en tres
                     certificaciones ISO 9001 e ISO 14001, auditorías internas y análisis de causa raíz. Ahí aprendí que un proceso
                     mejora cuando se mide y se sostiene, no cuando se compra una herramienta.
                   </Reveal>
                   <Reveal as="p" delay={0.1}>
-                    Hoy soy analista de procesos y mejora continua en Brook Motors, concesionario oficial Jeep y RAM, donde
+                    Hoy soy analista de procesos y mejora continua en un concesionario oficial, donde
                     desarrollé TallerHub, el sistema que el taller usa todos los días. En paralelo construyo soluciones de
                     transformación digital para empresas de otros rubros: cadenas de farmacias, trade marketing, agro y construcción.
                   </Reveal>
@@ -57,17 +57,6 @@ export default function About() {
                     Trabajo desde Tucumán, al pie de las Yungas, con empresas de Argentina y LATAM.
                   </Reveal>
                 </div>
-
-                <Reveal className="mt-8 flex items-start gap-4 border border-linea bg-papel p-5" delay={0.2}>
-                  <span className="display text-4xl leading-none">★</span>
-                  <p className="text-[15px] leading-relaxed text-tinta-2">
-                    <strong className="font-semibold text-tinta">
-                      <Senal>Premio Romar 2025</Senal>
-                    </strong>{' '}
-                    — reconocimiento a la labor profesional y a la identificación con los valores del grupo: libertad, honestidad y
-                    responsabilidad.
-                  </p>
-                </Reveal>
               </div>
             </div>
 
@@ -89,7 +78,6 @@ export default function About() {
                     </div>
                     <div className="text-[15px] leading-relaxed text-tinta-2">
                       {e.detail}
-                      {e.award && <span className="rotulo mt-2 block text-tinta">{e.award}</span>}
                     </div>
                   </Reveal>
                 ))}

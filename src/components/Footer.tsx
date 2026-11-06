@@ -89,7 +89,7 @@ export default function Footer() {
         </motion.p>
         <Cota tone="tinta" label="Fin de lámina · 06 / 06" className="mb-2" delay={0.5} />
         <div className="rotulo flex flex-col gap-3 border-t border-linea-oscura py-6 text-grafito-claro sm:flex-row sm:items-center sm:justify-between">
-          <span>© {year} Juan Ignacio Luquez · Tucumán, Argentina</span>
+          <span>© {year} Juan Ignacio Luquez · Yunga Devs · Tucumán, Argentina</span>
           <span>ingeniería + IA →</span>
           <a href="#inicio" className="text-grafito-claro hover:text-papel">
             Volver arriba ↑

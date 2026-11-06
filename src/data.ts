@@ -68,7 +68,7 @@ export const METHOD_STEPS = [
 
 export const THESIS = {
   title: 'Estrategias de mejora en la atención al cliente y la gestión productiva en talleres de concesionarias de posventa',
-  place: 'Tesis de Ingeniería Industrial · UNT · aplicada en Brook Motors',
+  place: 'Tesis de Ingeniería Industrial · UNT · aplicada en un taller de posventa',
   facts: [
     { value: '347', label: 'llegadas de clientes relevadas en campo' },
     { value: '−60 %', label: 'tiempo medio de espera proyectado con teoría de colas' },
@@ -81,24 +81,24 @@ export const PROJECTS: Project[] = [
     id: 'tallerhub',
     fig: 'FIG. 02',
     title: 'TallerHub',
-    client: 'Brook Motors · Grupo Romar',
-    sector: 'Posventa automotriz · Jeep · RAM',
+    client: 'Concesionario oficial',
+    sector: 'Posventa automotriz',
     year: '2025 — hoy',
     status: { label: 'En producción', kind: 'live' },
     tagline: 'El sistema de gestión que el taller usa todos los días, en Tucumán y Salta.',
     problem:
       'Las órdenes de trabajo vivían repartidas entre el sistema de gestión del concesionario, planillas y mensajes sueltos. Cada área se enteraba tarde de lo que le tocaba y nadie veía el estado real del taller.',
     solution:
-      'Un tablero único de órdenes y estados que se sincroniza solo con Oversoft, el sistema de gestión del concesionario, y avisa por WhatsApp a cada área cuando una orden la necesita. La asesora registra un ingreso dictando un audio y el agente valida cada dato antes de cargarlo.',
+      'Un tablero único de órdenes y estados que se sincroniza solo con el sistema de gestión del concesionario (DMS) y avisa por WhatsApp a cada área cuando una orden la necesita. La asesora registra un ingreso dictando un audio y el agente valida cada dato antes de cargarlo.',
     highlights: [
       'Tablero de órdenes con estados, prioridades y vista kanban para todo el taller.',
-      'Sincronización automática con Oversoft (DMS del concesionario) cada 5 minutos.',
+      'Sincronización automática con el DMS del concesionario cada 5 minutos.',
       'Avisos por WhatsApp a cada área: asesoras, repuestos y lavadero.',
       'Agente de IA por WhatsApp que toma ingresos y turnos por texto o audio y valida cada dato antes de registrarlo.',
-      'Checklist de calidad de fábrica (WiCheck, Stellantis) completado desde el celular, con reporte semanal de desvíos.',
+      'Checklist de calidad de fábrica completado desde el celular, con reporte semanal de desvíos.',
       'Tableros de KPIs: tasa de retrabajo, productividad por técnico, tiempos de espera y de entrega.',
     ],
-    flow: ['Orden en Oversoft', 'Sincronización cada 5 min', 'Tablero TallerHub', 'Aviso por WhatsApp al área', 'KPIs del taller'],
+    flow: ['Orden en el DMS', 'Sincronización cada 5 min', 'Tablero TallerHub', 'Aviso por WhatsApp al área', 'KPIs del taller'],
     results: [
       { value: '2', label: 'sucursales en uso diario: Tucumán y Salta' },
       { value: '5 min', label: 'entre sincronizaciones con el DMS' },
@@ -297,14 +297,13 @@ export const EXPERIENCE = [
   {
     period: '2024 — hoy',
     role: 'Analista de Procesos y Mejora Continua',
-    org: 'Brook Motors · Grupo Romar',
-    detail: 'Concesionario oficial Jeep / RAM. Desarrollé TallerHub, digitalicé el control de calidad de fábrica y diseñé los tableros de KPIs del taller.',
-    award: 'Premio Romar 2025',
+    org: 'Concesionario oficial · posventa automotriz',
+    detail: 'Desarrollé TallerHub, digitalicé el control de calidad de fábrica y diseñé los tableros de KPIs del taller.',
   },
   {
     period: '2022 — 2023',
     role: 'Pasante de Calidad',
-    org: 'Rolcar S.A. · Grupo Romar · Mercedes-Benz',
+    org: 'Concesionario oficial · sector automotriz',
     detail: 'Participé en 3 procesos de certificación ISO 9001 e ISO 14001, auditorías internas y análisis de causa raíz (Ishikawa, 8D).',
   },
   {

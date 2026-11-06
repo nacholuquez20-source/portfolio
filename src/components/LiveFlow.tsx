@@ -54,12 +54,12 @@ const SCENARIOS: Scenario[] = [
       {
         stage: 'Transcripción',
         detail: 'El audio se convierte en texto.',
-        quote: '“Recibí al cliente Ferreyra, patente [[AB 123 CD]], una [[Compass]], viene por el service de los 40 mil.”',
+        quote: '“Recibí al cliente Ferreyra, patente [[AB 123 CD]], una [[SUV compacta]], viene por el service de los 40 mil.”',
       },
       {
         stage: 'Extracción',
         detail: 'La IA devuelve los datos estructurados.',
-        fields: { Cliente: 'Ferreyra', Patente: '[[AB 123 CD]]', Modelo: '[[Compass]]', Trabajo: 'Service 40.000 km' },
+        fields: { Cliente: 'Ferreyra', Patente: '[[AB 123 CD]]', Modelo: '[[SUV compacta]]', Trabajo: 'Service 40.000 km' },
       },
       {
         stage: 'Validación',
@@ -73,7 +73,7 @@ const SCENARIOS: Scenario[] = [
           {
             side: 'in',
             kind: 'text',
-            card: { label: '¿Registro el ingreso?', lines: ['Ferreyra · [[AB 123 CD]]', '[[Compass]] · Service 40.000 km'] },
+            card: { label: '¿Registro el ingreso?', lines: ['Ferreyra · [[AB 123 CD]]', '[[SUV compacta]] · Service 40.000 km'] },
             chips: ['Sí', 'No'],
           },
           { side: 'out', kind: 'text', text: 'Sí' },

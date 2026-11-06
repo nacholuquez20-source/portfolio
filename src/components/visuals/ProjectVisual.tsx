@@ -135,11 +135,11 @@ function Frame({ tone, label, children }: { tone: Tone; label: string; children:
 /* ───────────────────────── TallerHub ───────────────────────── */
 
 const ORDENES = [
-  { or: '4821', pat: 'AB 102 CD', mod: 'Compass', est: 'En diagnóstico', tec: 'Téc. 03', t: '1 h 20', p: 1 },
-  { or: '4822', pat: 'AC 448 KL', mod: 'RAM 1500', est: 'Espera repuesto', tec: 'Téc. 07', t: '3 h 05', p: 2, alert: true },
-  { or: '4823', pat: 'AD 731 MN', mod: 'Renegade', est: 'En reparación', tec: 'Téc. 01', t: '0 h 45', p: 2 },
-  { or: '4824', pat: 'AE 219 PQ', mod: 'Wrangler', est: 'Lavadero', tec: '—', t: '0 h 15', p: 3 },
-  { or: '4825', pat: 'AF 560 RS', mod: 'Commander', est: 'Listo para entregar', tec: 'Téc. 03', t: '—', p: 3, done: true },
+  { or: '4821', pat: 'AB 102 CD', mod: 'SUV compacto', est: 'En diagnóstico', tec: 'Téc. 03', t: '1 h 20', p: 1 },
+  { or: '4822', pat: 'AC 448 KL', mod: 'Pick-up 4x4', est: 'Espera repuesto', tec: 'Téc. 07', t: '3 h 05', p: 2, alert: true },
+  { or: '4823', pat: 'AD 731 MN', mod: 'SUV urbano', est: 'En reparación', tec: 'Téc. 01', t: '0 h 45', p: 2 },
+  { or: '4824', pat: 'AE 219 PQ', mod: 'Todoterreno', est: 'Lavadero', tec: '—', t: '0 h 15', p: 3 },
+  { or: '4825', pat: 'AF 560 RS', mod: 'SUV 7 plazas', est: 'Listo para entregar', tec: 'Téc. 03', t: '—', p: 3, done: true },
 ];
 
 function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
@@ -158,7 +158,7 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
               animate={{ rotate: 360 }}
               transition={{ duration: 1.6, repeat: Infinity, ease: 'linear' }}
             />
-            Sincronizado con Oversoft · hace 2 min
+            Sincronizado con el DMS · hace 2 min
           </span>
         </div>
         <div className="overflow-hidden">
@@ -228,7 +228,7 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
         transition={{ duration: 0.45, delay: 0.7, ease: [0.2, 0, 0, 1] }}
       >
         <p className="rotulo text-[9px]">WhatsApp → Repuestos</p>
-        <p className="mt-1 text-[12px] font-medium leading-snug">OR 4822 · <Oculto>RAM 1500</Oculto> espera filtro de combustible. ¿Fecha de llegada?</p>
+        <p className="mt-1 text-[12px] font-medium leading-snug">OR 4822 · <Oculto>Pick-up 4x4</Oculto> espera filtro de combustible. ¿Fecha de llegada?</p>
       </motion.div>
     </div>
   );

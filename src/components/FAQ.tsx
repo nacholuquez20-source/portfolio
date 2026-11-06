@@ -11,7 +11,7 @@ export default function FAQ() {
       <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[200px_minmax(0,5fr)_minmax(0,7fr)] lg:gap-10 lg:px-10 lg:py-32">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <div className="flex items-baseline gap-3 lg:flex-col lg:gap-1.5">
-            <span className="rotulo text-grafito">05.1</span>
+            <span className="rotulo text-grafito">05.2</span>
             <span className="text-sm font-bold uppercase tracking-[0.08em]">Preguntas</span>
           </div>
         </div>
