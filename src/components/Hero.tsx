@@ -1,8 +1,8 @@
 import { PointerEvent, useRef, useState } from 'react';
 import { motion, useMotionValue, useScroll, useTransform } from 'motion/react';
-import { HERO_FACTS, PORTRAIT, WHATSAPP_URL } from '../data';
+import { PORTRAIT, WHATSAPP_URL } from '../data';
 import HeroLine from './motion/HeroLine';
-import { Corners, Counter, Firma, LineReveal, Senal } from './ui/primitives';
+import { Corners, Firma, LineReveal, Senal } from './ui/primitives';
 
 const FICHA =
   'Ingeniero industrial dedicado al desarrollo, la digitalización y la mejora de procesos. Acompaño a empresas en su transición hacia la digitalización y la inteligencia artificial.';
@@ -183,17 +183,6 @@ export default function Hero({ ready }: { ready: boolean }) {
           </div>
         </motion.div>
 
-        {/* Datos duros */}
-        <dl className="mt-px grid grid-cols-2 gap-px border border-linea bg-linea lg:grid-cols-4">
-          {HERO_FACTS.map((f) => (
-            <div key={f.label} className="flex flex-col bg-papel p-5 sm:p-6">
-              <dt className="rotulo order-2 mt-2 block text-grafito">{f.label}</dt>
-              <dd className="display order-1 text-5xl sm:text-6xl">
-                <Counter value={f.value} />
-              </dd>
-            </div>
-          ))}
-        </dl>
       </div>
 
       {/* Cinta de rubros */}

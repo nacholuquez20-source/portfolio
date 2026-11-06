@@ -23,14 +23,6 @@ export const NAV = [
   { id: 'contacto', num: '06', label: 'Contacto' },
 ] as const;
 
-/** Cifras reales, verificables en cada proyecto o en la trayectoria. */
-export const HERO_FACTS: Metric[] = [
-  { value: '23', label: 'sucursales auditadas por WhatsApp' },
-  { value: '2', label: 'provincias usan TallerHub a diario' },
-  { value: '5 min', label: 'entre sincronizaciones con el DMS' },
-  { value: '3', label: 'certificaciones ISO 9001 / 14001' },
-];
-
 export const METHOD_STEPS = [
   {
     num: '01',
