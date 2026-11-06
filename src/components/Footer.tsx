@@ -1,138 +1,100 @@
-import { ArrowUpRight } from 'lucide-react';
-import { EMAIL, LINKEDIN_URL, GITHUB_URL, WHATSAPP_URL } from '../data';
+import { motion } from 'motion/react';
+import { EMAIL, INSTAGRAM_URL, LINKEDIN_URL, NAV, WHATSAPP_URL } from '../data';
+import { Cota } from './ui/primitives';
 
-interface FooterProps {
-  onNavigate: (sectionId: string) => void;
-}
+const NBSP = String.fromCharCode(160);
 
-export default function Footer({ onNavigate }: FooterProps) {
-  const currentYear = new Date().getFullYear();
+export default function Footer() {
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#1c1c1a] text-[#F8F8F5] pt-24 pb-12 border-t border-neutral-800 text-left relative overflow-hidden">
-      {/* Decorative vertical lines */}
-      <div className="absolute inset-y-0 left-6 md:left-12 w-[1px] bg-neutral-800/60 pointer-events-none" />
-      <div className="absolute inset-y-0 right-6 md:right-12 w-[1px] bg-neutral-800/60 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-
-        {/* Upper footer grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-neutral-800">
-
-          {/* Tagline Column */}
-          <div className="md:col-span-6 space-y-6">
-            <h3 className="font-serif text-3xl font-medium tracking-tight">Juan Ignacio Luquez</h3>
-            <p className="text-sm text-neutral-400 font-light max-w-sm leading-relaxed">
-              Ingeniero Industrial, consultor y desarrollador. No construyo herramientas
-              en el vacío — las construyo junto a la gente que las va a usar.
+    <footer className="relative overflow-hidden border-t border-linea-oscura bg-tinta text-papel">
+      <div className="mx-auto max-w-[1240px] px-4 pt-16 sm:px-6 lg:px-10">
+        <div className="grid grid-cols-1 gap-10 border-b border-linea-oscura pb-12 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
+          <div>
+            <p className="titular max-w-[22ch] text-3xl">
+              Primero el proceso.
+              <span className="block text-grafito-claro">Después la IA.</span>
+            </p>
+            <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-papel/70">
+              Ingeniero industrial. Desarrollo soluciones digitales para la transformación digital de empresas y la
+              automatización de procesos.
             </p>
           </div>
-
-          {/* Links Column 1: Projects */}
-          <div className="md:col-span-3 space-y-4">
-            <p className="font-mono text-[10px] tracking-wider text-neutral-500 uppercase font-bold">// PROYECTOS</p>
-            <ul className="space-y-2 text-sm font-light text-neutral-400">
-              <li>
-                <button onClick={() => onNavigate('demos')} className="hover:text-amber-300 text-amber-200/90 transition cursor-pointer flex items-center gap-1 font-medium">
-                  💡 Demos Interactivas
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('projects')} className="hover:text-white transition cursor-pointer">
-                  AuditBot — Auditorías por WhatsApp
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('projects')} className="hover:text-white transition cursor-pointer">
-                  TallerHub — Gestión de Talleres
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('projects')} className="hover:text-white transition cursor-pointer">
-                  Kernium — Flota Industrial
-                </button>
-              </li>
-              <li>
-                <button onClick={() => onNavigate('projects')} className="hover:text-white transition cursor-pointer">
-                  FlujoNorte — Automatización Citrícola
-                </button>
-              </li>
+          <nav aria-label="Secciones del pie">
+            <p className="rotulo mb-4 text-grafito-claro">Índice</p>
+            <ul className="space-y-2 text-[15px]">
+              {NAV.map((n) => (
+                <li key={n.id}>
+                  <a href={`#${n.id}`} className="text-papel/80 transition-colors hover:text-senal">
+                    <span className="rotulo mr-2 text-[10px] text-grafito-claro">{n.num}</span>
+                    {n.label}
+                  </a>
+                </li>
+              ))}
             </ul>
-          </div>
-
-          {/* Links Column 2: Socials */}
-          <div className="md:col-span-3 space-y-4">
-            <p className="font-mono text-[10px] tracking-wider text-neutral-500 uppercase font-bold">// ENLACES</p>
-            <ul className="space-y-2 text-sm font-light text-neutral-400">
+          </nav>
+          <div>
+            <p className="rotulo mb-4 text-grafito-claro">Contacto</p>
+            <ul className="space-y-2 text-[15px]">
               <li>
-                <a
-                  href={`mailto:${EMAIL}`}
-                  className="hover:text-white transition flex items-center gap-1 w-fit"
-                >
-                  Correo Electrónico <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-papel/80 hover:text-senal">
+                  WhatsApp ↗
                 </a>
               </li>
               <li>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition flex items-center gap-1 w-fit"
-                >
-                  WhatsApp <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                <a href={`mailto:${EMAIL}`} className="text-papel/80 hover:text-senal">
+                  Email ↗
                 </a>
               </li>
               <li>
-                <a
-                  href={LINKEDIN_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition flex items-center gap-1 w-fit"
-                >
-                  LinkedIn <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="text-papel/80 hover:text-senal">
+                  LinkedIn ↗
                 </a>
               </li>
               <li>
-                <a
-                  href={GITHUB_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition flex items-center gap-1 w-fit"
-                >
-                  GitHub <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-papel/80 hover:text-senal">
+                  Instagram ↗
                 </a>
               </li>
               <li>
-                <a
-                  href="/privacy.html"
-                  className="hover:text-white transition flex items-center gap-1 w-fit"
-                >
-                  Política de Privacidad <ArrowUpRight className="w-3 h-3 text-neutral-500" />
+                <a href="/privacy.html" className="text-papel/60 hover:text-senal">
+                  Política de privacidad (AuditBot)
                 </a>
               </li>
             </ul>
           </div>
-
         </div>
+      </div>
 
-        {/* Lower footer: massive serif logo and copyright */}
-        <div className="pt-16 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="order-2 md:order-1 text-center md:text-left space-y-1">
-            <p className="text-xs text-neutral-500 font-mono">
-              © {currentYear} Juan Ignacio Luquez. Tucumán, Argentina. Todos los derechos reservados.
-            </p>
-            <p className="text-[10px] text-neutral-600 font-mono">
-              Quebrada del Portugués · Al pie de las Yungas.
-            </p>
-          </div>
-
-          <div className="order-1 md:order-2 select-none pointer-events-none opacity-[0.04]">
-            <h2 className="font-serif text-7xl sm:text-9xl lg:text-[12rem] leading-none font-bold tracking-tighter">
-              Luquez
-            </h2>
-          </div>
+      {/* Logotipo a todo el ancho */}
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
+        <motion.p
+          className="display flex select-none overflow-hidden whitespace-nowrap pb-[0.14em] pt-8 text-[clamp(4rem,18.2vw,16rem)] lowercase leading-[0.82]"
+          initial="oculto"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          aria-hidden
+        >
+          {'juan luquez'.split('').map((ch, i) => (
+            <motion.span
+              key={i}
+              className="inline-block"
+              variants={{ oculto: { y: '108%' }, visible: { y: '0%' } }}
+              transition={{ duration: 0.7, delay: i * 0.04, ease: [0.2, 0, 0, 1] }}
+            >
+              {ch === ' ' ? NBSP : ch}
+            </motion.span>
+          ))}
+        </motion.p>
+        <Cota tone="tinta" label="Fin de lámina · 06 / 06" className="mb-2" delay={0.5} />
+        <div className="rotulo flex flex-col gap-3 border-t border-linea-oscura py-6 text-grafito-claro sm:flex-row sm:items-center sm:justify-between">
+          <span>© {year} Juan Ignacio Luquez · Tucumán, Argentina</span>
+          <span>ingeniería + IA →</span>
+          <a href="#inicio" className="text-grafito-claro hover:text-papel">
+            Volver arriba ↑
+          </a>
         </div>
-
       </div>
     </footer>
   );

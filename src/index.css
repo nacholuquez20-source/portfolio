@@ -1,43 +1,188 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
+/*
+  Sistema visual alineado al manual de marca de @juanluquezia:
+  papel y tinta, una señal amarilla para el dato clave y un rojo cinabrio
+  reservado para el resultado logrado. Archivo para todo, IBM Plex Mono para datos.
+*/
 @theme {
-  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Cormorant Garamond", Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --color-papel: #f4f4f1;
+  --color-hoja: #ffffff;
+  --color-tinta: #111213;
+  --color-tinta-2: #1e1f21;
+  --color-tinta-3: #2a2b2e;
+  --color-grafito: #6b6e72;
+  --color-grafito-claro: #a3a6a9;
+  --color-linea: #d6d7d3;
+  --color-linea-oscura: #303236;
+  --color-senal: #f6c400;
+  --color-cinabrio: #c8361f;
+
+  --ease-plano: cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Custom fine-grained scrollbar and sleek custom backgrounds */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 body {
-  background-color: #F8F8F5;
-  color: #1c1c1a;
+  background-color: var(--color-papel);
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background-color: #1c1c1a;
-  color: #F8F8F5;
+  background-color: var(--color-senal);
+  color: var(--color-tinta);
 }
 
-/* Custom interactive animation classes if needed */
-.line-draw {
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* Titulares: condensados, apretados, siempre a la izquierda */
+.display {
+  font-weight: 800;
+  font-stretch: 80%;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+.titular {
+  font-weight: 700;
+  font-stretch: 85%;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+/* Voz técnica: rótulos, cotas y firma */
+.rotulo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Resaltador amarillo detrás del texto (solo sobre papel) */
+.marca-senal {
+  background-image: linear-gradient(transparent 14%, var(--color-senal) 14%, var(--color-senal) 88%, transparent 88%);
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  padding: 0 0.1em;
+  margin: 0 -0.04em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size 0.7s var(--ease-plano) 0.25s;
+}
+.marca-senal.is-on {
+  background-size: 100% 100%;
+}
+
+/* Grilla de plano de fondo */
+.grilla-plano {
+  background-image:
+    linear-gradient(to right, rgb(17 18 19 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(17 18 19 / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.grilla-plano-oscura {
+  background-image:
+    linear-gradient(to right, rgb(244 244 241 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(244 244 241 / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Grano de película para las bandas de tinta y las fotos */
+.grano {
+  position: relative;
+  isolation: isolate;
+}
+.grano::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.07;
+  background-size: 160px 160px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grano 1.2s steps(6) infinite;
+}
+@keyframes grano {
+  0% { background-position: 0 0; }
+  20% { background-position: -37px 21px; }
+  40% { background-position: 29px -44px; }
+  60% { background-position: -18px -9px; }
+  80% { background-position: 52px 33px; }
+  100% { background-position: 0 0; }
+}
+
+/* Esquinas de encuadre tipo plano */
+.encuadre {
   position: relative;
 }
-.line-draw::after {
-  content: '';
+.encuadre > .esq {
   position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  background-color: currentColor;
-  transform-origin: bottom right;
-  transition: transform 0.3s ease-out;
+  width: 14px;
+  height: 14px;
+  border-color: currentColor;
+  transition: all 0.35s var(--ease-plano);
+  pointer-events: none;
 }
-.line-draw:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
+.encuadre > .esq-tl { top: -1px; left: -1px; border-top-width: 1.5px; border-left-width: 1.5px; }
+.encuadre > .esq-tr { top: -1px; right: -1px; border-top-width: 1.5px; border-right-width: 1.5px; }
+.encuadre > .esq-bl { bottom: -1px; left: -1px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+.encuadre > .esq-br { bottom: -1px; right: -1px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+.encuadre:hover > .esq,
+.group:hover .encuadre > .esq { width: 22px; height: 22px; }
+
+/* Cinta de texto en movimiento continuo */
+@keyframes cinta {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+.cinta {
+  animation: cinta 48s linear infinite;
 }
 
+/* Piezas que circulan por las líneas de proceso (motion graphics) */
+@keyframes hero-flujo {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(370px); }
+}
+@keyframes obra-flujo {
+  0% { transform: translateX(0); opacity: 0; }
+  4% { opacity: 1; }
+  96% { opacity: 1; }
+  100% { transform: translateX(566px); opacity: 0; }
+}
+
+/* Onda de audio de los mockups */
+@keyframes onda {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .grano::after, .cinta { animation: none; }
+  .marca-senal { transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

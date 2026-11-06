@@ -1,163 +1,151 @@
-import { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, Sun, Layers, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
+import { NAV, WHATSAPP_URL, EMAIL } from '../data';
 
 interface HeaderProps {
-  onNavigate: (sectionId: string) => void;
   activeSection: string;
 }
 
-export default function Header({ onNavigate, activeSection }: HeaderProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Header({ activeSection }: HeaderProps) {
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40, restDelta: 0.001 });
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Proyectos', id: 'projects' },
-    { label: 'Cómo funciona', id: 'demos' },
-    { label: 'Sobre mí', id: 'about' },
-    { label: 'Preguntas Frecuentes', id: 'faq' },
-    { label: 'Contacto', id: 'contact' },
-  ];
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#F8F8F5]/90 backdrop-blur-md border-b border-neutral-200/50 py-4'
-            : 'bg-transparent py-6'
+        className={`fixed inset-x-0 top-0 z-40 transition-[background-color,border-color,padding] duration-300 ${
+          scrolled ? 'border-b border-linea bg-papel/90 py-3 backdrop-blur-md' : 'border-b border-transparent bg-transparent py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
-          {/* Logo / Brand Name */}
-          <button
-            onClick={() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              onNavigate('hero');
-            }}
-            className="font-serif text-2xl font-semibold tracking-tight text-[#1c1c1a] cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-2"
-            id="brand-logo"
-          >
-            JIL · Luquez <span className="text-xs font-mono font-normal opacity-50 px-1 border border-neutral-300 rounded">IA</span>
-          </button>
+        <motion.div className="absolute inset-x-0 top-0 h-[2px] origin-left bg-senal" style={{ scaleX: progress }} />
+        <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10">
+          <a href="#inicio" className="group flex items-baseline gap-3" aria-label="Juan Luquez — inicio">
+            <span className="display text-[26px] leading-none lowercase">juan luquez</span>
+            <span className="rotulo hidden text-grafito sm:inline">
+              ingeniería + IA <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </span>
+          </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => onNavigate(item.id)}
-                className={`font-sans text-sm tracking-wide transition-all duration-200 cursor-pointer relative py-1 ${
-                  activeSection === item.id
-                    ? 'text-[#1c1c1a] font-medium'
-                    : 'text-neutral-500 hover:text-[#1c1c1a]'
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#1c1c1a]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </button>
-            ))}
-            <button
-              onClick={() => onNavigate('contact')}
-              className="bg-[#1c1c1a] text-[#F8F8F5] text-xs font-mono py-2.5 px-5 rounded-full hover:bg-neutral-800 transition-colors flex items-center gap-2 cursor-pointer shadow-sm"
-              id="cta-header-btn"
-            >
-              Consulta <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+          <nav className="hidden items-center gap-1 lg:flex" aria-label="Secciones">
+            {NAV.map((item) => {
+              const active = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  className={`relative px-3 py-2 text-[13px] font-medium transition-colors ${
+                    active ? 'text-tinta' : 'text-grafito hover:text-tinta'
+                  }`}
+                  aria-current={active ? 'true' : undefined}
+                >
+                  <span className="rotulo mr-1.5 text-[10px] text-grafito">{item.num}</span>
+                  {item.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-activo"
+                      className="absolute inset-x-3 -bottom-0.5 h-[2px] bg-tinta"
+                      transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-[#1c1c1a] p-2 focus:outline-none cursor-pointer"
-            id="mobile-menu-toggle"
-            aria-label="Toggle Menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rotulo hidden items-center gap-2 bg-tinta px-4 py-2.5 text-papel transition-colors hover:bg-tinta-3 sm:inline-flex"
+            >
+              Hablemos <span aria-hidden>↗</span>
+            </a>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="rotulo flex items-center gap-2 border border-tinta px-3 py-2.5 lg:hidden"
+              aria-expanded={open}
+              aria-controls="menu-movil"
+            >
+              Menú
+              <span className="flex flex-col gap-[3px]" aria-hidden>
+                <span className="block h-px w-4 bg-tinta" />
+                <span className="block h-px w-4 bg-tinta" />
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-45 bg-black/40 backdrop-blur-sm md:hidden"
-            onClick={() => setIsOpen(false)}
+            id="menu-movil"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menú"
+            className="grano fixed inset-0 z-50 flex flex-col overflow-y-auto bg-tinta text-papel"
+            initial={{ clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.5, ease: [0.2, 0, 0, 1] }}
           >
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-[#F8F8F5] p-8 shadow-2xl flex flex-col justify-between"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div>
-                <div className="flex justify-between items-center mb-12">
-                  <span className="font-serif text-2xl font-semibold">JIL · Luquez</span>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 border border-neutral-200 rounded-full cursor-pointer hover:bg-neutral-100"
-                    id="close-sidebar-btn"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                <nav className="flex flex-col gap-6">
-                  {navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => {
-                        setIsOpen(false);
-                        onNavigate(item.id);
-                      }}
-                      className={`text-left font-serif text-2xl py-2 ${
-                        activeSection === item.id
-                          ? 'text-[#1c1c1a] border-l-2 border-[#1c1c1a] pl-4 font-medium'
-                          : 'text-neutral-500 pl-0 hover:text-[#1c1c1a] transition-all'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-
-              <div className="border-t border-neutral-200 pt-6">
-                <p className="text-xs text-neutral-400 font-mono mb-4">
-                  INGENIERÍA INDUSTRIAL + IA // TUCUMÁN
-                </p>
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    onNavigate('contact');
-                  }}
-                  className="w-full bg-[#1c1c1a] text-[#F8F8F5] py-3.5 px-6 rounded-xl flex justify-center items-center gap-2 font-mono text-xs hover:bg-neutral-800 transition-all cursor-pointer"
-                  id="mobile-sidebar-cta"
+            <div className="relative z-10 flex items-center justify-between px-4 py-5 sm:px-6">
+              <span className="display text-[26px] lowercase">juan luquez</span>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="rotulo border border-linea-oscura px-3 py-2.5 text-papel"
+              >
+                Cerrar ✕
+              </button>
+            </div>
+            <nav className="relative z-10 flex flex-1 flex-col justify-center gap-1 px-4 sm:px-6" aria-label="Secciones">
+              {NAV.map((item, i) => (
+                <motion.a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={() => setOpen(false)}
+                  className="flex items-baseline gap-4 border-b border-linea-oscura py-3"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: 0.15 + i * 0.05, ease: [0.2, 0, 0, 1] }}
                 >
-                  Agendar Consulta <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
-            </motion.div>
+                  <span className="rotulo text-grafito-claro">{item.num}</span>
+                  <span className={`display text-5xl ${activeSection === item.id ? 'text-senal' : ''}`}>{item.label}</span>
+                </motion.a>
+              ))}
+            </nav>
+            <div className="relative z-10 space-y-3 px-4 pb-8 pt-6 sm:px-6">
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rotulo flex items-center justify-between bg-senal px-4 py-4 text-tinta"
+              >
+                Escribime por WhatsApp <span aria-hidden>↗</span>
+              </a>
+              <a href={`mailto:${EMAIL}`} className="rotulo block text-grafito-claro">
+                {EMAIL}
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,119 +1,201 @@
-import { PORTRAIT } from '../data';
+import { PointerEvent, useRef, useState } from 'react';
+import { motion, useMotionValue, useScroll, useTransform } from 'motion/react';
+import { HERO_FACTS, PORTRAIT, WHATSAPP_URL } from '../data';
+import HeroLine from './motion/HeroLine';
+import { Corners, Counter, LineReveal, Senal } from './ui/primitives';
 
-interface HeroProps {
-  onExploreProjects: () => void;
-}
+const SECTORES = [
+  'Posventa automotriz',
+  'Retail farmacéutico',
+  'Agro',
+  'Trade marketing',
+  'Construcción',
+  'Calidad ISO 9001',
+  'Capacitación interna',
+  'Mejora continua',
+];
 
-export default function Hero({ onExploreProjects }: HeroProps) {
+export default function Hero({ ready }: { ready: boolean }) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: frameRef, offset: ['start end', 'end start'] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
+
+  // Retícula que sigue al puntero sobre la foto, con lectura de coordenadas como en un plano
+  const cx = useMotionValue(0);
+  const cy = useMotionValue(0);
+  const [coords, setCoords] = useState<{ x: number; y: number } | null>(null);
+
+  const onMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    cx.set(x);
+    cy.set(y);
+    setCoords({ x: Math.round((x / r.width) * 2912), y: Math.round((y / r.height) * 1248) });
+  };
+
   return (
-    <section id="hero" className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-[#F8F8F5]">
-      {/* Structural visual grid lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] flex justify-between px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="w-[1px] h-full bg-[#1c1c1a]" />
-        <div className="w-[1px] h-full bg-[#1c1c1a] hidden md:block" />
-        <div className="w-[1px] h-full bg-[#1c1c1a] hidden md:block" />
-        <div className="w-[1px] h-full bg-[#1c1c1a]" />
-      </div>
+    <section id="inicio" className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36">
+      <div className="grilla-plano pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_70%)]" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="max-w-4xl">
-          {/* Subtle tag at the top */}
-          <div className="flex items-center gap-2 mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-mono text-[10px] md:text-[11px] tracking-widest text-neutral-500 uppercase">
-              TUCUMÁN · ARGENTINA // INGENIERÍA INDUSTRIAL & IA APLICADA
+      <div className="relative mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
+        {/* Rótulo de lámina */}
+        <motion.div
+          className="rotulo flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-linea pb-3 text-grafito"
+          initial={{ opacity: 0 }}
+          animate={ready ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <span>FIG. 00 — Portada</span>
+          <span className="hidden md:inline">San Miguel de Tucumán · 26°49′S 65°13′O</span>
+          <span className="flex items-center gap-2 text-tinta">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping bg-senal opacity-75" />
+              <span className="relative inline-flex h-2 w-2 bg-senal ring-1 ring-tinta/30" />
             </span>
-          </div>
+            Disponible para proyectos
+          </span>
+        </motion.div>
 
-          {/* Majestic Hero Typography */}
-          <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight leading-[0.9] text-[#1c1c1a] mb-8 font-light select-none">
-            Ingeniero <br />
-            <span className="font-serif italic font-light text-neutral-400 pr-2 lowercase">industrial</span>
-            <span className="font-serif font-semibold text-neutral-800">+ IA.</span>
+        <div className="pt-10 lg:pt-14">
+          <motion.p
+            className="rotulo mb-6 text-grafito"
+            initial={{ opacity: 0, y: 8 }}
+            animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
+            Juan Ignacio Luquez · Ingeniero industrial
+          </motion.p>
+          <h1 className="display text-[clamp(2.75rem,7.2vw,6.6rem)]">
+            <LineReveal
+              play={ready}
+              delay={0.2}
+              lines={[
+                'Transformo procesos',
+                'manuales en sistemas',
+                <>
+                  que <Senal play={ready} delay={0.6}>funcionan solos.</Senal>
+                </>,
+              ]}
+            />
           </h1>
-
-          {/* Premium Sub-narrative */}
-          <p className="font-sans text-lg md:text-xl text-neutral-600 max-w-2xl leading-relaxed mb-10 font-light">
-            Diseño sistemas donde los procesos industriales y la inteligencia
-            artificial producen resultados reales — medibles, sostenidos, humanos.
-          </p>
-
-          {/* Interactive CTA pills */}
-          <div className="flex flex-wrap items-center gap-4">
-            <button
-              onClick={onExploreProjects}
-              className="group flex items-center gap-3 bg-[#1c1c1a] text-[#F8F8F5] text-xs font-mono py-4 px-8 rounded-full border border-neutral-800 hover:bg-transparent hover:text-[#1c1c1a] transition-all duration-300 transform hover:-translate-y-0.5 shadow-md cursor-pointer"
-              id="view-projects-hero-btn"
-            >
-              VER PROYECTOS
-              <span className="inline-block transition-transform duration-300 group-hover:translate-x-1.5">
-                →
-              </span>
-            </button>
-
-            <a
-              href="https://wa.me/5493814758763"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-xs font-mono py-4 px-8 rounded-full border border-neutral-300 text-neutral-600 hover:border-[#1c1c1a] hover:text-[#1c1c1a] transition-all duration-300"
-            >
-              HABLEMOS ↗
-            </a>
-          </div>
         </div>
 
-        {/* Large cinematic workspace image */}
-        <div className="mt-16 md:mt-24 relative">
-          <div className="overflow-hidden rounded-2xl bg-neutral-200 aspect-[16/10] md:aspect-[21/9] shadow-inner relative group border border-neutral-200/40">
-            <img
-              src={PORTRAIT}
-              alt="Juan Ignacio Luquez — Ingeniero Industrial y consultor"
-              className="w-full h-full object-cover contrast-[1.02] brightness-100 group-hover:scale-[1.02] transition-transform duration-700 ease-out"
-            />
-            {/* Elegant overlay card containing live indicators */}
-            <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 bg-[#F8F8F5]/85 backdrop-blur-md px-4 py-3 md:px-6 md:py-4 rounded-xl border border-white/20 shadow-lg text-left max-w-xs transition-opacity duration-300">
-              <p className="font-mono text-[9px] tracking-widest text-[#1c1c1a] font-semibold uppercase mb-1 flex items-center gap-1.5">
-                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                DISPONIBLE PARA CONSULTORÍA
-              </p>
-              <p className="text-xs text-neutral-500 font-light leading-snug">
-                Juan Ignacio Luquez — procesos, automatizaciones con IA y SaaS industriales.
-              </p>
+        <motion.div
+          className="mt-10 grid grid-cols-1 gap-8 border-t border-linea pt-8 lg:mt-14 lg:grid-cols-12 lg:gap-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+          transition={{ duration: 0.6, delay: 0.55, ease: [0.2, 0, 0, 1] }}
+        >
+          <div className="lg:col-span-7">
+            <p className="max-w-[58ch] text-[17px] leading-relaxed text-tinta-2 sm:text-lg">
+              Soy ingeniero industrial y desarrollo soluciones digitales para la{' '}
+              <strong className="font-semibold text-tinta">transformación digital de empresas</strong>: automatización de
+              procesos, agentes de IA por WhatsApp, integraciones con los sistemas que ya usan y tableros para decidir con datos.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="#proyectos"
+                className="group rotulo inline-flex items-center gap-3 bg-tinta px-6 py-4 text-papel transition-colors hover:bg-tinta-3"
+              >
+                Ver proyectos
+                <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
+              </a>
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group rotulo inline-flex items-center gap-3 border border-tinta px-6 py-4 text-tinta transition-colors hover:bg-tinta hover:text-papel"
+              >
+                Contame tu proceso
+                <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+              </a>
             </div>
           </div>
-        </div>
+          <div className="flex flex-col justify-between gap-6 lg:col-span-4 lg:col-start-9">
+            <p className="titular text-3xl">
+              Primero el proceso.
+              <span className="block text-grafito">Después la IA.</span>
+            </p>
+            <HeroLine play={ready} />
+          </div>
+        </motion.div>
 
-        {/* Ficha técnica: lo esencial, escaneable en segundos */}
-        <div className="mt-16 pt-10 border-t border-neutral-200/60">
-          <p className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase mb-6">
-            // FICHA TÉCNICA
-          </p>
-          <dl className="divide-y divide-neutral-200/70 border-y border-neutral-200/70">
-            {[
-              { label: 'UBICACIÓN', value: 'San Miguel de Tucumán, Argentina — remoto en Argentina & LATAM' },
-              { label: 'ESPECIALIZACIÓN', value: 'Procesos industriales · Automatización con IA · SaaS a medida' },
-              { label: 'STACK', value: 'Python · FastAPI · React · n8n · Claude API · PostgreSQL · Docker' },
-              { label: 'PRODUCTOS EN CAMPO', value: '04 — AuditBot · TallerHub · Kernium · FlujoNorte' },
-            ].map((row) => (
-              <div key={row.label} className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-6 py-3.5">
-                <dt className="sm:col-span-3 font-mono text-[10px] sm:text-xs tracking-wider text-neutral-500 uppercase pt-0.5">
-                  {row.label}
-                </dt>
-                <dd className="sm:col-span-9 font-sans text-sm text-neutral-700">
-                  {row.value}
-                </dd>
-              </div>
-            ))}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-1 sm:gap-6 py-3.5">
-              <dt className="sm:col-span-3 font-mono text-[10px] sm:text-xs tracking-wider text-neutral-500 uppercase pt-0.5">
-                ESTADO
-              </dt>
-              <dd className="sm:col-span-9 font-sans text-sm text-neutral-700 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                Disponible para consultoría
+        {/* Foto con encuadre de plano */}
+        <motion.div
+          className="mt-14 lg:mt-20"
+          initial={{ opacity: 0 }}
+          animate={ready ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <div className="rotulo mb-2 flex justify-between text-grafito">
+            <span>FIG. 01 — J. I. Luquez</span>
+            <span className="tabular-nums">{coords ? `X ${String(coords.x).padStart(4, '0')} · Y ${String(coords.y).padStart(4, '0')}` : '2912 × 1248 px'}</span>
+          </div>
+          <div
+            ref={frameRef}
+            className="encuadre grano relative aspect-[4/3] cursor-crosshair overflow-hidden bg-tinta text-tinta sm:aspect-[16/8] lg:aspect-[21/9]"
+            onPointerMove={onMove}
+            onPointerLeave={() => setCoords(null)}
+          >
+            <motion.img
+              src={PORTRAIT}
+              alt="Juan Ignacio Luquez sentado junto a un ventanal"
+              className="absolute inset-x-0 top-[-6%] h-[112%] w-full object-cover object-[64%_center] contrast-[1.05] grayscale"
+              style={{ y: imgY }}
+              initial={{ opacity: 0, filter: 'brightness(1.9) blur(12px)' }}
+              animate={ready ? { opacity: 1, filter: 'brightness(1) blur(0px)' } : undefined}
+              transition={{ duration: 2.2, delay: 0.5, ease: [0.2, 0, 0, 1] }}
+              fetchPriority="high"
+            />
+            {/* Halo cálido: entra fuerte con la foto y queda como un susurro */}
+            <motion.div
+              className="pointer-events-none absolute inset-0 mix-blend-screen"
+              style={{ background: 'radial-gradient(55% 75% at 66% 38%, rgb(255 214 160 / 0.55), transparent 70%)' }}
+              initial={{ opacity: 0 }}
+              animate={ready ? { opacity: [0, 1, 0.22] } : undefined}
+              transition={{ duration: 3, delay: 0.5, times: [0, 0.25, 1], ease: 'easeOut' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-tinta/50 via-transparent to-transparent" />
+            {coords && (
+              <>
+                <motion.span className="pointer-events-none absolute inset-y-0 z-[2] w-px bg-papel/50" style={{ x: cx }} />
+                <motion.span className="pointer-events-none absolute inset-x-0 z-[2] h-px bg-papel/50" style={{ y: cy }} />
+              </>
+            )}
+            <div className="absolute bottom-4 left-4 z-[2] max-w-xs text-papel sm:bottom-6 sm:left-6">
+              <p className="rotulo text-grafito-claro">Ficha</p>
+              <p className="mt-1 text-sm leading-snug">
+                Ingeniero Industrial (UNT) · Técnico electromecánico. Analista de procesos y mejora continua en Grupo Romar.
+              </p>
+            </div>
+            <Corners />
+          </div>
+        </motion.div>
+
+        {/* Datos duros */}
+        <dl className="mt-px grid grid-cols-2 gap-px border border-linea bg-linea lg:grid-cols-4">
+          {HERO_FACTS.map((f) => (
+            <div key={f.label} className="flex flex-col bg-papel p-5 sm:p-6">
+              <dt className="rotulo order-2 mt-2 block text-grafito">{f.label}</dt>
+              <dd className="display order-1 text-5xl sm:text-6xl">
+                <Counter value={f.value} />
               </dd>
             </div>
-          </dl>
+          ))}
+        </dl>
+      </div>
+
+      {/* Cinta de rubros */}
+      <div className="mt-16 overflow-hidden border-y border-linea py-4" aria-label="Rubros en los que trabajé">
+        <div className="cinta flex w-max gap-10 whitespace-nowrap">
+          {[...SECTORES, ...SECTORES].map((s, i) => (
+            <span key={i} className="rotulo flex items-center gap-10 text-grafito" aria-hidden={i >= SECTORES.length}>
+              {s}
+              <span className="text-grafito-claro">/</span>
+            </span>
+          ))}
         </div>
       </div>
     </section>

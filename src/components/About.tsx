@@ -1,86 +1,117 @@
-import { motion } from 'motion/react';
-import { Globe } from 'lucide-react';
-import fotoJuan from '../assets/images/foto-sobre-mi.jpg';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { useRef } from 'react';
+import { EXPERIENCE, PROFILE_PHOTO, SKILLS } from '../data';
+import { Corners, LineReveal, Reveal, SectionLabel, Senal } from './ui/primitives';
 
 export default function About() {
+  const photoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: photoRef, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['-4%', '4%']);
+
   return (
-    <section id="about" className="py-24 bg-[#F8F8F5] border-t border-neutral-200/60 scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    <section id="perfil" className="relative border-t border-linea bg-hoja">
+      <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-10 lg:py-32">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <SectionLabel num="05" title="Perfil" />
+          </div>
 
-          {/* Retrato */}
-          <motion.div
-            className="lg:col-span-4"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
-            <div className="relative max-w-sm mx-auto lg:mx-0">
-              <div className="overflow-hidden rounded-2xl aspect-[4/5] border border-neutral-200/60 shadow-sm bg-neutral-200 group">
-                <img
-                  src={fotoJuan}
-                  alt="Juan Ignacio Luquez trabajando"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
-                />
+          <div className="min-w-0">
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+              {/* Retrato */}
+              <Reveal className="max-w-md">
+                <div className="rotulo mb-2 flex justify-between text-grafito">
+                  <span>FIG. 08</span>
+                  <span>En el escritorio</span>
+                </div>
+                <div ref={photoRef} className="encuadre relative aspect-[4/5] overflow-hidden bg-tinta text-tinta">
+                  <motion.img
+                    src={PROFILE_PHOTO}
+                    alt="Juan Ignacio Luquez trabajando con su computadora y un cuaderno"
+                    className="absolute inset-x-0 top-[-5%] h-[110%] w-full object-cover contrast-[1.05] grayscale"
+                    style={{ y }}
+                    loading="lazy"
+                  />
+                  <Corners />
+                </div>
+                <p className="rotulo mt-3 text-grafito">Juan Ignacio Luquez · Ing. Industrial · San Miguel de Tucumán</p>
+              </Reveal>
+
+              {/* Texto */}
+              <div>
+                <h2 className="display text-[clamp(2.4rem,5.4vw,4.6rem)]">
+                  <LineReveal lines={['De la calidad', 'al código.']} />
+                </h2>
+                <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-tinta-2">
+                  <Reveal as="p" delay={0.05}>
+                    Soy ingeniero industrial (UNT) y técnico electromecánico. Empecé en calidad, en Grupo Romar: participé en tres
+                    certificaciones ISO 9001 e ISO 14001, auditorías internas y análisis de causa raíz. Ahí aprendí que un proceso
+                    mejora cuando se mide y se sostiene, no cuando se compra una herramienta.
+                  </Reveal>
+                  <Reveal as="p" delay={0.1}>
+                    Hoy soy analista de procesos y mejora continua en Brook Motors, concesionario oficial Jeep y RAM, donde
+                    desarrollé TallerHub, el sistema que el taller usa todos los días. En paralelo construyo soluciones de
+                    transformación digital para empresas de otros rubros: cadenas de farmacias, trade marketing, agro y construcción.
+                  </Reveal>
+                  <Reveal as="p" delay={0.15}>
+                    Trabajo desde Tucumán, al pie de las Yungas, con empresas de Argentina y LATAM.
+                  </Reveal>
+                </div>
+
+                <Reveal className="mt-8 flex items-start gap-4 border border-linea bg-papel p-5" delay={0.2}>
+                  <span className="display text-4xl leading-none">★</span>
+                  <p className="text-[15px] leading-relaxed text-tinta-2">
+                    <strong className="font-semibold text-tinta">
+                      <Senal>Premio Romar 2025</Senal>
+                    </strong>{' '}
+                    — reconocimiento a la labor profesional y a la identificación con los valores del grupo: libertad, honestidad y
+                    responsabilidad.
+                  </p>
+                </Reveal>
               </div>
-              <p className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase mt-4 text-center lg:text-left">
-                Juan Ignacio Luquez · Ing. Industrial · Consultor & Dev
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Texto editorial */}
-          <motion.div
-            className="lg:col-span-8 space-y-8"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.6, delay: 0.12, ease: 'easeOut' }}
-          >
-            <div className="space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-neutral-100 rounded-full border border-neutral-200/50">
-                <Globe className="w-3.5 h-3.5 text-neutral-500" />
-                <span className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase">
-                  SOBRE MÍ // QUIÉN ESTÁ DETRÁS
-                </span>
-              </div>
-
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none text-[#1c1c1a]">
-                Construir operaciones <br />
-                <em className="font-light text-neutral-500">que respiren.</em>
-              </h2>
             </div>
 
-            <div className="space-y-5 text-left max-w-2xl">
-              <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed">
-                Soy Ingeniero Industrial. Trabajo en el cruce entre procesos industriales y
-                tecnología: diseño sistemas que combinan metodologías Lean con automatizaciones
-                de IA para que las operaciones funcionen de verdad.
-              </p>
-              <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed">
-                Entiendo el piso de fábrica, el taller mecánico, la logística real. Eso cambia
-                profundamente lo que construyo y cómo lo construyo — cada flujo nace de observar
-                gente resolviendo problemas, no de una pizarra.
-              </p>
-              <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed">
-                Basado en Tucumán, al pie de las Yungas. Trabajo con empresas de Argentina y
-                LATAM que quieren operar más liviano, más claro, más medible.
-              </p>
+            {/* Trayectoria */}
+            <div className="mt-20">
+              <p className="rotulo mb-4 text-grafito">Trayectoria</p>
+              <ol className="border-t border-tinta">
+                {EXPERIENCE.map((e, i) => (
+                  <Reveal
+                    as="li"
+                    key={e.role}
+                    delay={i * 0.06}
+                    className="group grid grid-cols-1 gap-2 border-b border-linea py-5 md:grid-cols-[160px_minmax(0,1fr)_minmax(0,1.2fr)] md:gap-8"
+                  >
+                    <span className="rotulo pt-1 text-grafito">{e.period}</span>
+                    <div>
+                      <p className="titular text-xl">{e.role}</p>
+                      <p className="rotulo mt-1 text-grafito">{e.org}</p>
+                    </div>
+                    <div className="text-[15px] leading-relaxed text-tinta-2">
+                      {e.detail}
+                      {e.award && <span className="rotulo mt-2 block text-tinta">{e.award}</span>}
+                    </div>
+                  </Reveal>
+                ))}
+              </ol>
             </div>
 
-            {/* Pull quote */}
-            <blockquote className="border-l-2 border-[#1c1c1a] pl-6 py-2 text-left">
-              <p className="font-serif text-2xl md:text-3xl text-[#1c1c1a] leading-snug">
-                No construyo herramientas <em className="text-neutral-500">en el vacío</em> —
-                las construyo junto a la gente que las va a usar.
-              </p>
-              <cite className="block font-mono text-[10px] tracking-widest text-neutral-500 uppercase mt-3 not-italic">
-                — Filosofía de trabajo
-              </cite>
-            </blockquote>
-          </motion.div>
-
+            {/* Herramientas */}
+            <div className="mt-16 grid grid-cols-1 gap-px border border-linea bg-linea sm:grid-cols-2 xl:grid-cols-4">
+              {SKILLS.map((s, i) => (
+                <Reveal key={s.area} delay={i * 0.06} className="bg-hoja p-5">
+                  <p className="rotulo text-grafito">{s.area}</p>
+                  <ul className="mt-3 flex flex-wrap gap-1.5">
+                    {s.items.map((it) => (
+                      <li key={it} className="border border-linea px-2 py-1 text-[13px] text-tinta">
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </Reveal>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

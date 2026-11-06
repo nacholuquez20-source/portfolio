@@ -1,86 +1,66 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Plus, Minus, HelpCircle } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { FAQS } from '../data';
+import { LineReveal } from './ui/primitives';
 
 export default function FAQ() {
-  const [expandedId, setExpandedId] = useState<string | null>('faq1');
-
-  const toggleExpand = (id: string) => {
-    setExpandedId((prev) => (prev === id ? null : id));
-  };
+  const [open, setOpen] = useState<string | null>(FAQS[0].id);
 
   return (
-    <section id="faq" className="py-24 bg-[#F8F8F5] border-t border-neutral-200/60 scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        {/* Left Column - Heading Sticky */}
-        <div className="lg:col-span-5 lg:sticky lg:top-32 h-fit space-y-4 text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-neutral-100 rounded-full border border-neutral-200/50">
-            <HelpCircle className="w-3.5 h-3.5 text-neutral-500" />
-            <span className="font-mono text-[10px] tracking-widest text-neutral-500 uppercase">
-              RESPUESTAS // CONSULTAS COMUNES
-            </span>
+    <section id="preguntas" className="relative border-t border-linea bg-papel">
+      <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-12 px-4 py-24 sm:px-6 lg:grid-cols-[200px_minmax(0,5fr)_minmax(0,7fr)] lg:gap-10 lg:px-10 lg:py-32">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <div className="flex items-baseline gap-3 lg:flex-col lg:gap-1.5">
+            <span className="rotulo text-grafito">05.1</span>
+            <span className="text-sm font-bold uppercase tracking-[0.08em]">Preguntas</span>
           </div>
-          
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none text-[#1c1c1a]">
-            Preguntas <br />Frecuentes
-          </h2>
+        </div>
 
-          <p className="text-sm text-neutral-500 leading-relaxed font-light max-w-sm">
-            Sobre cómo trabajo: el cruce entre procesos industriales, automatizaciones con IA y software que la gente realmente usa.
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <h2 className="display text-[clamp(2.4rem,5vw,4.2rem)]">
+            <LineReveal lines={['Lo que suelen', 'preguntarme.']} />
+          </h2>
+          <p className="mt-6 max-w-[40ch] text-[16px] leading-relaxed text-tinta-2">
+            Sobre cómo trabajo, cuánto cambia el día a día de tu equipo y dónde entra la inteligencia artificial.
           </p>
         </div>
 
-        {/* Right Column - Accordion Items */}
-        <div className="lg:col-span-7 flex flex-col border-t border-neutral-200">
-          {FAQS.map((faq) => {
-            const isExpanded = expandedId === faq.id;
+        <div className="border-t border-tinta">
+          {FAQS.map((f, i) => {
+            const isOpen = open === f.id;
             return (
-              <div
-                key={faq.id}
-                className="border-b border-neutral-200 py-6 text-left cursor-pointer transition-colors hover:bg-neutral-50/40 px-2"
-                onClick={() => toggleExpand(faq.id)}
-              >
-                <div className="flex justify-between items-center gap-4">
-                  <h3 className="font-serif text-xl sm:text-2xl font-normal text-neutral-900 leading-tight">
-                    {faq.question}
-                  </h3>
+              <div key={f.id} className="border-b border-linea">
+                <h3>
                   <button
-                    className="p-1 rounded-full border border-neutral-200 hover:bg-white text-neutral-600 focus:outline-none shrink-0"
-                    id={`toggle-faq-${faq.id}`}
-                    aria-label="Toggle answer visibility"
+                    type="button"
+                    onClick={() => setOpen(isOpen ? null : f.id)}
+                    className="group flex w-full items-start gap-4 py-5 text-left"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-${f.id}`}
                   >
-                    {isExpanded ? (
-                      <Minus className="w-4 h-4 transition-transform duration-300 rotate-185" />
-                    ) : (
-                      <Plus className="w-4 h-4 transition-transform" />
-                    )}
+                    <span className="rotulo pt-1.5 text-grafito">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="titular flex-1 text-xl sm:text-2xl">{f.question}</span>
+                    <span className="relative mt-2 h-3 w-3 shrink-0" aria-hidden>
+                      <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-tinta" />
+                      <motion.span
+                        className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-tinta"
+                        animate={{ scaleY: isOpen ? 0 : 1 }}
+                        transition={{ duration: 0.25 }}
+                      />
+                    </span>
                   </button>
-                </div>
-
+                </h3>
                 <AnimatePresence initial={false}>
-                  {isExpanded && (
+                  {isOpen && (
                     <motion.div
-                      key="content"
-                      initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                      animate={{
-                        height: 'auto',
-                        opacity: 1,
-                        marginTop: 16,
-                        transition: { duration: 0.35, ease: 'easeOut' },
-                      }}
-                      exit={{
-                        height: 0,
-                        opacity: 0,
-                        marginTop: 0,
-                        transition: { duration: 0.25, ease: 'easeIn' },
-                      }}
+                      id={`faq-${f.id}`}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: [0.2, 0, 0, 1] }}
                       className="overflow-hidden"
                     >
-                      <p className="text-sm md:text-base text-neutral-600 leading-relaxed font-light">
-                        {faq.answer}
-                      </p>
+                      <p className="max-w-[60ch] pb-6 pl-9 text-[16px] leading-relaxed text-tinta-2">{f.answer}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -88,7 +68,6 @@ export default function FAQ() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

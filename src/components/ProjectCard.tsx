@@ -1,87 +1,160 @@
 import { motion } from 'motion/react';
 import { Project } from '../types';
-import { Sparkles, Cpu, Code2 } from 'lucide-react';
-import ProjectCardPreview from './ProjectCardPreview';
+import ProjectVisual from './visuals/ProjectVisual';
+import { Arrow, Corners, Counter, StatusTag } from './ui/primitives';
 
 interface ProjectCardProps {
   project: Project;
   onSelect: (project: Project) => void;
 }
 
-export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
-  // Determine an icon to fit the theme
-  const getIcon = (id: string) => {
-    switch (id) {
-      case 'auditbot':
-        return <Cpu className="w-4 h-4 text-[#1c1c1a]" />;
-      case 'tallerhub':
-        return <Sparkles className="w-4 h-4 text-[#1c1c1a]" />;
-      default:
-        return <Code2 className="w-4 h-4 text-[#1c1c1a]" />;
-    }
-  };
+const toneClasses = (tone: Project['tone']) =>
+  tone === 'tinta'
+    ? { box: 'bg-tinta text-papel grano', muted: 'text-grafito-claro', border: 'border-linea-oscura', grid: 'grilla-plano-oscura' }
+    : { box: 'bg-hoja text-tinta', muted: 'text-grafito', border: 'border-linea', grid: 'grilla-plano' };
 
+export function FeaturedProjectCard({ project, onSelect }: ProjectCardProps) {
+  const t = toneClasses(project.tone);
   return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
-      onClick={() => onSelect(project)}
-      className="group cursor-pointer flex flex-col space-y-4 border-b border-neutral-200/60 pb-8 text-left"
+    <motion.article
+      className={`group encuadre relative border ${t.border} ${t.box}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 0.6, ease: [0.2, 0, 0, 1] }}
     >
-      {/* Cover Image Container */}
-      <div className="overflow-hidden rounded-xl bg-neutral-100 aspect-[16/10] relative shadow-sm border border-neutral-200/30">
-        <img
-          src={project.image}
-          alt={project.title}
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500 ease-out grayscale"
-        />
-        {/* Animated mini-demo revealed on hover */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-          <ProjectCardPreview projectId={project.id} />
+      <button
+        type="button"
+        onClick={() => onSelect(project)}
+        className="relative z-[2] grid w-full grid-cols-1 text-left lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]"
+        aria-label={`Ver el caso ${project.title}`}
+      >
+        <div className={`flex flex-col gap-6 border-b p-6 sm:p-8 lg:border-b-0 lg:border-r lg:p-10 ${t.border}`}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className={`rotulo ${t.muted}`}>
+              {project.fig} · {project.sector}
+            </span>
+            <StatusTag label={project.status.label} kind={project.status.kind} tone={project.tone} />
+          </div>
+
+          <div>
+            <h3 className="display text-[clamp(3rem,6vw,5.2rem)]">{project.title}</h3>
+            <p className={`rotulo mt-3 ${t.muted}`}>
+              {project.client}
+              {project.previously && <> · antes {project.previously}</>}
+            </p>
+          </div>
+
+          <p className="titular max-w-[26ch] text-2xl">{project.tagline}</p>
+          <p className={`max-w-[52ch] text-[15px] leading-relaxed ${project.tone === 'tinta' ? 'text-papel/75' : 'text-tinta-2'}`}>
+            {project.problem}
+          </p>
+
+          <dl className={`mt-auto grid grid-cols-1 gap-3 border-t pt-5 sm:grid-cols-3 sm:gap-0 ${t.border}`}>
+            {project.results.slice(0, 3).map((r) => (
+              <div key={r.label} className="flex items-baseline gap-4 sm:flex-col sm:items-start sm:gap-0 sm:pr-3">
+                <dd className="display order-1 w-20 shrink-0 text-4xl sm:w-auto">
+                  <Counter value={r.value} />
+                </dd>
+                <dt className={`rotulo order-2 text-[10px] leading-snug sm:mt-2 ${t.muted}`}>{r.label}</dt>
+              </div>
+            ))}
+          </dl>
+
+          <span className="rotulo inline-flex items-center gap-2">
+            Ver el caso completo <Arrow className="group-hover:translate-x-1.5" />
+          </span>
         </div>
-      </div>
 
-      {/* Project info & Meta */}
-      <div className="space-y-2">
-        <div className="flex flex-wrap items-center gap-2">
-          <h3 className="font-serif text-3xl font-medium text-neutral-900 group-hover:text-black transition-colors flex items-center gap-2">
-            {project.title}
-          </h3>
+        <div className={`relative flex items-center justify-center overflow-hidden px-5 py-12 sm:px-10 lg:py-14 ${t.grid}`}>
+          <HoverCotas label={`${project.fig} · Esc. 1:1`} muted={t.muted} />
+          <div className="w-full max-w-[560px] transition-transform duration-500 ease-[var(--ease-plano)] group-hover:-translate-y-1.5">
+            <ProjectVisual id={project.visual} tone={project.tone} />
+          </div>
+        </div>
+      </button>
+      <Corners />
+    </motion.article>
+  );
+}
 
-          <div className="flex flex-wrap items-center gap-1.5 ml-2">
-            {project.badges.map((badge, idx) => {
-              const isProduction = badge.toLowerCase().includes('producción') || badge.toLowerCase().includes('estudio');
-              const isDevelopment = badge.toLowerCase().includes('desarrollo');
-              
-              return (
-                <span
-                  key={badge}
-                  className={`font-mono text-[10px] tracking-wide px-2.5 py-0.5 rounded-full border ${
-                    isProduction
-                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                      : isDevelopment
-                      ? 'bg-amber-55/20 text-amber-700 border-amber-200'
-                      : 'bg-neutral-100 text-neutral-600 border-neutral-200'
-                  }`}
-                >
-                  {badge}
-                </span>
-              );
-            })}
+export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
+  const t = toneClasses(project.tone);
+  return (
+    <motion.article
+      className={`group encuadre relative h-full border ${t.border} ${t.box}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, ease: [0.2, 0, 0, 1] }}
+    >
+      <button
+        type="button"
+        onClick={() => onSelect(project)}
+        className="relative z-[2] flex h-full w-full flex-col text-left"
+        aria-label={`Ver el caso ${project.title}`}
+      >
+        <div className="flex flex-col gap-4 p-6 sm:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span className={`rotulo ${t.muted}`}>{project.fig}</span>
+            <StatusTag label={project.status.label} kind={project.status.kind} tone={project.tone} />
+          </div>
+          <div>
+            <h3 className="display text-5xl sm:text-6xl">{project.title}</h3>
+            <p className={`rotulo mt-2 ${t.muted}`}>
+              {project.client} · {project.sector}
+            </p>
+          </div>
+          <p className="titular max-w-[30ch] text-xl">{project.tagline}</p>
+        </div>
+
+        <div className={`relative flex flex-1 items-center justify-center border-y px-5 py-10 ${t.border} ${t.grid}`}>
+          <HoverCotas label={`${project.fig} · Esc. 1:1`} muted={t.muted} />
+          <div className="w-full max-w-[340px] transition-transform duration-500 ease-[var(--ease-plano)] group-hover:-translate-y-1.5">
+            <ProjectVisual id={project.visual} tone={project.tone} compact />
           </div>
         </div>
 
-        {/* Project snippet */}
-        <p className="text-sm text-neutral-500 line-clamp-2 leading-relaxed font-light font-sans">
-          {project.description}
-        </p>
-
-        {/* Interactive action indicator */}
-        <div className="pt-2 flex items-center gap-1 text-xs font-mono font-medium text-[#1c1c1a] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-4px] group-hover:translate-x-0">
-          Explorar Detalles & Simulador <span className="text-sm">→</span>
+        <div className="flex items-end justify-between gap-4 p-6 sm:px-8">
+          {project.results[0] ? (
+            <div className="flex items-baseline gap-3">
+              <span className="display text-3xl">
+                <Counter value={project.results[0].value} />
+              </span>
+              <span className={`rotulo max-w-[22ch] text-[10px] leading-snug ${t.muted}`}>{project.results[0].label}</span>
+            </div>
+          ) : (
+            <span className={`rotulo ${t.muted}`}>{project.sector}</span>
+          )}
+          <span className="rotulo inline-flex shrink-0 items-center gap-2">
+            Ver caso <Arrow className="group-hover:translate-x-1.5" />
+          </span>
         </div>
-      </div>
-    </motion.div>
+      </button>
+      <Corners />
+    </motion.article>
+  );
+}
+
+/** Cotas de plano que se dibujan alrededor del mockup al pasar el mouse. */
+function HoverCotas({ label, muted }: { label: string; muted: string }) {
+  const line = 'block bg-current transition-transform duration-500 ease-[var(--ease-plano)]';
+  return (
+    <span aria-hidden className={`pointer-events-none absolute inset-0 z-[1] hidden md:block ${muted}`}>
+      {/* horizontal */}
+      <span className="absolute inset-x-6 top-4 flex items-center gap-2">
+        <span className={`${line} h-2.5 w-px scale-y-0 group-hover:scale-y-100`} />
+        <span className={`${line} h-px flex-1 origin-left scale-x-0 group-hover:scale-x-100`} />
+        <span className="rotulo text-[9px] opacity-0 transition-opacity delay-200 duration-300 group-hover:opacity-100">{label}</span>
+        <span className={`${line} h-px flex-1 origin-right scale-x-0 group-hover:scale-x-100`} />
+        <span className={`${line} h-2.5 w-px scale-y-0 group-hover:scale-y-100`} />
+      </span>
+      {/* vertical */}
+      <span className="absolute inset-y-10 left-4 flex flex-col items-center">
+        <span className={`${line} h-px w-2.5 scale-x-0 group-hover:scale-x-100`} />
+        <span className={`${line} w-px flex-1 origin-top scale-y-0 delay-100 group-hover:scale-y-100`} />
+        <span className={`${line} h-px w-2.5 scale-x-0 group-hover:scale-x-100`} />
+      </span>
+    </span>
   );
 }

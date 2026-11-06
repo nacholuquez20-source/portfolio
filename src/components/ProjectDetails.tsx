@@ -1,569 +1,240 @@
-import React, { useState, useEffect } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { X, Settings, ShieldAlert } from 'lucide-react';
 import { Project } from '../types';
+import { PROJECTS } from '../data';
+import ProjectVisual from './visuals/ProjectVisual';
+import { Counter, StatusTag } from './ui/primitives';
 
 interface ProjectDetailsProps {
   project: Project;
   onClose: () => void;
+  onNavigate: (project: Project) => void;
 }
 
-export default function ProjectDetails({ project, onClose }: ProjectDetailsProps) {
-  // Simulator state triggers
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+export default function ProjectDetails({ project, onClose, onNavigate }: ProjectDetailsProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const index = PROJECTS.findIndex((p) => p.id === project.id);
+  const prev = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length];
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
 
-  // 1. AuditBot states — cadena de frío
-  const [temperature, setTemperature] = useState<number>(4.5);
-  const [threshold, setThreshold] = useState<number>(8);
-  const [deviationForced, setDeviationForced] = useState<boolean>(false);
-  const [logs, setLogs] = useState<string[]>([]);
-
-  // 2. TallerHub states — voz a orden de trabajo
-  const [service, setService] = useState<'frenos' | 'motor' | 'suspension'>('frenos');
-  const [npsEnabled, setNpsEnabled] = useState<boolean>(true);
-  const [orderProgress, setOrderProgress] = useState<number>(15);
-  const [voiceLogs, setVoiceLogs] = useState<string[]>([]);
-
-  // 3. Kernium states — flota interna
-  const [powerSaving, setPowerSaving] = useState<boolean>(false);
-  const [reportInterval, setReportInterval] = useState<number>(5);
-  const [unitIndex, setUnitIndex] = useState<number>(0);
-  const [bottleneck, setBottleneck] = useState<boolean>(false);
-
-  // 4. FlujoNorte states — pipeline de datos
-  const [recordsSynced, setRecordsSynced] = useState<number>(128);
-  const [outOfRange, setOutOfRange] = useState<boolean>(false);
-
-  const addLog = (msg: string, setFn: React.Dispatch<React.SetStateAction<string[]>>) => {
-    const time = new Date().toLocaleTimeString();
-    setFn((prev) => [`[${time}] ${msg}`, ...prev].slice(0, 15));
-  };
-
-  const currentTemp = deviationForced ? 9.2 : temperature;
-  const hasDeviation = currentTemp > threshold;
-
-  // Simulation clock
   useEffect(() => {
-    if (!isPlaying) return;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onNavigate(next);
+      if (e.key === 'ArrowLeft') onNavigate(prev);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+      previouslyFocused?.focus?.();
+    };
+  }, [onClose, onNavigate, next, prev]);
 
-    const interval = setInterval(() => {
-      if (project.id === 'auditbot') {
-        if (hasDeviation) {
-          addLog(`DESVÍO: Heladera de vacunas a ${currentTemp.toFixed(1)}°C (límite ${threshold}°C). Alerta escalada al panel.`, setLogs);
-        } else if (Math.random() > 0.6) {
-          addLog(`CHECKLIST: Evidencia validada. Cadena de frío estable a ${currentTemp.toFixed(1)}°C.`, setLogs);
-        }
-      }
-
-      if (project.id === 'tallerhub') {
-        setOrderProgress((p) => Math.min(100, p + (Math.random() * 6 + 2)));
-        if (Math.random() > 0.5) {
-          const frases: Record<string, string[]> = {
-            frenos: ['"...pastillas al 20%, disco delantero con rebaba..."', '"...recomiendo cambio de pastillas y rectificado..."'],
-            motor: ['"...ruido en frío del lado de la distribución..."', '"...correa con desgaste visible, tensor flojo..."'],
-            suspension: ['"...amortiguador trasero derecho transpirado..."', '"...bujes de parrilla con juego, golpeteo en pozos..."'],
-          };
-          const opts = frases[service];
-          addLog(`VOZ→TEXTO: ${opts[Math.floor(Math.random() * opts.length)]}`, setVoiceLogs);
-        }
-      }
-
-      if (project.id === 'kernium') {
-        setUnitIndex((i) => (i + 1) % 4);
-      }
-
-      if (project.id === 'flujonorte') {
-        setRecordsSynced((total) => total + Math.floor(Math.random() * 4 + 1));
-      }
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [isPlaying, project.id, hasDeviation, currentTemp, threshold, service]);
-
-  // Initial populate logs
   useEffect(() => {
-    if (project.id === 'auditbot') {
-      setLogs([
-        `[${new Date().toLocaleTimeString()}] Auditoría iniciada vía WhatsApp Business.`,
-        `[${new Date().toLocaleTimeString()}] Presencia confirmada por geolocalización.`,
-        `[${new Date().toLocaleTimeString()}] Esperando evidencia fotográfica de cadena de frío...`,
-      ]);
-    }
-    if (project.id === 'tallerhub') {
-      setVoiceLogs([
-        `[${new Date().toLocaleTimeString()}] Micrófono del box activo. Transcripción en tiempo real lista.`,
-        `[${new Date().toLocaleTimeString()}] Orden de trabajo #OT-1182 abierta.`,
-      ]);
-    }
+    scrollRef.current?.scrollTo({ top: 0 });
   }, [project.id]);
 
-  // Posiciones de unidades para el plano de planta de Kernium
-  const fleetUnits = [
-    { x: 50, y: 35, name: 'Montacargas MT-42', desc: 'Trasladando pallets a Rack B' },
-    { x: 140, y: 50, name: 'Apilador AP-05', desc: 'Carga en bahía de descarga' },
-    { x: 230, y: 38, name: 'Zorra ZE-12', desc: 'Mantenimiento preventivo programado' },
-    { x: 310, y: 62, name: 'Montacargas MT-43', desc: 'Ruta optimizada por pasillo lateral' },
-  ];
+  const dark = project.tone === 'tinta';
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-md flex items-center justify-center p-4 md:p-8">
+    <motion.div
+      className="fixed inset-0 z-50 flex justify-end"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="caso-titulo"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="absolute inset-0 bg-tinta/60 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
+
       <motion.div
-        initial={{ opacity: 0, scale: 0.97, y: 15 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.97, y: 15 }}
-        className="bg-[#F8F8F5] w-full max-w-6xl rounded-2xl border border-neutral-300 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]"
+        ref={scrollRef}
+        className="relative h-full w-full max-w-[1080px] overflow-y-auto bg-papel text-tinta shadow-2xl"
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ duration: 0.55, ease: [0.2, 0, 0, 1] }}
       >
-
-        {/* Modal Header */}
-        <div className="bg-[#F1F1ED] px-6 py-4 md:px-8 border-b border-neutral-200 flex justify-between items-center shrink-0">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-neutral-900" />
-            <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-              DETALLES DEL PROYECTO & SIMULADOR
-            </span>
-          </div>
-
+        {/* Barra superior */}
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-4 border-b border-linea bg-papel/95 px-4 py-3 backdrop-blur sm:px-8">
+          <span className="rotulo text-grafito">
+            {project.fig} · Caso {String(index + 1).padStart(2, '0')} de {String(PROJECTS.length).padStart(2, '0')}
+          </span>
           <button
+            ref={closeRef}
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-full border border-neutral-300 bg-white cursor-pointer hover:bg-neutral-100 transition-colors"
-            id="close-project-details"
-            aria-label="Cerrar panel"
+            className="rotulo border border-tinta px-3 py-2 transition-colors hover:bg-tinta hover:text-papel"
           >
-            <X className="w-5 h-5 text-neutral-700" />
+            Cerrar ✕
           </button>
         </div>
 
-        {/* Scrollable Modal Content */}
-        <div className="overflow-y-auto p-6 md:p-10 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10">
-
-          {/* Left Column: Tech Details & Specs */}
-          <div className="lg:col-span-6 space-y-8 text-left">
-            <div>
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-neutral-900 tracking-tight leading-none mb-4">
+        {/* Portada del caso */}
+        <header className={`${dark ? 'grano bg-tinta text-papel' : 'bg-hoja text-tinta'} relative`}>
+          <div className="relative z-[2] grid grid-cols-1 gap-10 px-4 py-10 sm:px-8 sm:py-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center">
+            <div className="flex flex-col gap-5">
+              <div className="flex flex-wrap items-center gap-3">
+                <StatusTag label={project.status.label} kind={project.status.kind} tone={project.tone} />
+                <span className={`rotulo ${dark ? 'text-grafito-claro' : 'text-grafito'}`}>{project.year}</span>
+              </div>
+              <h2 id="caso-titulo" className="display text-[clamp(3.2rem,8vw,6rem)]">
                 {project.title}
               </h2>
-
-              <p className="text-base text-neutral-600 font-light leading-relaxed">
-                {project.fullDescription}
+              <p className={`rotulo ${dark ? 'text-grafito-claro' : 'text-grafito'}`}>
+                {project.client} · {project.sector}
+                {project.previously && <> · antes {project.previously}</>}
               </p>
+              <p className="titular max-w-[24ch] text-2xl sm:text-3xl">{project.tagline}</p>
             </div>
-
-            {/* Facts row */}
-            <div className="grid grid-cols-3 gap-4 border-y border-neutral-200/80 py-5">
-              {project.metrics.map((m) => (
-                <div key={m.label} className="space-y-1">
-                  <p className="font-mono text-[9px] text-neutral-400 uppercase tracking-wide leading-none">{m.label}</p>
-                  <p className="font-serif text-lg md:text-xl font-semibold text-[#1c1c1a] leading-snug">{m.value}</p>
-                </div>
-              ))}
+            <div className={`${dark ? 'grilla-plano-oscura' : 'grilla-plano'} px-2 py-8 sm:px-6`}>
+              <ProjectVisual id={project.visual} tone={project.tone} />
             </div>
+          </div>
+        </header>
 
-            {/* Challenge & Solution */}
-            <div className="space-y-4 font-sans text-sm">
-              <div>
-                <h4 className="font-mono text-xs text-neutral-400 uppercase font-semibold mb-1">// EL PROBLEMA</h4>
-                <p className="text-neutral-600 leading-relaxed font-light">{project.challenge}</p>
-              </div>
-              <div className="pt-2">
-                <h4 className="font-mono text-xs text-neutral-400 uppercase font-semibold mb-1">// LA SOLUCIÓN</h4>
-                <p className="text-neutral-600 leading-relaxed font-light">{project.solution}</p>
-              </div>
-            </div>
+        <div className="px-4 sm:px-8">
+          <Block num="A" title="El problema">
+            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta-2">{project.problem}</p>
+          </Block>
 
-            {/* Technology Badge Stack */}
-            <div>
-              <h4 className="font-mono text-xs text-neutral-400 uppercase font-semibold mb-3">// STACK TECNOLÓGICO</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.techStack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="font-mono text-xs text-neutral-600 bg-white border border-neutral-200 px-3 py-1 rounded-md"
-                  >
-                    {tech}
+          <Block num="B" title="La solución">
+            <p className="max-w-[64ch] text-lg leading-relaxed text-tinta-2">{project.solution}</p>
+          </Block>
+
+          <Block num="C" title="El flujo">
+            <ol className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center md:gap-y-3">
+              {project.flow.map((step, i) => (
+                <motion.li
+                  key={step}
+                  className="flex items-center gap-2 md:gap-0"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.35, delay: 0.3 + i * 0.08 }}
+                >
+                  {i > 0 && (
+                    <span className="hidden items-center md:flex" aria-hidden>
+                      <span className="block h-px w-6 bg-tinta" />
+                      <span className="-ml-1 text-xs">▸</span>
+                    </span>
+                  )}
+                  <span className="flex items-center gap-2 border border-tinta bg-hoja px-3 py-2 text-sm">
+                    <span className="rotulo text-[10px] text-grafito">{String(i + 1).padStart(2, '0')}</span>
+                    {step}
                   </span>
+                </motion.li>
+              ))}
+            </ol>
+          </Block>
+
+          <Block num="D" title="Qué hace">
+            <ul className="grid grid-cols-1 gap-px border border-linea bg-linea md:grid-cols-2">
+              {project.highlights.map((h, i) => (
+                <li key={h} className="flex gap-4 bg-papel p-4 text-[15px] leading-relaxed text-tinta-2">
+                  <span className="rotulo pt-1 text-grafito">{String(i + 1).padStart(2, '0')}</span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </Block>
+
+          {project.results.length > 0 && (
+            <Block num="E" title="En números">
+              <dl className="grid grid-cols-1 gap-px border border-linea bg-linea sm:grid-cols-3">
+                {project.results.map((r) => (
+                  <div key={r.label} className="flex flex-col bg-hoja p-5">
+                    <dd className="display order-1 text-5xl">
+                      <Counter value={r.value} />
+                    </dd>
+                    <dt className="rotulo order-2 mt-2 text-grafito">{r.label}</dt>
+                  </div>
                 ))}
+              </dl>
+            </Block>
+          )}
+
+          {project.lesson && (
+            <Block num="F" title="Criterio de ingeniería">
+              <div className="border-l-[3px] border-senal pl-5">
+                <p className="titular text-2xl sm:text-3xl">{project.lesson.title}</p>
+                <p className="mt-3 max-w-[64ch] text-[17px] leading-relaxed text-tinta-2">{project.lesson.body}</p>
               </div>
-            </div>
-          </div>
+            </Block>
+          )}
 
-          {/* Right Column: INTERACTIVE SIMULATOR */}
-          <div className="lg:col-span-6 bg-neutral-900 p-6 md:p-8 rounded-xl text-white flex flex-col justify-between h-full min-h-[460px] relative overflow-hidden shadow-inner border border-stone-800">
-
-            {/* Header info simulator */}
-            <div className="flex justify-between items-center border-b border-white/10 pb-4 mb-6 shrink-0 z-10 relative">
-              <div className="flex items-center gap-2">
-                <Settings className={`w-4 h-4 text-emerald-400 ${isPlaying ? 'animate-spin' : ''}`} />
-                <span className="font-mono text-xs tracking-wider text-neutral-400">
-                  SIMULADOR CONCEPTUAL DEL PRODUCTO
-                </span>
-              </div>
-
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="bg-white/10 hover:bg-white/20 p-1 rounded font-mono text-[10px] text-neutral-300 hover:text-white transition cursor-pointer"
-                id="simulator-toggle-play"
-              >
-                {isPlaying ? 'PAUSAR' : 'REANUDAR'}
-              </button>
-            </div>
-
-            {/* SIMULATOR RENDER LAYER */}
-            <div className="flex-1 flex flex-col justify-center space-y-6 z-10 relative">
-
-              {/* CASO: AUDITBOT — Cadena de frío */}
-              {project.id === 'auditbot' && (
-                <div className="space-y-6">
-                  <div className="bg-black/40 p-4 rounded-lg border border-white/5 space-y-2 text-left">
-                    <span className="font-mono text-[9px] text-neutral-400 uppercase">Temperatura Heladera de Vacunas</span>
-                    <div className="flex items-baseline justify-between">
-                      <span className={`font-mono text-3xl font-bold ${hasDeviation ? 'text-rose-400' : 'text-cyan-400'}`}>
-                        {currentTemp.toFixed(1)}
-                      </span>
-                      <span className="text-[10px] font-mono text-neutral-400">°C</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="2"
-                      max="12"
-                      step="0.1"
-                      value={temperature}
-                      onChange={(e) => {
-                        setTemperature(parseFloat(e.target.value));
-                        setDeviationForced(false);
-                      }}
-                      className="w-full accent-cyan-400"
-                      id="sim-temp-slider"
-                    />
-                  </div>
-
-                  {/* Threshold Settings */}
-                  <div className="flex justify-between items-center text-xs font-mono bg-black/20 p-3 rounded-lg border border-white/5 text-left">
-                    <div>
-                      <span className="text-neutral-400 font-semibold block uppercase text-[10px]">Umbral Reglamentario</span>
-                      <span className="text-neutral-300 font-light pt-0.5">Desvío por encima de {threshold}°C</span>
-                    </div>
-                    <input
-                      type="number"
-                      value={threshold}
-                      onChange={(e) => setThreshold(parseInt(e.target.value) || 8)}
-                      className="bg-black/50 border border-white/10 rounded px-2 py-1 w-16 text-center text-emerald-400 font-semibold"
-                      id="sim-threshold-input"
-                    />
-                  </div>
-
-                  {/* Alarm display */}
-                  <div
-                    className={`p-4 rounded-lg border text-left flex items-start gap-3 transition-colors duration-400 ${
-                      hasDeviation ? 'bg-rose-950/40 border-rose-700' : 'bg-emerald-950/30 border-emerald-800/50'
-                    }`}
-                  >
-                    <ShieldAlert
-                      className={`w-5 h-5 shrink-0 mt-0.5 ${hasDeviation ? 'text-rose-500 animate-pulse' : 'text-emerald-500'}`}
-                    />
-                    <div>
-                      <h5 className="font-mono text-xs font-bold uppercase tracking-wide">
-                        {hasDeviation ? 'DESVÍO_CADENA_DE_FRÍO' : 'DENTRO_DE_NORMA'}
-                      </h5>
-                      <p className="text-[11px] text-neutral-400 font-light mt-1">
-                        {hasDeviation
-                          ? 'Alerta escalada por severidad al panel web. El farmacéutico recibe la acción correctiva por WhatsApp.'
-                          : 'Evidencia fotográfica validada. La auditoría avanza al siguiente paso de la checklist.'}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Injection actions */}
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setDeviationForced(!deviationForced)}
-                      className={`flex-1 font-mono text-[10px] py-2.5 rounded hover:opacity-90 cursor-pointer ${
-                        deviationForced ? 'bg-[#1c1c1a] text-white border border-white/30' : 'bg-rose-600 text-white'
-                      }`}
-                      id="force-deviation-btn"
-                    >
-                      {deviationForced ? '✓ RESOLVER DESVÍO' : '⚠ SIMULAR HELADERA DESCALIBRADA'}
-                    </button>
-                    <button
-                      onClick={() => {
-                        setTemperature(4.5);
-                        setDeviationForced(false);
-                        setLogs([`[${new Date().toLocaleTimeString()}] Auditoría reiniciada por el operador.`]);
-                      }}
-                      className="bg-white/15 hover:bg-white/20 p-2.5 rounded font-mono text-[10px] text-white shrink-0 font-bold transition cursor-pointer"
-                      id="reset-auditbot-sim"
-                    >
-                      RESET
-                    </button>
-                  </div>
-                </div>
+          {project.stack.length > 0 && (
+            <Block num="G" title="Stack">
+              <ul className="flex flex-wrap gap-1.5">
+                {project.stack.map((s) => (
+                  <li key={s} className="rotulo border border-linea bg-hoja px-2.5 py-1.5 text-tinta">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+              {project.extraLink && (
+                <a href={project.extraLink.href} className="rotulo mt-5 inline-flex items-center gap-2 text-grafito underline underline-offset-4 hover:text-tinta">
+                  {project.extraLink.label} ↗
+                </a>
               )}
+            </Block>
+          )}
 
-              {/* CASO: TALLERHUB — Voz a orden de trabajo */}
-              {project.id === 'tallerhub' && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4 text-left">
-                    <div className="space-y-1">
-                      <label className="font-mono text-[9px] text-neutral-400 uppercase">Tipo de Servicio</label>
-                      <select
-                        value={service}
-                        onChange={(e) => setService(e.target.value as typeof service)}
-                        className="w-full bg-black/40 border border-white/10 rounded px-2.5 py-2 font-mono text-xs text-stone-300 cursor-pointer focus:outline-none"
-                      >
-                        <option value="frenos">Frenos</option>
-                        <option value="motor">Motor / Distribución</option>
-                        <option value="suspension">Suspensión / Tren delantero</option>
-                      </select>
-                    </div>
-
-                    <div className="space-y-1 flex flex-col justify-end">
-                      <div className="flex justify-between items-center bg-black/30 px-3 py-2 rounded-lg border border-white/5">
-                        <span className="font-mono text-[10px] uppercase">NPS Automático</span>
-                        <button
-                          onClick={() => setNpsEnabled(!npsEnabled)}
-                          className={`font-mono text-[10px] px-3 py-1 rounded transition cursor-pointer ${
-                            npsEnabled ? 'bg-emerald-600 text-white' : 'bg-neutral-700 text-neutral-300'
-                          }`}
-                        >
-                          {npsEnabled ? 'ON' : 'OFF'}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Audio waveform: el mecánico dicta mientras trabaja */}
-                  <div className="bg-black p-4 rounded-lg border border-white/10 relative h-20 overflow-hidden flex items-end justify-center">
-                    <div className="absolute top-2 left-3 font-mono text-[9px] text-neutral-400 uppercase tracking-wider">
-                      Dictado del Mecánico — Transcripción en Vivo
-                    </div>
-                    <div className="flex items-end gap-0.5 w-full h-10">
-                      {Array.from({ length: 30 }).map((_, idx) => {
-                        const randomHeight = isPlaying ? Math.random() * 40 + 3 : 4;
-                        return (
-                          <div
-                            key={idx}
-                            style={{ height: `${randomHeight}px` }}
-                            className="flex-1 transition-all duration-150 bg-teal-400"
-                          />
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Order progress */}
-                  <div className="space-y-1 z-10">
-                    <div className="flex justify-between items-center text-xs font-mono">
-                      <span>Orden de Trabajo #OT-1182:</span>
-                      <span className={`font-bold ${orderProgress >= 100 ? 'text-emerald-400' : 'text-teal-300'}`}>
-                        {orderProgress >= 100 ? 'Lista para entrega' : `${orderProgress.toFixed(0)}% completa`}
-                      </span>
-                    </div>
-                    <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
-                      <div
-                        style={{ width: `${Math.min(100, orderProgress)}%` }}
-                        className="h-full transition-all duration-300 bg-teal-500"
-                      />
-                    </div>
-                    <p className="text-[10px] font-mono text-neutral-500 pt-1">
-                      {npsEnabled
-                        ? 'Al cerrar la orden, el cliente recibe seguimiento y encuesta NPS por WhatsApp.'
-                        : 'Encuesta NPS desactivada para esta orden.'}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* CASO: KERNIUM — Plano de planta y flota */}
-              {project.id === 'kernium' && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-2 gap-4 text-left">
-                    <div className="bg-black/40 p-4 rounded-lg border border-white/5 space-y-2">
-                      <span className="font-mono text-[9px] text-neutral-400 uppercase">Modo Telemetría</span>
-                      <div className="flex items-center justify-between pt-1">
-                        <span className="font-mono text-sm font-semibold">
-                          {powerSaving ? 'AHORRO ENERGÍA' : 'MÁX. PRECISIÓN'}
-                        </span>
-                        <input
-                          type="checkbox"
-                          checked={powerSaving}
-                          onChange={(e) => setPowerSaving(e.target.checked)}
-                          className="w-4 h-4 cursor-pointer accent-amber-500"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="bg-black/40 p-4 rounded-lg border border-white/5 space-y-1">
-                      <span className="font-mono text-[9px] text-neutral-400 uppercase">Reporte cada: {reportInterval} min</span>
-                      <input
-                        type="range"
-                        min="1"
-                        max="30"
-                        value={reportInterval}
-                        onChange={(e) => setReportInterval(parseInt(e.target.value))}
-                        className="w-full accent-amber-500 pt-1"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Plano de planta con unidades */}
-                  <div className="bg-black p-4 rounded-lg border border-white/10 text-left space-y-3">
-                    <span className="font-mono text-[9px] text-neutral-400 uppercase">PLANO DE PLANTA — FLOTA EN VIVO</span>
-
-                    <div className="relative h-24 bg-[#0d1117] rounded border border-neutral-800 overflow-hidden flex items-center justify-center">
-                      <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(#FAF9F5 1px, transparent 1px)', backgroundSize: '14px 14px' }} />
-                      <svg className="w-full h-full">
-                        <path
-                          d="M 30 30 L 130 30 L 130 70 L 240 70 L 240 40 L 330 40"
-                          fill="none"
-                          stroke={bottleneck ? '#ef4444' : '#10b981'}
-                          strokeWidth="2"
-                          strokeDasharray={bottleneck ? '4 4' : 'none'}
-                        />
-                        {fleetUnits.map((u, idx) => (
-                          <circle
-                            key={idx}
-                            cx={u.x}
-                            cy={u.y}
-                            r={idx === unitIndex ? '6' : '3'}
-                            className={`transition ${idx === unitIndex ? 'fill-amber-500 animate-pulse' : 'fill-emerald-500/50'}`}
-                          />
-                        ))}
-                      </svg>
-
-                      <div className="absolute bottom-1 left-2 right-2 flex justify-between items-center text-[10px] font-mono bg-black/60 p-1 rounded border border-white/5">
-                        <span className="text-amber-400">{fleetUnits[unitIndex].name}</span>
-                        <span className="text-neutral-400 text-right truncate max-w-[170px]">
-                          {fleetUnits[unitIndex].desc}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bottleneck trigger */}
-                  <div
-                    className={`p-4 rounded-lg text-left border flex justify-between items-center ${
-                      bottleneck ? 'bg-amber-950/40 border-amber-500/80' : 'bg-black/35 border-white/10'
-                    }`}
-                  >
-                    <div>
-                      <span className="font-mono text-xs font-semibold block uppercase">Estado del Pasillo Central</span>
-                      <p className="text-[10px] text-neutral-400 font-light mt-0.5">
-                        {bottleneck
-                          ? 'Cuello de botella detectado: rutas recalculadas por pasillos laterales.'
-                          : 'Flujo libre. Rutas internas operando en trayecto óptimo.'}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setBottleneck(!bottleneck)}
-                      className={`font-mono text-[9px] py-1.5 px-3 rounded transition cursor-pointer ${
-                        bottleneck ? 'bg-amber-500 text-black font-semibold' : 'bg-white/10 text-white'
-                      }`}
-                    >
-                      {bottleneck ? '✓ LIBERAR PASILLO' : 'SIMULAR CONGESTIÓN'}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* CASO: FLUJONORTE — Pipeline de datos */}
-              {project.id === 'flujonorte' && (
-                <div className="space-y-6">
-                  {/* Pipeline visual: Sheets → n8n → Metabase */}
-                  <div className="bg-black/40 p-5 rounded-lg border border-white/5 text-left space-y-4">
-                    <span className="font-mono text-[9px] text-neutral-400 uppercase">PIPELINE DE CONSOLIDACIÓN AUTOMÁTICA</span>
-
-                    <div className="flex items-center justify-between gap-2 font-mono text-[10px]">
-                      {['Planillas de Campo', 'n8n Workflows', 'Dashboard Metabase'].map((node, idx) => (
-                        <React.Fragment key={node}>
-                          <div className={`px-3 py-2.5 rounded-lg border text-center flex-1 ${
-                            idx === 1
-                              ? 'bg-emerald-950/40 border-emerald-700/50 text-emerald-300'
-                              : 'bg-neutral-900 border-neutral-700 text-neutral-300'
-                          }`}>
-                            {node}
-                          </div>
-                          {idx < 2 && (
-                            <span className={`shrink-0 ${isPlaying ? 'text-emerald-400 animate-pulse' : 'text-neutral-600'}`}>→</span>
-                          )}
-                        </React.Fragment>
-                      ))}
-                    </div>
-
-                    <div className="flex justify-between items-center text-xs font-mono pt-2 border-t border-white/5">
-                      <span className="text-neutral-400">Registros consolidados hoy:</span>
-                      <span className="text-emerald-400 font-bold text-base">{recordsSynced}</span>
-                    </div>
-                  </div>
-
-                  {/* Quality alert trigger */}
-                  <div
-                    className={`p-4 rounded-lg border text-left flex items-start gap-3 transition-colors duration-400 ${
-                      outOfRange ? 'bg-rose-950/40 border-rose-700' : 'bg-emerald-950/30 border-emerald-800/50'
-                    }`}
-                  >
-                    <ShieldAlert
-                      className={`w-5 h-5 shrink-0 mt-0.5 ${outOfRange ? 'text-rose-500 animate-pulse' : 'text-emerald-500'}`}
-                    />
-                    <div>
-                      <h5 className="font-mono text-xs font-bold uppercase tracking-wide">
-                        {outOfRange ? 'ALERTA_DE_CALIDAD' : 'INDICADORES_EN_RANGO'}
-                      </h5>
-                      <p className="text-[11px] text-neutral-400 font-light mt-1">
-                        {outOfRange
-                          ? 'Indicador de calidad fuera de rango: notificación automática enviada al responsable de turno.'
-                          : 'Producción y calidad dentro de los parámetros definidos. Sin intervención necesaria.'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => setOutOfRange(!outOfRange)}
-                    className={`w-full font-mono text-[10px] py-2.5 rounded hover:opacity-90 cursor-pointer ${
-                      outOfRange ? 'bg-[#1c1c1a] text-white border border-white/30' : 'bg-rose-600 text-white'
-                    }`}
-                    id="force-quality-alert-btn"
-                  >
-                    {outOfRange ? '✓ NORMALIZAR INDICADOR' : '⚠ SIMULAR DATO FUERA DE RANGO'}
-                  </button>
-                </div>
-              )}
-
-            </div>
-
-            {/* Terminal Live logs output footer */}
-            <div className="mt-6 border-t border-white/10 pt-4 text-left font-mono text-[10px] text-neutral-400 z-10 relative">
-              <span className="block font-bold text-neutral-400 pr-2 uppercase pb-2">
-                &gt;_ REGISTROS DEL SISTEMA EN VIVO (SIMULACIÓN)
-              </span>
-              <div className="bg-black/50 p-2.5 rounded border border-white/5 h-24 overflow-y-auto space-y-1 scrollbar-thin select-none">
-                {project.id === 'auditbot' ? (
-                  logs.map((log, index) => (
-                    <div key={index} className="truncate select-none text-cyan-300">
-                      {log}
-                    </div>
-                  ))
-                ) : project.id === 'tallerhub' ? (
-                  voiceLogs.map((log, index) => (
-                    <div key={index} className="truncate select-none text-teal-300">
-                      {log}
-                    </div>
-                  ))
-                ) : (
-                  <div>
-                    <span className="text-yellow-400">[SYSTEM]</span> Motor de simulación activo.
-                    <br />
-                    <span className="text-emerald-400">[INFO]</span> Datos ilustrativos del funcionamiento del producto.
-                    <br />
-                    <span className="text-purple-400">[OK]</span> Telemetría sincronizada cada {project.id === 'kernium' ? `${reportInterval} min` : '5 min'}.
-                  </div>
-                )}
-              </div>
-            </div>
-
-          </div>
-
+          <p className="rotulo border-t border-linea py-5 text-grafito">
+            Las pantallas de este caso son una recreación con datos de ejemplo.
+          </p>
         </div>
 
+        {/* Cierre: contacto y navegación entre casos */}
+        <div className="grano relative bg-tinta text-papel">
+          <div className="relative z-[2] px-4 py-10 sm:px-8">
+            <p className="titular max-w-[20ch] text-3xl sm:text-4xl">¿Tenés un proceso parecido en tu empresa?</p>
+            <a
+              href="#contacto"
+              onClick={onClose}
+              className="rotulo mt-6 inline-flex items-center gap-3 bg-senal px-5 py-3.5 text-tinta"
+            >
+              Contame cómo funciona hoy →
+            </a>
+          </div>
+          <div className="relative z-[2] grid grid-cols-2 border-t border-linea-oscura">
+            <button
+              type="button"
+              onClick={() => onNavigate(prev)}
+              className="group flex flex-col items-start gap-1 border-r border-linea-oscura px-4 py-6 text-left sm:px-8"
+            >
+              <span className="rotulo text-grafito-claro">← Anterior</span>
+              <span className="display text-2xl transition-transform duration-300 group-hover:-translate-x-1 sm:text-3xl">{prev.title}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate(next)}
+              className="group flex flex-col items-end gap-1 px-4 py-6 text-right sm:px-8"
+            >
+              <span className="rotulo text-grafito-claro">Siguiente →</span>
+              <span className="display text-2xl transition-transform duration-300 group-hover:translate-x-1 sm:text-3xl">{next.title}</span>
+            </button>
+          </div>
+        </div>
       </motion.div>
-    </div>
+    </motion.div>
+  );
+}
+
+function Block({ num, title, children }: { num: string; title: string; children: ReactNode }) {
+  return (
+    <section className="grid grid-cols-1 gap-4 border-b border-linea py-8 md:grid-cols-[160px_minmax(0,1fr)] md:gap-8 md:py-10">
+      <div className="flex items-baseline gap-3 md:flex-col md:gap-1">
+        <span className="rotulo text-grafito">{num}</span>
+        <h3 className="text-sm font-bold uppercase tracking-[0.08em]">{title}</h3>
+      </div>
+      <div className="min-w-0">{children}</div>
+    </section>
   );
 }
