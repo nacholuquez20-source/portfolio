@@ -114,18 +114,20 @@ export const PROJECTS: Project[] = [
     sector: 'Retail farmacéutico · 25 sucursales',
     year: '2026',
     status: { label: 'v1 en producción · v2 en desarrollo', kind: 'live' },
-    tagline: 'Lo que se detecta en la sucursal se arregla, y el dueño lo ve.',
+    tagline: 'Un mismo estándar en cada sucursal, y un equipo entero comprometido con mejorarlo.',
     problem:
-      'La cadena auditaba sus sucursales, pero lo detectado no se corregía: las observaciones quedaban en planillas, nadie perseguía el cierre y el dueño se enteraba tarde de lo que fallaba.',
+      'Cada sucursal atendía y exhibía a su manera. La cadena auditaba, pero lo detectado no se corregía: las observaciones quedaban en planillas, nadie seguía el cierre y la mejora dependía de quién estuviera de turno.',
     solution:
-      'La primera versión, AuditBot, llevó la auditoría a WhatsApp en 23 sucursales: el auditor manda hallazgos por texto, audio o foto y la IA los estructura en reportes y planes de acción. Circuito la rediseña alrededor del cierre: detectar, resolver, verificar y ver.',
+      'Circuito nace para estandarizar el servicio de venta en todas las sucursales y sumar a cada empleado a la mejora continua. Funciona como un ciclo cerrado: el auditor detecta, la sucursal resuelve con una foto, el auditor verifica y el dueño ve el avance cada lunes. La primera versión, AuditBot, llevó la auditoría a WhatsApp en 23 sucursales; Circuito la rediseña para que la mejora la haga la sucursal, no solo el auditor.',
     highlights: [
+      'Un estándar común para todas las sucursales: vencidos, exhibición, limpieza y orden, y mantenimiento.',
       'El referente de la sucursal resuelve cada pendiente con una foto, sin escribir “hola” ni instalar nada.',
       'Enlace de visita sin login: el encargado acepta el compromiso y resuelve desde el celular.',
       'Vencidos de perfumería con acción sugerida según los días al vencimiento y registro de la plata recuperada.',
       'Circulares de exhibición para todas las sucursales, con foto de ejemplo y respuesta de cada una.',
       'Resumen del lunes al dueño por WhatsApp: cinco líneas, sin scroll.',
       'Escalamiento automático a las 48 h y KPIs de respuesta por sucursal.',
+      'Se mide la sucursal, no la persona: la mejora es del equipo, sin buscar culpables.',
     ],
     flow: ['El auditor detecta', 'La sucursal resuelve con foto', 'El auditor verifica', 'El dueño ve el resumen del lunes'],
     results: [
@@ -134,8 +136,8 @@ export const PROJECTS: Project[] = [
       { value: '48 h', label: 'hasta el escalamiento automático' },
     ],
     lesson: {
-      title: 'AuditBot detectaba bien, pero no cerraba',
-      body: 'Los encargados nunca se sumaron: el bot rechazaba la foto que mandaban directo. Medí dónde se cortaba el circuito y lo rediseñé desde ahí. Es PDCA aplicado al propio producto.',
+      title: 'Sin estándar no hay mejora continua',
+      body: 'Primero se define cómo se trabaja bien en cada sucursal; recién después se puede mejorar sobre eso. AuditBot detectaba, pero no cerraba: los encargados nunca se sumaron. Medí dónde se cortaba el circuito y lo rediseñé para que cada equipo resuelva y vea su avance. Es PDCA aplicado al propio producto.',
     },
     stack: ['Python', 'FastAPI', 'Supabase', 'WhatsApp Cloud API', 'Claude API', 'Whisper', 'ReportLab', 'Railway'],
     tone: 'papel',
