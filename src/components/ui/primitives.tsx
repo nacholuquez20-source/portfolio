@@ -241,3 +241,22 @@ export function Arrow({ className = '' }: { className?: string }) {
     </span>
   );
 }
+
+/** Dato sensible desenfocado (patentes, modelos): se ve la forma, no el contenido. */
+export function Oculto({ children }: { children: ReactNode }) {
+  return (
+    <span className="relative inline-block">
+      <span aria-hidden className="inline-block select-none blur-[3.5px]">
+        {children}
+      </span>
+      <span className="sr-only">dato oculto</span>
+    </span>
+  );
+}
+
+/** Convierte los tramos marcados con [[...]] en datos ocultos. */
+export function conOcultos(text: string): ReactNode {
+  const parts = text.split(/\[\[(.+?)\]\]/g);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) => (i % 2 === 1 ? <Oculto key={i}>{part}</Oculto> : part));
+}

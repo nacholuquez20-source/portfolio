@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { motion } from 'motion/react';
 import { VisualId } from '../../types';
+import { Oculto } from '../ui/primitives';
 
 /*
   Mockups propios de cada sistema, dibujados con la paleta de la marca.
@@ -183,8 +184,12 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
                   transition={{ duration: 0.35, delay: 0.1 + i * 0.07 }}
                 >
                   <td className="px-3.5 py-2 font-mono">{o.or}</td>
-                  <td className="px-2 py-2 font-mono">{o.pat}</td>
-                  <td className="hidden px-2 py-2 sm:table-cell">{o.mod}</td>
+                  <td className="px-2 py-2 font-mono">
+                    <Oculto>{o.pat}</Oculto>
+                  </td>
+                  <td className="hidden px-2 py-2 sm:table-cell">
+                    <Oculto>{o.mod}</Oculto>
+                  </td>
                   <td className="px-2 py-2">
                     <span className="inline-flex items-center gap-1.5">
                       <span
@@ -223,7 +228,7 @@ function TallerHubVisual({ tone, compact }: { tone: Tone; compact: boolean }) {
         transition={{ duration: 0.45, delay: 0.7, ease: [0.2, 0, 0, 1] }}
       >
         <p className="rotulo text-[9px]">WhatsApp → Repuestos</p>
-        <p className="mt-1 text-[12px] font-medium leading-snug">OR 4822 · RAM 1500 espera filtro de combustible. ¿Fecha de llegada?</p>
+        <p className="mt-1 text-[12px] font-medium leading-snug">OR 4822 · <Oculto>RAM 1500</Oculto> espera filtro de combustible. ¿Fecha de llegada?</p>
       </motion.div>
     </div>
   );

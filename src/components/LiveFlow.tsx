@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
 import { useInkReveal } from './motion/useInkReveal';
-import { LineReveal, Reveal, SectionLabel } from './ui/primitives';
+import { conOcultos, LineReveal, Reveal, SectionLabel } from './ui/primitives';
 
 /*
   Demo del patrón que comparten casi todos los sistemas:
@@ -54,12 +54,12 @@ const SCENARIOS: Scenario[] = [
       {
         stage: 'Transcripción',
         detail: 'El audio se convierte en texto.',
-        quote: '“Recibí al cliente Ferreyra, patente AB 123 CD, una Compass, viene por el service de los 40 mil.”',
+        quote: '“Recibí al cliente Ferreyra, patente [[AB 123 CD]], una [[Compass]], viene por el service de los 40 mil.”',
       },
       {
         stage: 'Extracción',
         detail: 'La IA devuelve los datos estructurados.',
-        fields: { Cliente: 'Ferreyra', Patente: 'AB 123 CD', Modelo: 'Compass', Trabajo: 'Service 40.000 km' },
+        fields: { Cliente: 'Ferreyra', Patente: '[[AB 123 CD]]', Modelo: '[[Compass]]', Trabajo: 'Service 40.000 km' },
       },
       {
         stage: 'Validación',
@@ -73,7 +73,7 @@ const SCENARIOS: Scenario[] = [
           {
             side: 'in',
             kind: 'text',
-            card: { label: '¿Registro el ingreso?', lines: ['Ferreyra · AB 123 CD', 'Compass · Service 40.000 km'] },
+            card: { label: '¿Registro el ingreso?', lines: ['Ferreyra · [[AB 123 CD]]', '[[Compass]] · Service 40.000 km'] },
             chips: ['Sí', 'No'],
           },
           { side: 'out', kind: 'text', text: 'Sí' },
@@ -355,7 +355,7 @@ export default function LiveFlow() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    {quote}
+                    {conOcultos(quote)}
                   </motion.p>
                 )}
               </AnimatePresence>
@@ -394,7 +394,7 @@ export default function LiveFlow() {
                               exit={{ opacity: 0 }}
                               transition={{ duration: 0.3 }}
                             >
-                              {fields[k]}
+                              {conOcultos(fields[k])}
                             </motion.span>
                           ) : (
                             <span className="block h-[6px] w-16 bg-linea" />
@@ -491,7 +491,7 @@ function Message({ m }: { m: Msg }) {
           <span className="rotulo block text-[9px] opacity-70">{m.card.label}</span>
           {m.card.lines.map((l) => (
             <span key={l} className="block font-medium">
-              {l}
+              {conOcultos(l)}
             </span>
           ))}
         </span>
