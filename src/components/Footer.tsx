@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { EMAIL, INSTAGRAM_URL, LINKEDIN_URL, NAV, WHATSAPP_URL } from '../data';
-import { Cota } from './ui/primitives';
+import { Cota, Firma } from './ui/primitives';
 
 const NBSP = String.fromCharCode(160);
 
@@ -70,13 +70,13 @@ export default function Footer() {
       {/* Logotipo a todo el ancho */}
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-10">
         <motion.p
-          className="display flex select-none overflow-hidden whitespace-nowrap pb-[0.14em] pt-8 text-[clamp(4rem,18.2vw,16rem)] lowercase leading-[0.82]"
+          className="display flex select-none overflow-hidden whitespace-nowrap pb-[0.14em] pt-8 text-[clamp(4rem,18.2vw,16rem)] leading-[0.82]"
           initial="oculto"
           whileInView="visible"
           viewport={{ once: true, margin: '-40px' }}
           aria-hidden
         >
-          {'juan luquez'.split('').map((ch, i) => (
+          {'Yunga Devs'.split('').map((ch, i) => (
             <motion.span
               key={i}
               className="inline-block"
@@ -87,6 +87,9 @@ export default function Footer() {
             </motion.span>
           ))}
         </motion.p>
+        <div className="-mt-[0.4em] mb-6 flex justify-end pr-2 text-[clamp(2rem,6vw,4.6rem)] text-senal sm:-mt-[0.55em]">
+          <Firma glow delay={0.7} />
+        </div>
         <Cota tone="tinta" label="Fin de lámina · 06 / 06" className="mb-2" delay={0.5} />
         <div className="rotulo flex flex-col gap-3 border-t border-linea-oscura py-6 text-grafito-claro sm:flex-row sm:items-center sm:justify-between">
           <span>© {year} Juan Ignacio Luquez · Yunga Devs · Tucumán, Argentina</span>

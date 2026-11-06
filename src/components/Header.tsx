@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'motion/react';
 import { NAV, WHATSAPP_URL, EMAIL } from '../data';
+import { Firma } from './ui/primitives';
 
 interface HeaderProps {
   activeSection: string;
@@ -35,9 +36,12 @@ export default function Header({ activeSection }: HeaderProps) {
       >
         <motion.div className="absolute inset-x-0 top-0 h-[2px] origin-left bg-senal" style={{ scaleX: progress }} />
         <div className="mx-auto flex max-w-[1240px] items-center justify-between gap-6 px-4 sm:px-6 lg:px-10">
-          <a href="#inicio" className="group flex items-baseline gap-3" aria-label="Juan Luquez — inicio">
-            <span className="display text-[26px] leading-none lowercase">juan luquez</span>
-            <span className="rotulo hidden text-grafito sm:inline">
+          <a href="#inicio" className="group flex items-baseline gap-3" aria-label="Yunga Devs, Juan Ignacio Luquez — inicio">
+            <span className="display text-[26px] leading-none">Yunga Devs</span>
+            <span className="hidden text-[22px] leading-none text-grafito xl:inline" aria-hidden>
+              <Firma delay={0.4} />
+            </span>
+            <span className="rotulo hidden text-grafito sm:inline xl:hidden">
               ingeniería + IA <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
             </span>
           </a>
@@ -108,7 +112,7 @@ export default function Header({ activeSection }: HeaderProps) {
             transition={{ duration: 0.5, ease: [0.2, 0, 0, 1] }}
           >
             <div className="relative z-10 flex items-center justify-between px-4 py-5 sm:px-6">
-              <span className="display text-[26px] lowercase">juan luquez</span>
+              <span className="display text-[26px]">Yunga Devs</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}

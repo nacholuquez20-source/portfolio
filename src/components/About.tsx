@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { useRef } from 'react';
 import { EXPERIENCE, PROFILE_PHOTO, SKILLS } from '../data';
-import { Corners, LineReveal, Reveal, SectionLabel } from './ui/primitives';
+import { Corners, Firma, LineReveal, Reveal, SectionLabel } from './ui/primitives';
 
 export default function About() {
   const photoRef = useRef<HTMLDivElement>(null);
@@ -56,6 +56,9 @@ export default function About() {
                   <Reveal as="p" delay={0.15}>
                     Trabajo desde Tucumán, al pie de las Yungas, con empresas de Argentina y LATAM.
                   </Reveal>
+                  <p className="pt-2 text-[clamp(2rem,3.6vw,2.8rem)] text-tinta">
+                    <Firma delay={0.3} />
+                  </p>
                 </div>
               </div>
             </div>

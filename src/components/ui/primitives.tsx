@@ -260,3 +260,37 @@ export function conOcultos(text: string): ReactNode {
   if (parts.length === 1) return text;
   return parts.map((part, i) => (i % 2 === 1 ? <Oculto key={i}>{part}</Oculto> : part));
 }
+
+/** Firma manuscrita (Yellowtail) que se escribe de izquierda a derecha al aparecer. */
+export function Firma({
+  children = 'Juan Ignacio Luquez',
+  className = '',
+  play,
+  delay = 0,
+  glow = false,
+}: {
+  children?: ReactNode;
+  className?: string;
+  play?: boolean;
+  delay?: number;
+  /** Halo amarillo suave, solo sobre fondo de tinta */
+  glow?: boolean;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-40px' });
+  const on = play ?? inView;
+  const hidden = 'inset(-30% 100% -30% -6%)';
+  const shown = 'inset(-30% -6% -30% -6%)';
+  return (
+    <motion.span
+      ref={ref}
+      className={`firma inline-block pr-[0.2em] ${className}`}
+      style={glow ? { textShadow: '0 0 22px rgb(246 196 0 / 0.35)' } : undefined}
+      initial={{ clipPath: hidden }}
+      animate={{ clipPath: on ? shown : hidden }}
+      transition={{ duration: 1.2, delay, ease: [0.45, 0, 0.2, 1] }}
+    >
+      {children}
+    </motion.span>
+  );
+}

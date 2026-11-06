@@ -1,4 +1,4 @@
-# Portfolio — Juan Ignacio Luquez
+# Yunga Devs — portfolio de Juan Ignacio Luquez
 
 Sitio portfolio personal: ingeniero industrial que desarrolla soluciones digitales para la transformación digital de empresas y la automatización de procesos.
 
@@ -6,7 +6,7 @@ Stack: Vite + React 19 + TypeScript + Tailwind CSS v4 + Motion.
 
 ## Identidad visual
 
-Sigue el manual de marca de @juanluquezia: papel `#F4F4F1` y tinta `#111213`, una señal amarilla `#F6C400` para el dato clave y rojo cinabrio `#C8361F` solo para el resultado logrado. Archivo (condensada) para todo e IBM Plex Mono para rótulos, cifras y cotas. Los tokens están en `src/index.css`.
+Sigue el manual de marca de @juanluquezia: papel `#F4F4F1` y tinta `#111213`, una señal amarilla `#F6C400` para el dato clave y rojo cinabrio `#C8361F` solo para el resultado logrado. Archivo (condensada) para todo e IBM Plex Mono para rótulos, cifras y cotas. La marca principal es **Yunga Devs**; el nombre **Juan Ignacio Luquez** va como firma manuscrita en Yellowtail (componente `Firma`), solo para el nombre y nunca para texto corrido. Los tokens están en `src/index.css`.
 
 Reglas que conviene mantener al editar:
 

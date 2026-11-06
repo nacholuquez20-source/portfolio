@@ -8,6 +8,8 @@
 @theme {
   --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  /* Solo para la firma: el nombre escrito a mano */
+  --font-firma: "Yellowtail", "Brush Script MT", cursive;
 
   --color-papel: #f4f4f1;
   --color-hoja: #ffffff;
@@ -63,6 +65,15 @@ body {
   letter-spacing: -0.02em;
   line-height: 1.04;
   text-wrap: balance;
+}
+
+/* Firma manuscrita: solo el nombre, nunca texto corrido */
+.firma {
+  font-family: var(--font-firma);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-transform: none;
 }
 
 /* Voz técnica: rótulos, cotas y firma */

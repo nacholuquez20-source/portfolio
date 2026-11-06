@@ -2,7 +2,7 @@ import { PointerEvent, useRef, useState } from 'react';
 import { motion, useMotionValue, useScroll, useTransform } from 'motion/react';
 import { HERO_FACTS, PORTRAIT, WHATSAPP_URL } from '../data';
 import HeroLine from './motion/HeroLine';
-import { Corners, Counter, LineReveal, Senal } from './ui/primitives';
+import { Corners, Counter, Firma, LineReveal, Senal } from './ui/primitives';
 
 const FICHA =
   'Ingeniero industrial dedicado al desarrollo, la digitalización y la mejora de procesos. Acompaño a empresas en su transición hacia la digitalización y la inteligencia artificial.';
@@ -50,7 +50,7 @@ export default function Hero({ ready }: { ready: boolean }) {
           animate={ready ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <span>FIG. 00 — Portada</span>
+          <span>Yunga Devs — FIG. 00 · Portada</span>
           <span className="hidden md:inline">San Miguel de Tucumán · 26°49′S 65°13′O</span>
           <span className="flex items-center gap-2 text-tinta">
             <span className="relative flex h-2 w-2">
@@ -68,8 +68,11 @@ export default function Hero({ ready }: { ready: boolean }) {
             animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
-            Juan Ignacio Luquez · Ingeniero industrial
+            Yunga Devs · Ingeniería industrial + IA
           </motion.p>
+          <p className="mb-3 text-[clamp(2.1rem,4.4vw,3.6rem)] text-tinta">
+            <Firma play={ready} delay={0.25} />
+          </p>
           <h1 className="display text-[clamp(2.75rem,7.2vw,6.6rem)]">
             <LineReveal
               play={ready}

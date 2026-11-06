@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { animate, AnimatePresence, motion } from 'motion/react';
+import { Firma } from '../ui/primitives';
 
 /*
   Apertura de lámina: el logotipo entra letra por letra, se dibuja una cota y la hoja sube.
@@ -8,7 +9,7 @@ import { animate, AnimatePresence, motion } from 'motion/react';
 
 const NBSP = String.fromCharCode(160);
 const EASE = [0.2, 0, 0, 1] as const;
-const LOGO = 'juan luquez';
+const LOGO = 'Yunga Devs';
 const KEY = 'jl-intro-vista';
 
 function shouldShow() {
@@ -44,8 +45,8 @@ export default function Intro({ onDone }: { onDone: () => void }) {
       /* sin almacenamiento: se vuelve a ver la próxima vez, no pasa nada */
     }
     document.documentElement.style.overflow = 'hidden';
-    const counter = animate(0, 100, { duration: 1.25, ease: EASE, onUpdate: (v) => setCount(Math.round(v)) });
-    const t = setTimeout(finish, 1500);
+    const counter = animate(0, 100, { duration: 1.5, ease: EASE, onUpdate: (v) => setCount(Math.round(v)) });
+    const t = setTimeout(finish, 1750);
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && finish();
     window.addEventListener('keydown', onKey);
     return () => {
@@ -81,7 +82,7 @@ export default function Intro({ onDone }: { onDone: () => void }) {
           </div>
 
           <div className="relative mx-auto w-full max-w-[1240px]">
-            <p className="display flex overflow-hidden pb-[0.1em] text-[clamp(3.6rem,15vw,13rem)] lowercase leading-[0.85]">
+            <p className="display flex overflow-hidden pb-[0.1em] text-[clamp(3.6rem,15vw,13rem)] leading-[0.85]">
               {LOGO.split('').map((ch, i) => (
                 <motion.span
                   key={i}
@@ -93,6 +94,9 @@ export default function Intro({ onDone }: { onDone: () => void }) {
                   {ch === ' ' ? NBSP : ch}
                 </motion.span>
               ))}
+            </p>
+            <p className="-mt-1 text-[clamp(1.9rem,4.6vw,3.6rem)] text-tinta">
+              <Firma play delay={0.45} />
             </p>
             <div className="mt-4 flex items-center gap-3 text-grafito">
               <motion.span
